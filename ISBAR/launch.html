@@ -13,10 +13,11 @@
         clientId: "my_web_app",
 
         // The scopes that you request from the EHR. In this case we want to:
-        // launch            - Get the launch context
-        // openid & fhirUser - Get the current user
+        // launch            - Get the launch context. This will be used to get the current patient
+        // openid & fhirUser - Get the current user (practitioner)
         // patient/*.read    - Read patient data
-        scope: "launch openid fhirUser patient/*.read",
+        // patient/*.write   - Write patient data.
+        scope: "launch openid fhirUser patient/*.read patient/*.write",
 
         // Typically, if your redirectUri points to the root of the current directory
         // (where the launchUri is), you can omit this option because the default value is
