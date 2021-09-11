@@ -1,70 +1,44 @@
+/*
+  Application file for simple ISBAR app.
+  Classes can be separated later on.
+*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import { FhirClientContext } from "FHIRClient"
+import { FhirClientProvider } from "FHIRClient"
 
-class TextInputField extends React.Component {
+/*
+ The top application object. Responsible for:
+ - Loading patient information
+ - Loading questionnaire
+ - Loading questionnaire response
+ - Initiating the render of other components.
+ */
+class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''}
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
+    this.state = {
+      patient: 1
+    }
   }
 
   render() {
     return (
-      <div class="isbar-text-input-container">
-        <label for={this.props.name}>{this.props.heading}</label>
-        <textarea 
-        id={this.props.name} 
-        rows="4"
-        value={this.state.value} 
-        onChange={this.handleChange} />
+      <div className="App">
+        <FhirClientProvider>
+          {/* This is where the patient information will be displayed*/}
+          <header className="patient-info">
+            <PatientInfoField />
+          </header>
+          <body>
+            <ISBARSimpleInputField />
+          </body>
+        </FhirClientProvider>
+
       </div>
     )
-    
   }
 }
-
-class ISBARSimpleInputField extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
-  render() {
-    return (
-      <TextInputField name="THis is the name" heading="Heading"/>
-    )
-
-  }
-}
-
-class PatientInfoField extends React.Component{
-  constructor(props){
-    super(props);
-  }
-  
-  render(){
-
-  }
-}
-
-function App() {
-  return (
-    <div className="App">
-      {/* This is where the patient information will be displayed*/}
-      <header className="patient-info">
-        <h2>Patient name</h2>
-        <ISBARSimpleInputField />
-      </header>
-
-    </div>
-  );
-}
-
-
 
 export default App;
