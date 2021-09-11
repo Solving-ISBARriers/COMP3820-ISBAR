@@ -1,12 +1,15 @@
 /*
   Application file for simple ISBAR app.
   Classes can be separated later on.
+  the react-router-dom module had to be installed with:
+  npm install -S react-router-dom
 */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './App.css';
-import { FhirClientContext } from "FHIRClient"
-import { FhirClientProvider } from "FHIRClient"
+import { BrowserRouter, Route } from "react-router-dom";
+import Launcher from './Launcher';
+import Main from "./Main"
+
+
 
 /*
  The top application object. Responsible for:
@@ -18,25 +21,17 @@ import { FhirClientProvider } from "FHIRClient"
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      patient: 1
-    }
   }
 
   render() {
     return (
-      <div className="App">
-        <FhirClientProvider>
-          {/* This is where the patient information will be displayed*/}
-          <header className="patient-info">
-            <PatientInfoField />
-          </header>
-          <body>
-            <ISBARSimpleInputField />
-          </body>
-        </FhirClientProvider>
-
-      </div>
+      // This runs the launcher first, which redirects to the main screen.
+      <BrowserRouter>
+        {/* The actual app */}
+        <Route path="/isbar-simple" component={Main} />
+        {/* Launcher for smart app */}
+        <Route path="/" component={Launcher} exact />
+      </BrowserRouter>
     )
   }
 }
