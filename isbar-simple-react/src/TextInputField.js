@@ -5,6 +5,9 @@ import React from "react";
 export default class TextInputField extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      value: ""
+    }
     this.state.value = this.props.value;
 
     this.handleChange = this.handleChange.bind(this);

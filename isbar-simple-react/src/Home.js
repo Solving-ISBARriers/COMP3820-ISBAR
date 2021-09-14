@@ -15,8 +15,7 @@ export default class Home extends React.Component{
             <IsbarClientProvider>
                 <ISBARSimpleInputField/>
             </IsbarClientProvider>
-            // andupdate
-            
+
 
         )
     }

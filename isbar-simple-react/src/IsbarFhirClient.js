@@ -38,12 +38,13 @@ export class IsbarClientProvider extends React.Component {
 
                         // if client is already available render the subtree (patient and input in this case.)
                         if (client) {
-                            return "Client loaded";
-                            //return this.props.children;
+                            //return "Client loaded";
+                            return this.props.children;
                         }
                         console.log("App break1");
                         // client is undefined until SMART.ready() is fulfilled
                         return "Authorizing...";
+                        
                     }}
                 </IsbarClientContext.Consumer>
             </IsbarClientContext.Provider>

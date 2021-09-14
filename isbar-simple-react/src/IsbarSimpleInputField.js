@@ -12,6 +12,7 @@ export class ISBARSimpleInputField extends React.Component {
         loaded: false,
         // would be good if we have a array of question-answer pair.
         // hardcode the questionnaire object?
+        value:"s ",
         labels: [], // labels for the questionnaire
         answers: [] // answers for the questionnaire//
       };
@@ -19,23 +20,26 @@ export class ISBARSimpleInputField extends React.Component {
 
     componentDidMount(){
         //this.setState(client, this.context);
+        //this comment chancd
     }
-  
+    
     // Load the text fields after the questionnaire and questionnaire responses are loaded.
     render() {
       if (this.state.loaded) {
         return (
-          <div class="isbar-input-fields">
+          <div className="isbar-input-fields">
             <TextInputField label="field1" heading="Heading" value="Loading..." />
-            <TextInputField label="field2" heading="Heading" value="Loading..." />
+            <TextInputField label="field2" heading="Heading" value="Loading...." />
             <TextInputField label="field3" heading="Heading" value="Loading..." />
-  
+            
           </div>
         )
       } else {
         return (
-          <div class="isbar-loading">
-            Loading...
+          <div className="isbar-loading">
+          <TextInputField label="field1" heading="Heading" value="Loading..." />
+          <TextInputField label="field2" heading="Heading" value="Loading...." />
+          <TextInputField label="field3" heading="Heading" value="Loading..." />
           </div>
         )
       }
