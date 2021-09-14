@@ -3,8 +3,9 @@ import React from "react";
 import { oauth2 as SMART } from "fhirclient";
 import { IsbarClientContext } from "./IsbarFhirClient";
 import { IsbarClientProvider } from "./IsbarFhirClient";
+import { ISBARSimpleInputField } from "./IsbarSimpleInputField";
 
-export default class Main extends React.Component{
+export default class Home extends React.Component{
     constructor(props){
         super(props);
     }
@@ -12,8 +13,10 @@ export default class Main extends React.Component{
     render(){
         return(
             <IsbarClientProvider>
-    
+                <ISBARSimpleInputField/>
             </IsbarClientProvider>
+            // andupdate
+            
 
         )
     }

@@ -21,6 +21,7 @@ export default class Launcher extends React.Component {
      * and `launch` url parameters
      */
     componentDidMount() {
+        
         SMART.authorize({
             clientId: "my-client-id",
             scope: "launch openid fhirUser patient/*.read patient/*.write",

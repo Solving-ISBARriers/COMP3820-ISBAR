@@ -7,7 +7,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from "react-router-dom";
 import Launcher from './Launcher';
-import Main from "./Main"
+import Home from "./Home"
 
 
 
@@ -28,7 +28,7 @@ class App extends React.Component {
       // This runs the launcher first, which redirects to the main screen.
       <BrowserRouter>
         {/* The actual app */}
-        <Route path="/isbar-simple" component={Main} />
+        <Route path="/isbar-simple" component={Home} />
         {/* Launcher for smart app */}
         <Route path="/" component={Launcher} exact />
       </BrowserRouter>
