@@ -17,6 +17,7 @@ export class IsbarClientProvider extends React.Component {
         }
     }
     componentDidMount() {
+        // Wait until the SMART client is ready, then save the client object as its state.
         SMART.ready().then(
             (client) => this.setState({ client }),
             (error) => this.setState({ error })
@@ -25,7 +26,8 @@ export class IsbarClientProvider extends React.Component {
     render() {
         
         return (
-            // value is state or none.
+            // When the client is not loaded, it displays authorizing message.
+            // Once the client is loaded, display the child components.
             <IsbarClientContext.Provider value={this.state || {}}>
                 <IsbarClientContext.Consumer>
                     {({ client, error }) => {
@@ -38,11 +40,10 @@ export class IsbarClientProvider extends React.Component {
 
                         // if client is already available render the subtree (patient and input in this case.)
                         if (client) {
-                            return "Client loaded";
-                            //return this.props.children;
+
+                            return this.props.children;
                         }
-                        console.log("App break1");
-                        // client is undefined until SMART.ready() is fulfilled
+                        // client is undefined until SMART.ready() is fulfilled. show loading message
                         return "Authorizing...";
                     }}
                 </IsbarClientContext.Consumer>

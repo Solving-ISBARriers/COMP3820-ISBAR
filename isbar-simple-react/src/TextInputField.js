@@ -16,8 +16,8 @@ export default class TextInputField extends React.Component {
 
   render() {
     return (
-      <div class="isbar-text-input-container">
-        <label for={this.props.label}>{this.props.heading}</label>
+      <div className="isbar-text-input-container">
+        <label>{this.props.heading}</label>
         <textarea
           id={this.props.name}
           rows="4"
