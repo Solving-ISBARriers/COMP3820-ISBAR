@@ -5,7 +5,7 @@ import { questionnaireObject } from "./Questionnaire";
 import { runInThisContext } from "vm";
 
 // Class for the input field group.
-export class ISBARSimpleInputField extends React.Component {
+export class IsbarSimpleInputField extends React.Component {
 
     // the this.context.client is the client object!!!
     static contextType = IsbarClientContext;
@@ -29,21 +29,30 @@ export class ISBARSimpleInputField extends React.Component {
         // Code is not inlcuded becaues it's not related to anything?
         
         const client = this.context.client;
+        console.log("Component mounted");
+        // These are number of async calls.
         this._loader = client.patient
             .read()
             .then(patient => {
                 this.setState({ patient, loaded: true, error: null });
+                // return the result from request
+                //return client.request("QuestionnaireResponse/" + questionnaireObject.name)
             })
+
+            // .then( response =>{
+            //     console.log(response);
+            // })
             .catch(error => {
                 this.setState({ error, loading: false });
             });
         // Search for the questionnaire
         
+        // if it's not there, create questionnaire
             // the questionnaire
-        client.create(questionnaireObject).then(questionnaire => {
-            this.setState({ questionnaire })
-            console.log(this.state.questionnaire);
-        }).catch(console.error);
+        // client.create(questionnaireObject).then(questionnaire => {
+        //     this.setState({ questionnaire })
+        //     console.log(this.state.questionnaire);
+        // }).catch(console.error);
     }
 
     // function to change the form to isobar form.
