@@ -18,8 +18,6 @@ export class IsbarSimpleInputField extends React.Component {
             patient: null,
             questionnaire: null,
             questionnaireResponse: null,
-            // variable for testing.
-            test: null,
             // turns true if it's isobar
             isIsobar: false,
             // would be good if we have a array of question-answer pair.
@@ -42,7 +40,7 @@ export class IsbarSimpleInputField extends React.Component {
                 //return client.patient.request("QuestionnaireResponse")
             });
 
-            // is is the steam to retrieve the questionnaire object
+        // is is the steam to retrieve the questionnaire object
         const loadQuestionnaire = loadPatient.then(() => {
 
             // WHy doesn't canonical url work?
@@ -53,16 +51,16 @@ export class IsbarSimpleInputField extends React.Component {
 
             console.log("Questionnaires:");
             console.log(response);
-            if(response.total == 0){
+            if (response.total == 0) {
                 // there are no questionnaire object - create one
                 return client.create(questionnaireObject);
-            } else{
+            } else {
                 // return the existing questionnaire to be saved
                 return response.entry[0].resource;
             }
-        }).then(response =>{
+        }).then(result => {
             // save the created/found questionnaire object
-            this.setState({questionnaire: response});
+            this.setState({ questionnaire: result });
         });
 
         // this is the stream for questionnaireResponse object
@@ -70,25 +68,38 @@ export class IsbarSimpleInputField extends React.Component {
 
             return client.patient.request("QuestionnaireResponse");
         }).then(response => {
+
             console.log("Questionnaireresponse");
             console.log(response);
             // Find the response corresponding to isbar
-            if(response.total == 0){
-                // create questionnaire response resource and save it
-            } else{
-                this.setState({questionnaireResponse: response.entry[0].resource});
+            if (response.total > 0) {
+
+                response.entry.forEach(element => {
+                    if (element.resource.text.name == "isbar-simple-response") {
+
+                        return element.resource;
+                    }
+                });
             }
+            // create if there are no responses
+            return client.create(this.newQuestionnaireResponse());
+        }).then(result => {
+
+            console.log("Questionnaire result");
+            console.log(result);
+            // save the response object.
+            this.setState({ questionnaireResponse: result });
         });
 
         // wait for all promise to resolve. and catch error
         Promise.all([loadQuestionnaire, loadResponse]).then((values) => {
-            this.setState({ loaded: true, error: null });
-        })
-            .catch(error => {
-                console.error(error);
-                this.setState({ error, loaded: false });
-            });
 
+            this.setState({ loaded: true, error: null });
+        }).catch(error => {
+
+            console.error(error);
+            this.setState({ error, loaded: false });
+        });
     }
 
     // function to change the form to isobar form.
@@ -104,12 +115,15 @@ export class IsbarSimpleInputField extends React.Component {
         }).catch(console.error);
     }
 
-    // create new questionnaire response resource with this patient.
-    createQuestionnaireResponse() {
+    // create new empty questionnaire response resource with this patient.
+    // returns the questionnaire object made.
+    newQuestionnaireResponse() {
         // questionnaire response resource
         var qResponse = {
             "resourceType": "QuestionnaireResponse",
-            "questionnaire": "Questionnaire/" + this.state.questionnaire.id,
+            "text": { "name": "isbar-simple-response" },
+            // maybe later when we sort out the thingy
+            //"questionnaire": "Questionnaire/" + this.state.questionnaire.id,
             "status": "in-progress",
             "authored": "2021-09-16T00:00:00+01:00",
             "source": {
@@ -118,15 +132,62 @@ export class IsbarSimpleInputField extends React.Component {
             "item": [
                 {
                     "linkId": "1",
-                    "text": this.state.questionnaire.text
-                }
+                    "text": "I:Identify",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
+                {
+                    "linkId": "2",
+                    "text": "S:Situation",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
+                {
+                    "linkId": "3",
+                    "text": "O:Observation",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
+                {
+                    "linkId": "4",
+                    "text": "B:Background",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
+                {
+                    "linkId": "5",
+                    "text": "A:Assessment",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
+                {
+                    "linkId": "6",
+                    "text": "R:Recommendation",
+                    "answer": [
+                        {
+                            "valueString": ""
+                        }
+                    ]
+                },
             ]
         }
 
-        this.client.create(questionnaireObject).then(response => {
-            console.log("Created questionnaireResponse");
-            console.log(response);
-        }).catch(console.error);
+        return qResponse;
     }
 
     // Load the text fields after the questionnaire and questionnaire responses are loaded.
