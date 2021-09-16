@@ -5,9 +5,15 @@ import React from "react";
 export default class TextInputField extends React.Component {
   constructor(props) {
     super(props);
-    this.state.value = this.props.value;
+    this.state = {
+      value: "",
+    }
 
     this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount(){
+    this.setState({value: this.props.value});
+    
   }
 
   handleChange(event) {
