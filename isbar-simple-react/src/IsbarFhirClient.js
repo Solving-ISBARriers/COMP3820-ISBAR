@@ -41,6 +41,7 @@ export class IsbarClientProvider extends React.Component {
                         // if client is already available render the subtree (patient and input in this case.)
                         if (client) {
 
+                            
                             return this.props.children;
                         }
                         // client is undefined until SMART.ready() is fulfilled. show loading message

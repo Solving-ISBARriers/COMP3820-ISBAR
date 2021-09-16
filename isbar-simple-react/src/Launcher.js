@@ -33,7 +33,7 @@ export default class Launcher extends React.Component {
             // target is not another frame or window but since the entire
             // example works in a frame here, it gets confused without
             // setting this!
-            //completeInTarget: true
+            completeInTarget: true
         });
     }
     /**

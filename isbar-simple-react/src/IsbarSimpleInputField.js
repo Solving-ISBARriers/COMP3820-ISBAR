@@ -1,8 +1,7 @@
 import React from "react";
 import TextInputField from "./TextInputField";
 import { IsbarClientContext } from "./IsbarFhirClient";
-import { questionnaireObject } from "./Questionnaire";
-import { runInThisContext } from "vm";
+//import { questionnaireObject } from "./Questionnaire";
 
 // Class for the input field group.
 export class IsbarSimpleInputField extends React.Component {
@@ -27,7 +26,7 @@ export class IsbarSimpleInputField extends React.Component {
     componentDidMount() {
         // questionnaire object
         // Code is not inlcuded becaues it's not related to anything?
-        
+
         const client = this.context.client;
         console.log("Component mounted");
         // These are number of async calls.
@@ -36,19 +35,19 @@ export class IsbarSimpleInputField extends React.Component {
             .then(patient => {
                 this.setState({ patient, loaded: true, error: null });
                 // return the result from request
-                //return client.request("QuestionnaireResponse/" + questionnaireObject.name)
+                return client.request("QuestionnaireResponse/" + questionnaireObject.name)
             })
 
-            // .then( response =>{
-            //     console.log(response);
-            // })
+            .then(response => {
+                console.log(response);
+            })
             .catch(error => {
                 this.setState({ error, loading: false });
             });
         // Search for the questionnaire
-        
+
         // if it's not there, create questionnaire
-            // the questionnaire
+        // the questionnaire
         // client.create(questionnaireObject).then(questionnaire => {
         //     this.setState({ questionnaire })
         //     console.log(this.state.questionnaire);

@@ -19,9 +19,6 @@ import Home from "./Home"
  - Initiating the render of other components.
  */
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
