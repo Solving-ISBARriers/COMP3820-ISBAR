@@ -40,7 +40,8 @@ export class IsbarSimpleInputField extends React.Component {
                 //return client.patient.request("QuestionnaireResponse")
             });
 
-        // is is the steam to retrieve the questionnaire object
+
+        // This is the steam to retrieve the questionnaire object
         const loadQuestionnaire = loadPatient.then(() => {
 
             // WHy doesn't canonical url work?
@@ -69,7 +70,7 @@ export class IsbarSimpleInputField extends React.Component {
             return client.patient.request("QuestionnaireResponse");
         }).then(response => {
 
-            console.log("Questionnaireresponse");
+            console.log("Questionnaireresponse bundle");
             console.log(response);
             // Find the response corresponding to isbar
             if (response.total > 0) {
@@ -82,10 +83,11 @@ export class IsbarSimpleInputField extends React.Component {
                 });
             }
             // create if there are no responses
+            console.log("No questionnaire response from this patient. Creating one..")
             return client.create(this.newQuestionnaireResponse());
         }).then(result => {
 
-            console.log("Questionnaire result");
+            console.log("Questionnaire response result");
             console.log(result);
             // save the response object.
             this.setState({ questionnaireResponse: result });
@@ -118,16 +120,19 @@ export class IsbarSimpleInputField extends React.Component {
     // create new empty questionnaire response resource with this patient.
     // returns the questionnaire object made.
     newQuestionnaireResponse() {
+
         // questionnaire response resource
         var qResponse = {
             "resourceType": "QuestionnaireResponse",
             "text": { "name": "isbar-simple-response" },
             // maybe later when we sort out the thingy
+            // Reference the questionnaire
             //"questionnaire": "Questionnaire/" + this.state.questionnaire.id,
             "status": "in-progress",
             "authored": "2021-09-16T00:00:00+01:00",
             "source": {
-                "reference": "Patient/" + this.client.patient.id
+                // refer to current patient
+                "reference": "Patient/" + this.context.client.patient.id
             },
             "item": [
                 {
@@ -190,33 +195,80 @@ export class IsbarSimpleInputField extends React.Component {
         return qResponse;
     }
 
+    // this is the function for changing value
+    // changes answer string in the questionnaireresponse object with given index
+    // updates questionnaireresponse state
+    handleChange(event, index) {
+        
+        
+        var response = this.state.questionnaireResponse;
+        
+        
+        //item.answer[0].valueString = event.target.value
+
+        if(response.item[index].hasOwnProperty('answer')){
+            response.item[index].answer[0].valueString = event.target.value
+        } else{
+            response.item[index].answer = [{
+                "valueString": event.target.value
+            }]
+        }
+        
+        this.setState({questionnaireResponse: response})
+        
+
+    }
+
     // Load the text fields after the questionnaire and questionnaire responses are loaded.
     render() {
         //const client = this.context.client;
         //this.state.client = this.context.client;
         //this.state.value = this.context.client;
         //var patient = this.state.value.patient;
+
+        // questionnaire response object
+
         if (this.state.loaded) {
             if (this.state.isIsobar) {
                 return (
                     <div className="isbar-input-fields">
-                        <TextInputField label="I" heading="Heading" value={this.state.patient} />
+                        {/* <TextInputField label="I" heading="Heading" value={this.state.questionnaireResponse} />
                         <TextInputField label="S" heading="Heading" value="Loading...." />
                         <TextInputField label="O" heading="Heading" value="Loading..." />
                         <TextInputField label="B" heading="Heading" value="Loading..." />
                         <TextInputField label="A" heading="Heading" value="Loading..." />
-                        <TextInputField label="R" heading="Heading" value="Loading..." />
+                        <TextInputField label="R" heading="Heading" value="Loading..." /> */}
 
                     </div>
                 )
             } else {
                 return (
                     <div className="isbar-input-fields">
-                        <TextInputField label="I" heading="Heading" value={JSON.stringify(this.state.patient)} />
-                        <TextInputField label="S" heading="Heading" value={JSON.stringify(this.state.test)} />
-                        <TextInputField label="B" heading="Heading" value="Loading..." />
-                        <TextInputField label="A" heading="Heading" value="Loading..." />
-                        <TextInputField label="R" heading="Heading" value="Loading..." />
+                        <TextInputField
+                            index="0"
+                            item={this.state.questionnaireResponse.item[0]}
+                            handleChange={this.handleChange.bind(this)}
+                        />
+                        <TextInputField
+                            index="1"
+                            item={this.state.questionnaireResponse.item[1]}
+                            handleChange={this.handleChange.bind(this)}
+                        />
+                        <TextInputField
+                            index="3"
+                            item={this.state.questionnaireResponse.item[3]}
+                            handleChange={this.handleChange.bind(this)}
+                        />
+                        <TextInputField
+                            index="4"
+                            item={this.state.questionnaireResponse.item[4]}
+                            handleChange={this.handleChange.bind(this)}
+                        />
+                        <TextInputField
+                            index="5"
+                            item={this.state.questionnaireResponse.item[5]}
+                            handleChange={this.handleChange.bind(this)}
+                        />
                     </div>
                 )
             }
