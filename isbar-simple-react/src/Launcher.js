@@ -32,6 +32,7 @@ export default class Launcher extends React.Component {
             // in the codesandbox frame. It is otherwise not needed if the
             // target is not another frame or window but since the entire
             // example works in a frame here, it gets confused without
+            // setting this!
             completeInTarget: true
         });
     }
