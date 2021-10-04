@@ -29,13 +29,11 @@ export class IsbarSimpleInputField extends React.Component {
         // Code is not inlcuded becaues it's not related to anything?
 
         const client = this.context.client;
-        console.log("Component mounted");
         // These are number of async calls.
         const loadPatient = client.patient
             .read()
             .then(patient => {
                 this.setState({ patient, loaded: false, error: null });
-                console.log(questionnaireObject.name);
                 // Request the questionnaire responses by this patient
                 //return client.patient.request("QuestionnaireResponse")
             });
@@ -52,7 +50,7 @@ export class IsbarSimpleInputField extends React.Component {
 
             console.log("Questionnaires:");
             console.log(response);
-            if (response.total == 0) {
+            if (response.total === 0) {
                 // there are no questionnaire object - create one
                 return client.create(questionnaireObject);
             } else {
@@ -67,20 +65,33 @@ export class IsbarSimpleInputField extends React.Component {
         // this is the stream for questionnaireResponse object
         const loadResponse = loadPatient.then(() => {
 
-            return client.patient.request("QuestionnaireResponse");
+            return client.request("QuestionnaireResponse?source="+"Patient/" + this.context.client.patient.id);
         }).then(response => {
 
-            console.log("Questionnaireresponse bundle");
+            console.log("Questionnaire Responses:");
             console.log(response);
+            var qResponse
             // Find the response corresponding to isbar
             if (response.total > 0) {
+                // clear all response
+                // response.entry.forEach(element => {
+                //     client.delete("QuestionnaireResponse/" + element.resource.id).then(console.log).catch(console.error)
+                    
+                // });
 
-                response.entry.forEach(element => {
-                    if (element.resource.text.name == "isbar-simple-response") {
-
-                        return element.resource;
-                    }
-                });
+                if(
+                    // this checks if our questionnaire exists
+                    response.entry.some(element => {
+                        qResponse = element.resource;
+                        return this.checkExistingResponse(element.resource);
+                    })
+                ){
+                    console.log("Selected Response")
+                    console.log(qResponse)
+                    return qResponse
+                } else{
+                    return client.create(this.newQuestionnaireResponse());
+                }
             }
             // create if there are no responses
             console.log("No questionnaire response from this patient. Creating one..")
@@ -91,7 +102,7 @@ export class IsbarSimpleInputField extends React.Component {
             console.log(result);
             // save the response object.
             this.setState({ questionnaireResponse: result });
-        });
+        })
 
         // wait for all promise to resolve. and catch error
         Promise.all([loadQuestionnaire, loadResponse]).then((values) => {
@@ -115,6 +126,26 @@ export class IsbarSimpleInputField extends React.Component {
             console.log("Created questionnaire");
             console.log(response);
         }).catch(console.error);
+    }
+    
+    // check if the given resource is QuestionnaireResponse for isbar
+    // still need some check to see if it is actually for isbar
+    checkExistingResponse(resource){
+
+        if(resource.source.reference === "Patient/" + this.context.client.patient.id){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
+    // function to send update request
+    updateResponse(){
+        console.log("Updated response: " + JSON.stringify(this.state.questionnaireResponse))
+        this.context.client.update(this.state.questionnaireResponse)
+        .then(console.log)
+        .catch(console.error)
     }
 
     // create new empty questionnaire response resource with this patient.
@@ -269,6 +300,9 @@ export class IsbarSimpleInputField extends React.Component {
                             item={this.state.questionnaireResponse.item[5]}
                             handleChange={this.handleChange.bind(this)}
                         />
+                        <button onClick={() => this.updateResponse()}>
+                            click to update
+                        </button>
                     </div>
                 )
             }
