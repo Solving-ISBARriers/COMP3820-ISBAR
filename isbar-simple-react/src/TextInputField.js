@@ -16,36 +16,44 @@ export default class TextInputField extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount(){
-    if(!this.props.item.hasOwnProperty('answer')){
-      this.setState({value: ""});
-    } else{
-      this.setState({value: this.props.item.answer[0].valueString});
+  componentDidMount() {
+    if (!this.props.item.hasOwnProperty('answer')) {
+      this.setState({ value: "" });
+    } else {
+      this.setState({ value: this.props.item.answer[0].valueString });
     }
   }
 
   handleChange(event) {
-    
+
     // update the field
     this.setState({ value: event.target.value });
     this.props.handleChange(event, this.props.index);
   }
 
   // value of this text area
-  getValue(){
+  getValue() {
     return this.state.value
   }
 
   render() {
     return (
-      <div className="isbar-text-input-container">
-        <label>{this.props.item.text}</label>
-        
-        <textarea
-          id={this.props.item.text}
-          rows="4"
-          value={this.state.value}
-          onChange={this.handleChange} />
+      <div className="row">
+        <div className="col-25">
+          <label htmlFor={this.props.formID}>{this.props.label}</label>
+        </div>
+
+        <div className="col-75">
+          <textarea
+            style={{resize: "none"}}
+            id={this.props.formID}
+            name={this.props.formID}
+            placeholder={this.props.placeholder}
+            value={this.state.value}
+            onChange={this.handleChange} />
+
+        </div>
+
       </div>
     )
   }

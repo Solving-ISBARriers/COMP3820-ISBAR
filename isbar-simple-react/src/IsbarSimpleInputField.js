@@ -25,26 +25,18 @@ export class IsbarSimpleInputField extends React.Component {
     }
 
     componentDidMount() {
-        // questionnaire object
-        // Code is not inlcuded becaues it's not related to anything?
 
+        // load client from the client context
         const client = this.context.client;
-        // These are number of async calls.
-        const loadPatient = client.patient
-            .read()
-            .then(patient => {
-                this.setState({ patient, loaded: false, error: null });
-                // Request the questionnaire responses by this patient
-                //return client.patient.request("QuestionnaireResponse")
-            });
-
+        
+        // Promise to 
+        const loadPatient = client.patient.read().then(patient => this.setState({patient: patient}))
 
         // This is the steam to retrieve the questionnaire object
         const loadQuestionnaire = loadPatient.then(() => {
 
-            // WHy doesn't canonical url work?
-            //return client.request(questionnaireObject.url);
-            // tHis is searching based on name.. need something more robust.
+            // tHis is searching based on name.. need something more robust?
+            // but the url can't be returned
             return client.request("Questionnaire?name=" + questionnaireObject.name);
         }).then(response => {
 
@@ -73,11 +65,6 @@ export class IsbarSimpleInputField extends React.Component {
             var qResponse
             // Find the response corresponding to isbar
             if (response.total > 0) {
-                // clear all response
-                // response.entry.forEach(element => {
-                //     client.delete("QuestionnaireResponse/" + element.resource.id).then(console.log).catch(console.error)
-                    
-                // });
 
                 if(
                     // this checks if our questionnaire exists
@@ -274,35 +261,54 @@ export class IsbarSimpleInputField extends React.Component {
                 )
             } else {
                 return (
-                    <div className="isbar-input-fields">
+                    <div className="container">
+                        
                         <TextInputField
                             index="0"
+                            formID="introduction"
+                            label="I"
+                            placeholder="Introduction"
                             item={this.state.questionnaireResponse.item[0]}
                             handleChange={this.handleChange.bind(this)}
                         />
                         <TextInputField
                             index="1"
+                            formID="situation"
+                            label="S"
+                            placeholder="Situation"
                             item={this.state.questionnaireResponse.item[1]}
                             handleChange={this.handleChange.bind(this)}
                         />
                         <TextInputField
                             index="3"
+                            formID="background"
+                            label="B"
+                            placeholder="Background"
                             item={this.state.questionnaireResponse.item[3]}
                             handleChange={this.handleChange.bind(this)}
                         />
                         <TextInputField
                             index="4"
+                            formID="assessment"
+                            label="A"
+                            placeholder="Assessment"
                             item={this.state.questionnaireResponse.item[4]}
                             handleChange={this.handleChange.bind(this)}
                         />
                         <TextInputField
                             index="5"
+                            formID="recommendation"
+                            label="R"
+                            placeholder="Recommendation"
                             item={this.state.questionnaireResponse.item[5]}
                             handleChange={this.handleChange.bind(this)}
                         />
-                        <button onClick={() => this.updateResponse()}>
-                            click to update
+                        <button 
+                        className="isbar-save"
+                        onClick={() => this.updateResponse()}>
+                            Save
                         </button>
+                        
                     </div>
                 )
             }
