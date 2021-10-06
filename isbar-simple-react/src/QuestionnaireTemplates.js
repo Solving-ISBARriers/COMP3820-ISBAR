@@ -1,11 +1,9 @@
 
 // file to store questionnaire related data.
-export const questionnaireObject = {
+export const isbarQuestionnaire = {
     "resourceType": "Questionnaire",
     "title": "questionnaireTitle",
     "name": "isbar-simple",
-    "url": "https://launch.smarthealthit.org/v/r4/fhir/Questionnaire/1347247",
-    //"url": "https://launch.smarthealthit.org/v/r4/fhir/Questionnaire/isbar-simple-questionnaire",
     "status": "draft",
     // Introduction
     "item": [{
@@ -44,3 +42,4 @@ export const questionnaireObject = {
         "type": "text" // free text
     }]
 }
+

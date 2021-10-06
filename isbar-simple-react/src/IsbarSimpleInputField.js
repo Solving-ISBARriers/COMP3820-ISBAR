@@ -1,7 +1,9 @@
 import React from "react";
 import TextInputField from "./TextInputField";
 import { IsbarClientContext } from "./IsbarFhirClient";
-import { questionnaireObject } from "./QuestionnaireTemplates";
+import { isbarQuestionnaire } from "./QuestionnaireTemplates";
+import { IsbarDoc } from "./IsbarDoc";
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 // Class for the input field group.
 export class IsbarSimpleInputField extends React.Component {
@@ -15,6 +17,9 @@ export class IsbarSimpleInputField extends React.Component {
             // used true if data is loaded
             loaded: false,
             error: null,
+            // true if questionnaireResponse exists
+            responseExist: false,
+
             patient: null,
             questionnaire: null,
             questionnaireResponse: null,
@@ -28,78 +33,69 @@ export class IsbarSimpleInputField extends React.Component {
 
         // load client from the client context
         const client = this.context.client;
-        
-        // Promise to 
-        const loadPatient = client.patient.read().then(patient => this.setState({patient: patient}))
 
-        // This is the steam to retrieve the questionnaire object
-        const loadQuestionnaire = loadPatient.then(() => {
+        // Promise to set the patient... for?
+        //const loadPatient = client.patient.read().then(patient => this.setState({patient: patient}))
 
-            // tHis is searching based on name.. need something more robust?
-            // but the url can't be returned
-            return client.request("Questionnaire?name=" + questionnaireObject.name);
-        }).then(response => {
+        // Promise to load/create questionnaire
+        const loadQuestionnaire = client.request("Questionnaire?name=" + isbarQuestionnaire.name)
+            .then(response => {
+                // Check if questionnaire exist or not
 
-            console.log("Questionnaires:");
-            console.log(response);
-            if (response.total === 0) {
-                // there are no questionnaire object - create one
-                return client.create(questionnaireObject);
-            } else {
-                // return the existing questionnaire to be saved
-                return response.entry[0].resource;
-            }
-        }).then(result => {
-            // save the created/found questionnaire object
-            this.setState({ questionnaire: result });
-        });
-
-        // this is the stream for questionnaireResponse object
-        const loadResponse = loadPatient.then(() => {
-
-            return client.request("QuestionnaireResponse?source="+"Patient/" + this.context.client.patient.id);
-        }).then(response => {
-
-            console.log("Questionnaire Responses:");
-            console.log(response);
-            var qResponse
-            // Find the response corresponding to isbar
-            if (response.total > 0) {
-
-                if(
-                    // this checks if our questionnaire exists
-                    response.entry.some(element => {
-                        qResponse = element.resource;
-                        return this.checkExistingResponse(element.resource);
-                    })
-                ){
-                    console.log("Selected Response")
-                    console.log(qResponse)
-                    return qResponse
-                } else{
-                    return client.create(this.newQuestionnaireResponse());
+                console.log("Questionnaires:");
+                console.log(response);
+                if (response.total === 0) {
+                    // there are no questionnaire object - create one
+                    return client.create(isbarQuestionnaire);
+                } else {
+                    // return the existing questionnaire to be saved
+                    return response.entry[0].resource;
                 }
-            }
-            // create if there are no responses
-            console.log("No questionnaire response from this patient. Creating one..")
-            return client.create(this.newQuestionnaireResponse());
-        }).then(result => {
+            }).then(result => {
+                // save questionnaire, request questionnaireResponse
 
-            console.log("Questionnaire response result");
-            console.log(result);
-            // save the response object.
-            this.setState({ questionnaireResponse: result });
-        })
+                this.setState({ questionnaire: result });
+                return client.request("QuestionnaireResponse?source=Patient/" + this.context.client.patient.id)
+            }).then(response => {
+                // Check if there's an existing questionnaireResponse
 
-        // wait for all promise to resolve. and catch error
-        Promise.all([loadQuestionnaire, loadResponse]).then((values) => {
+                console.log("Questionnaire Responses:");
+                console.log(response);
+                var qResponse
 
-            this.setState({ loaded: true, error: null });
-        }).catch(error => {
+                if (response.total > 0) {
+                    if (
+                        response.entry.some(element => {
+                            qResponse = element.resource;
+                            return this.checkExistingResponse(element.resource);
+                        })
+                    ) {
+                        // response that fulfills the criteria exists
+                        console.log("Selected Response")
+                        //console.log(qResponse)
+                        console.log(this.newQuestionnaireResponse());
+                        //return client.create(this.newQuestionnaireResponse());
+                        return qResponse
+                    }
+                }
+                // no isbar responses - create one
+                console.log("No ISBAR questionnaire response from this patient. Creating one..")
+                return client.create(this.newQuestionnaireResponse());
+            }).then(result => {
 
-            console.error(error);
-            this.setState({ error, loaded: false });
-        });
+                console.log("Questionnaire response result");
+                console.log(result);
+                // save the response object, finish loading
+                this.setState({
+                    questionnaireResponse: result,
+                    loaded: true,
+                    error: null
+                });
+            }).catch(error => {
+
+                console.error(error);
+                this.setState({ error, loaded: false });
+            });
     }
 
     // function to change the form to isobar form.
@@ -107,32 +103,24 @@ export class IsbarSimpleInputField extends React.Component {
 
     }
 
-    // function that creates questionnaire
-    createQuestionnaire() {
-        this.client.create(questionnaireObject).then(response => {
-            console.log("Created questionnaire");
-            console.log(response);
-        }).catch(console.error);
-    }
-    
     // check if the given resource is QuestionnaireResponse for isbar
     // still need some check to see if it is actually for isbar
-    checkExistingResponse(resource){
+    checkExistingResponse(resource) {
 
-        if(resource.source.reference === "Patient/" + this.context.client.patient.id){
+        if (resource.source.reference === "Patient/" + this.context.client.patient.id &&
+            resource.questionnaire === "Questionnaire/" + this.state.questionnaire.id
+        ) {
             return true
         }
-        else{
-            return false
-        }
+        return false
     }
 
     // function to send update request
-    updateResponse(){
+    updateResponse() {
         console.log("Updated response: " + JSON.stringify(this.state.questionnaireResponse))
         this.context.client.update(this.state.questionnaireResponse)
-        .then(console.log)
-        .catch(console.error)
+            .then(console.log)
+            .catch(console.error)
     }
 
     // create new empty questionnaire response resource with this patient.
@@ -145,9 +133,8 @@ export class IsbarSimpleInputField extends React.Component {
             "text": { "name": "isbar-simple-response" },
             // maybe later when we sort out the thingy
             // Reference the questionnaire
-            //"questionnaire": "Questionnaire/" + this.state.questionnaire.id,
+            "questionnaire": "Questionnaire/" + this.state.questionnaire.id,
             "status": "in-progress",
-            "authored": "2021-09-16T00:00:00+01:00",
             "source": {
                 // refer to current patient
                 "reference": "Patient/" + this.context.client.patient.id
@@ -217,32 +204,26 @@ export class IsbarSimpleInputField extends React.Component {
     // changes answer string in the questionnaireresponse object with given index
     // updates questionnaireresponse state
     handleChange(event, index) {
-        
-        
-        var response = this.state.questionnaireResponse;
-        
-        
-        //item.answer[0].valueString = event.target.value
 
-        if(response.item[index].hasOwnProperty('answer')){
+        var response = this.state.questionnaireResponse;
+
+        if (response.item[index].hasOwnProperty('answer')) {
             response.item[index].answer[0].valueString = event.target.value
-        } else{
+        } else {
             response.item[index].answer = [{
                 "valueString": event.target.value
             }]
         }
-        
-        this.setState({questionnaireResponse: response})
-        
+
+        this.setState({ questionnaireResponse: response })
+    }
+
+    printPDF() {
 
     }
 
     // Load the text fields after the questionnaire and questionnaire responses are loaded.
     render() {
-        //const client = this.context.client;
-        //this.state.client = this.context.client;
-        //this.state.value = this.context.client;
-        //var patient = this.state.value.patient;
 
         // questionnaire response object
 
@@ -262,7 +243,7 @@ export class IsbarSimpleInputField extends React.Component {
             } else {
                 return (
                     <div className="container">
-                        
+
                         <TextInputField
                             index="0"
                             formID="introduction"
@@ -303,12 +284,23 @@ export class IsbarSimpleInputField extends React.Component {
                             item={this.state.questionnaireResponse.item[5]}
                             handleChange={this.handleChange.bind(this)}
                         />
-                        <button 
-                        className="isbar-save"
-                        onClick={() => this.updateResponse()}>
+                        <button
+                            className="isbar-save"
+                            onClick={() => this.updateResponse()}>
                             Save
                         </button>
+
                         
+                        
+                        <button
+                            className="isbar-save">
+                            <PDFDownloadLink document={
+                            <IsbarDoc content={this.state.questionnaireResponse}/>} fileName="isbar.pdf">
+                                {({ blob, url, loading, error }) =>
+                                    loading ? 'Preparing' : 'Print'
+                                }
+                            </PDFDownloadLink>
+                            </button>
                     </div>
                 )
             }

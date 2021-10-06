@@ -1,17 +1,13 @@
-// Launcher file for the app. Will be optimised for EHR launch.
+// Launcher file for the app. 
 import React from "react";
 import { oauth2 as SMART } from "fhirclient";
 
 /**
  * Typically the launch page is an empty page with a `SMART.authorize`
- * call in it. This based on the example code from:
+ * call in it. This isbased on the example code from:
  * https://codesandbox.io/s/fhir-client-react-react-router-context-0q3n8?file=/src/components/Launcher.js
  * 
  *
- * This example demonstrates that the call to authorize can be postponed
- * and called manually. In this case we use ReactRouter which will match
- * the `/launch` path and render our component. Then, after our page is
- * rendered we start the auth flow.
  */
 export default class Launcher extends React.Component {
     
@@ -36,9 +32,7 @@ export default class Launcher extends React.Component {
             completeInTarget: true
         });
     }
-    /**
-     * Could also return `null` for empty page
-     */
+    
     render() {
         return "Launching...";
     }
