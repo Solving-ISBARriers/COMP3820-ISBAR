@@ -52,6 +52,7 @@ textarea {
   border-radius: 10px;
   box-sizing: border-box;
   resize: vertical;
+  font-family: "Open Sans", sans-serif;
 }
 
 /* Style the label to display next to the inputs */
