@@ -24,12 +24,18 @@ label {
 /* Style the submit button */
 button[class="isbar-save"] {
   background-color: #04aa6d;
+  margin: 2%;
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   float: right;
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: white;
 }
 
 /* Style the container */
@@ -39,9 +45,7 @@ button[class="isbar-save"] {
   color: #fff;
   padding-left: 100px;
   padding-right: 100px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin: 5% 20%;
+  margin: 0 20%;
 }
 
 /* Floating column for labels: 25% width */
