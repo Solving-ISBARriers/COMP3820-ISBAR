@@ -25,6 +25,7 @@ export class IsbarSimpleInputField extends React.Component {
       questionnaireResponse: null,
       // turns true if it's isobar
       isIsobar: false,
+      saveState: "edited"
       // would be good if we have a array of question-answer pair.
     };
   }
@@ -58,7 +59,7 @@ export class IsbarSimpleInputField extends React.Component {
         this.setState({ questionnaire: result });
         return client.request(
           "QuestionnaireResponse?source=Patient/" +
-            this.context.client.patient.id
+          this.context.client.patient.id
         );
       })
       .then((response) => {
@@ -105,15 +106,12 @@ export class IsbarSimpleInputField extends React.Component {
       });
   }
 
-  // function to change the form to isobar form.
-  changeToIsobar() {}
-
   // check if the given resource is QuestionnaireResponse for isbar
   // still need some check to see if it is actually for isbar
   checkExistingResponse(resource) {
     if (
       resource.source.reference ===
-        "Patient/" + this.context.client.patient.id &&
+      "Patient/" + this.context.client.patient.id &&
       resource.questionnaire === "Questionnaire/" + this.state.questionnaire.id
     ) {
       return true;
@@ -128,7 +126,10 @@ export class IsbarSimpleInputField extends React.Component {
     );
     this.context.client
       .update(this.state.questionnaireResponse)
-      .then(console.log)
+      .then((response) => {
+        console.log(response);
+        this.setState({saveState: "saved"})
+      })
       .catch(console.error);
   }
 
@@ -225,9 +226,12 @@ export class IsbarSimpleInputField extends React.Component {
     }
 
     this.setState({ questionnaireResponse: response });
+    if(this.state.saveState === "saved"){
+      this.setState({saveState: "edited"})
+    }
   }
 
-  printPDF() {}
+  printPDF() { }
 
   // Load the text fields after the questionnaire and questionnaire responses are loaded.
   render() {
@@ -236,22 +240,22 @@ export class IsbarSimpleInputField extends React.Component {
     if (this.state.loaded) {
       if (this.state.isIsobar) {
         return (
-          <div className="isbar-input-fields">
-            {/* <TextInputField label="I" heading="Heading" value={this.state.questionnaireResponse} />
-                        <TextInputField label="S" heading="Heading" value="Loading...." />
-                        <TextInputField label="O" heading="Heading" value="Loading..." />
-                        <TextInputField label="B" heading="Heading" value="Loading..." />
-                        <TextInputField label="A" heading="Heading" value="Loading..." />
-                        <TextInputField label="R" heading="Heading" value="Loading..." /> */}
-          </div>
-        );
-      } else {
-        return (
           <div className="container">
+
+            <button
+              className="isbar-save"
+              onClick={() => this.setState({ isIsobar: false })}
+            >
+              ISBAR
+            </button>
+            <p>
+              State: 
+              {this.state.saveState}
+              </p>
             <TextInputField
               index="0"
               formID="introduction"
-              label="I"
+              label="Introduction"
               placeholder="Introduction"
               item={this.state.questionnaireResponse.item[0]}
               handleChange={this.handleChange.bind(this)}
@@ -259,15 +263,23 @@ export class IsbarSimpleInputField extends React.Component {
             <TextInputField
               index="1"
               formID="situation"
-              label="S"
+              label="Situation"
               placeholder="Situation"
               item={this.state.questionnaireResponse.item[1]}
               handleChange={this.handleChange.bind(this)}
             />
             <TextInputField
+              index="2"
+              formID="Observation"
+              label="Observation"
+              placeholder="Observation"
+              item={this.state.questionnaireResponse.item[2]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
               index="3"
               formID="background"
-              label="B"
+              label="Background"
               placeholder="Background"
               item={this.state.questionnaireResponse.item[3]}
               handleChange={this.handleChange.bind(this)}
@@ -275,7 +287,7 @@ export class IsbarSimpleInputField extends React.Component {
             <TextInputField
               index="4"
               formID="assessment"
-              label="A"
+              label="Assessment"
               placeholder="Assessment"
               item={this.state.questionnaireResponse.item[4]}
               handleChange={this.handleChange.bind(this)}
@@ -283,7 +295,84 @@ export class IsbarSimpleInputField extends React.Component {
             <TextAreaField
               index="5"
               formID="recommendation"
-              label="R"
+              label="Recommendation"
+              placeholder="Recommendation"
+              item={this.state.questionnaireResponse.item[5]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <button
+              className="isbar-save"
+              onClick={() => this.updateResponse()}
+            >
+              Save
+            </button>
+
+            <button className="isbar-save">
+              <PDFDownloadLink
+                document={
+                  <IsbarDoc content={this.state.questionnaireResponse} />
+                }
+                fileName="isbar.pdf"
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Preparing" : "Print"
+                }
+              </PDFDownloadLink>
+            </button>
+          </div>
+
+        );
+      } else {
+        return (
+          <div className="container">
+
+            <button
+              className="isbar-save"
+              onClick={() => this.setState({ isIsobar: true })}
+            >
+              ISOBAR
+            </button>
+
+            <p>
+              State: 
+              {this.state.saveState}
+              </p>
+            <TextInputField
+              index="0"
+              formID="introduction"
+              label="Introduction"
+              placeholder="Introduction"
+              item={this.state.questionnaireResponse.item[0]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="1"
+              formID="situation"
+              label="Situation"
+              placeholder="Situation"
+              item={this.state.questionnaireResponse.item[1]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="3"
+              formID="background"
+              label="Background"
+              placeholder="Background"
+              item={this.state.questionnaireResponse.item[3]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="4"
+              formID="assessment"
+              label="Assessment"
+              placeholder="Assessment"
+              item={this.state.questionnaireResponse.item[4]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextAreaField
+              index="5"
+              formID="recommendation"
+              label="Recommendation"
               placeholder="Recommendation"
               item={this.state.questionnaireResponse.item[5]}
               handleChange={this.handleChange.bind(this)}
