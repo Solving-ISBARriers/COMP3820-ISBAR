@@ -2,12 +2,13 @@ import React from "react";
 import TextInputField from "./TextInputField";
 import TextAreaField from "./TextAreaField";
 import { IsbarClientContext } from "./IsbarFhirClient";
-import { isbarQuestionnaire } from "./QuestionnaireTemplates";
+import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { IsbarDoc } from "./IsbarDoc";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
+
 // Class for the input field group.
-export class IsbarSimpleInputField extends React.Component {
+export class IsbarSimpleApp extends React.Component {
   // the this.context.client is the client object!!!
   static contextType = IsbarClientContext;
 
@@ -38,8 +39,7 @@ export class IsbarSimpleInputField extends React.Component {
     //const loadPatient = client.patient.read().then(patient => this.setState({patient: patient}))
 
     // Promise to load/create questionnaire
-    const loadQuestionnaire = client
-      .request("Questionnaire?name=" + isbarQuestionnaire.name)
+    client.request("Questionnaire?name=" + isbarQuestionnaire.name)
       .then((response) => {
         // Check if questionnaire exist or not
 
@@ -76,11 +76,11 @@ export class IsbarSimpleInputField extends React.Component {
               return this.checkExistingResponse(element.resource);
             })
           ) {
+
             // response that fulfills the criteria exists
             console.log("Selected Response");
-            //console.log(qResponse)
-            console.log(this.newQuestionnaireResponse());
-            //return client.create(this.newQuestionnaireResponse());
+            console.log(qResponse)
+            
             return qResponse;
           }
         }
@@ -88,7 +88,10 @@ export class IsbarSimpleInputField extends React.Component {
         console.log(
           "No ISBAR questionnaire response from this patient. Creating one.."
         );
-        return client.create(this.newQuestionnaireResponse());
+        return client.create(newQuestionnaireResponse(
+          this.state.questionnaire.id, 
+          this.context.client.patient.id
+          ));
       })
       .then((result) => {
         console.log("Questionnaire response result");
@@ -133,81 +136,6 @@ export class IsbarSimpleInputField extends React.Component {
       .catch(console.error);
   }
 
-  // create new empty questionnaire response resource with this patient.
-  // returns the questionnaire object made.
-  newQuestionnaireResponse() {
-    // questionnaire response resource
-    var qResponse = {
-      resourceType: "QuestionnaireResponse",
-      text: { name: "isbar-simple-response" },
-      // maybe later when we sort out the thingy
-      // Reference the questionnaire
-      questionnaire: "Questionnaire/" + this.state.questionnaire.id,
-      status: "in-progress",
-      source: {
-        // refer to current patient
-        reference: "Patient/" + this.context.client.patient.id,
-      },
-      item: [
-        {
-          linkId: "1",
-          text: "I:Identify",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-        {
-          linkId: "2",
-          text: "S:Situation",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-        {
-          linkId: "3",
-          text: "O:Observation",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-        {
-          linkId: "4",
-          text: "B:Background",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-        {
-          linkId: "5",
-          text: "A:Assessment",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-        {
-          linkId: "6",
-          text: "R:Recommendation",
-          answer: [
-            {
-              valueString: "",
-            },
-          ],
-        },
-      ],
-    };
-
-    return qResponse;
-  }
 
   // this is the function for changing value
   // changes answer string in the questionnaireresponse object with given index
@@ -337,7 +265,8 @@ export class IsbarSimpleInputField extends React.Component {
               State: 
               {this.state.saveState}
               </p>
-            <TextInputField
+            
+              <TextInputField
               index="0"
               formID="introduction"
               label="Introduction"

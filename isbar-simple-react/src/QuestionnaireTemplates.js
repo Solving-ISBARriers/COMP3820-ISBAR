@@ -43,3 +43,79 @@ export const isbarQuestionnaire = {
     }]
 }
 
+
+  // create new empty questionnaire response resource with this patient.
+  // returns the questionnaire object made.
+  export function newQuestionnaireResponse(questionnaireID, patientID) {
+    // questionnaire response resource
+    var qResponse = {
+      resourceType: "QuestionnaireResponse",
+      text: { name: "isbar-simple-response" },
+      // maybe later when we sort out the thingy
+      // Reference the questionnaire
+      questionnaire: "Questionnaire/" + questionnaireID,
+      status: "in-progress",
+      source: {
+        // refer to current patient
+        reference: "Patient/" + patientID,
+      },
+      item: [
+        {
+          linkId: "1",
+          text: "I:Identify",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+        {
+          linkId: "2",
+          text: "S:Situation",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+        {
+          linkId: "3",
+          text: "O:Observation",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+        {
+          linkId: "4",
+          text: "B:Background",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+        {
+          linkId: "5",
+          text: "A:Assessment",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+        {
+          linkId: "6",
+          text: "R:Recommendation",
+          answer: [
+            {
+              valueString: "",
+            },
+          ],
+        },
+      ],
+    };
+
+    return qResponse;
+  }
