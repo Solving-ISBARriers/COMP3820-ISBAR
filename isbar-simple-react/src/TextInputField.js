@@ -37,24 +37,29 @@ export default class TextInputField extends React.Component {
   }
 
   render() {
-    return (
-      <div className="row">
-        <div className="col-25">
-          <label htmlFor={this.props.formID}>{this.props.label}</label>
+    if (this.props.render === false) {
+      
+      return (<div></div>)
+    } else {
+      return (
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor={this.props.formID}>{this.props.label}</label>
+          </div>
+
+          <div className="col-75">
+            <textarea
+              style={{ resize: "none" }}
+              id={this.props.formID}
+              name={this.props.formID}
+              placeholder={this.props.placeholder}
+              value={this.state.value}
+              onChange={this.handleChange} />
+
+          </div>
+
         </div>
-
-        <div className="col-75">
-          <textarea
-            style={{resize: "none"}}
-            id={this.props.formID}
-            name={this.props.formID}
-            placeholder={this.props.placeholder}
-            value={this.state.value}
-            onChange={this.handleChange} />
-
-        </div>
-
-      </div>
-    )
+      )
+    }
   }
 }
