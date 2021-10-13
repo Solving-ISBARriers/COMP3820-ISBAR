@@ -5,10 +5,11 @@
   npm install -S react-router-dom
 */
 import React from 'react';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Launcher from './Launcher';
 import Home from "./Home"
 import './App.css';
+import { IsbarSimpleContainer } from './IsbarSimpleContainer';
 
 
 
@@ -25,10 +26,13 @@ class App extends React.Component {
     return (
       // This runs the launcher first, which redirects to the main screen.
       <BrowserRouter>
-        {/* The actual app */}
-        <Route path="/isbar-simple" component={Home} />
-        {/* Launcher for smart app */}
-        <Route path="/" component={Launcher} exact />
+        <Switch>
+          {/* The actual app */}
+          <Route path="/isbar-app" component={Home} exact/>
+
+          {/* Launcher for smart app */}
+          <Route path="/" component={Launcher} exact />
+        </Switch>
       </BrowserRouter>
     )
   }

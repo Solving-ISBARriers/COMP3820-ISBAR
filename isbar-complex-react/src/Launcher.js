@@ -21,14 +21,9 @@ export default class Launcher extends React.Component {
         SMART.authorize({
             clientId: "my-client-id",
             scope: "launch openid fhirUser patient/*.read patient/*.write",
-            redirectUri: "./isbar-simple",
+            redirectUri: "./isbar-app",
             // Redirect to main screen.
             
-            // WARNING: completeInTarget=true is needed to make this work
-            // in the codesandbox frame. It is otherwise not needed if the
-            // target is not another frame or window but since the entire
-            // example works in a frame here, it gets confused without
-            // setting this!
             completeInTarget: true
         });
     }

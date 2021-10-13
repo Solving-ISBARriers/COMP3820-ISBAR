@@ -5,6 +5,7 @@ import { IsbarClientContext } from "./IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { IsbarDoc } from "./IsbarDoc";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { IsbarClientProvider } from "./IsbarFhirClient";
 
 
 // Class for the input field group.
@@ -35,9 +36,6 @@ export class IsbarSimpleApp extends React.Component {
   componentDidMount() {
     // load client from the client context
     const client = this.context.client;
-
-    // Promise to set the patient... for?
-    //const loadPatient = client.patient.read().then(patient => this.setState({patient: patient}))
 
     // Promise to load/create questionnaire
     client.request("Questionnaire?name=" + isbarQuestionnaire.name)
@@ -168,103 +166,93 @@ export class IsbarSimpleApp extends React.Component {
 
     if (this.state.loaded) {
       return (
-        <div className="container">
+        
+          <div className="container">
 
-          {/* <button
-            className="isbar-save"
-            onClick={() => {
-              this.state.isIsobar ? this.setState({ formState: "ISOBAR" }) : this.setState({ formState: "ISBAR" })
-              this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))
-            }}
-          >
-            {this.state.formState}
-          </button>
-           */}
+            <label>
+              Is ISOBAR:
+              <input
+                name="isISOBAR"
+                type="checkbox"
+                checked={this.state.isIsobar}
+                onChange={() => this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))}
+              />
+            </label>
+            <p>
+              State:
+              {this.state.saveState}
+            </p>
 
-          <label>
-            Is ISOBAR:
-            <input
-              name="isISOBAR"
-              type="checkbox"
-              checked={this.state.isIsobar}
-              onChange={() => this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))}
+            <TextInputField
+              index="0"
+              formID="introduction"
+              label="Introduction"
+              placeholder="Introduction"
+              item={this.state.questionnaireResponse.item[0]}
+              handleChange={this.handleChange.bind(this)}
             />
-          </label>
-          <p>
-            State:
-            {this.state.saveState}
-          </p>
-
-          <TextInputField
-            index="0"
-            formID="introduction"
-            label="Introduction"
-            placeholder="Introduction"
-            item={this.state.questionnaireResponse.item[0]}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <TextInputField
-            index="1"
-            formID="situation"
-            label="Situation"
-            placeholder="Situation"
-            item={this.state.questionnaireResponse.item[1]}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <TextInputField
-            index="2"
-            formID="Observation"
-            label="Observation"
-            placeholder="Observation"
-            item={this.state.questionnaireResponse.item[2]}
-            render={this.state.isIsobar}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <TextInputField
-            index="3"
-            formID="background"
-            label="Background"
-            placeholder="Background"
-            item={this.state.questionnaireResponse.item[3]}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <TextInputField
-            index="4"
-            formID="assessment"
-            label="Assessment"
-            placeholder="Assessment"
-            item={this.state.questionnaireResponse.item[4]}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <TextAreaField
-            index="5"
-            formID="recommendation"
-            label="Recommendation"
-            placeholder="Recommendation"
-            item={this.state.questionnaireResponse.item[5]}
-            handleChange={this.handleChange.bind(this)}
-          />
-          <button
-            className="isbar-save"
-            onClick={() => this.updateResponse()}
-          >
-            Save
-          </button>
-
-          <button className="isbar-save">
-            <PDFDownloadLink
-              document={
-                <IsbarDoc content={this.state.questionnaireResponse} />
-              }
-              fileName="isbar.pdf"
+            <TextInputField
+              index="1"
+              formID="situation"
+              label="Situation"
+              placeholder="Situation"
+              item={this.state.questionnaireResponse.item[1]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="2"
+              formID="Observation"
+              label="Observation"
+              placeholder="Observation"
+              item={this.state.questionnaireResponse.item[2]}
+              render={this.state.isIsobar}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="3"
+              formID="background"
+              label="Background"
+              placeholder="Background"
+              item={this.state.questionnaireResponse.item[3]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextInputField
+              index="4"
+              formID="assessment"
+              label="Assessment"
+              placeholder="Assessment"
+              item={this.state.questionnaireResponse.item[4]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <TextAreaField
+              index="5"
+              formID="recommendation"
+              label="Recommendation"
+              placeholder="Recommendation"
+              item={this.state.questionnaireResponse.item[5]}
+              handleChange={this.handleChange.bind(this)}
+            />
+            <button
+              className="isbar-save"
+              onClick={() => this.updateResponse()}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Preparing" : "Print"
-              }
-            </PDFDownloadLink>
-          </button>
-        </div>
+              Save
+            </button>
 
+            <button className="isbar-save">
+              <PDFDownloadLink
+                document={
+                  <IsbarDoc content={this.state.questionnaireResponse} />
+                }
+                fileName="isbar.pdf"
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Preparing" : "Print"
+                }
+              </PDFDownloadLink>
+            </button>
+          </div>
+        
       )
     } else {
       return <div className="isbar-loading">Loading the ISBAR form..</div>;

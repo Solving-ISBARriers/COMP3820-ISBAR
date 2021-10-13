@@ -39,6 +39,11 @@ a {
   color: white;
 }
 
+.home-nav a{
+  text-decoration: none;
+  color: black;
+}
+
 /* Style the container */
 .container {
   border-radius: 5px;
@@ -80,4 +85,41 @@ a {
     width: 100%;
     margin-top: 0;
   }
+}
+
+/* This is new css for complex version of the app */
+.main-menu-container {
+  
+  width: 90vw;
+  height: 90vh;
+  margin: 5vh 5vw 5vh 5vw;
+  border-radius: 20px;
+  
+  color: #fff;
+  background-color: #455d84;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Open Sans", sans-serif;
+}
+
+.main-menu-button{
+  width: 300px;
+  height: 50px;
+
+  background-color: white;
+  color: #455d84;
+
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 20px; 
+}
+
+.menu-title{
+  color: white;
+  font-weight: 600;
+  font-size: 30px;
 }
