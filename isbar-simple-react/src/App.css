@@ -10,14 +10,20 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
+  vertical-align: middle;
   resize: vertical;
   font-family: "Open Sans", sans-serif;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* Style the label to display next to the inputs */
 label {
   display: inline-block;
-  font-size: 2em;
+  font-size: 1em;
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
 }
@@ -44,9 +50,9 @@ a {
   border-radius: 5px;
   background-color: #455d84;
   color: #fff;
-  padding-left: 80px;
-  padding-right: 80px;
-  margin: 0 20%;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin: 0 15%;
 }
 
 /* Floating column for labels: 25% width */
@@ -54,13 +60,12 @@ a {
   float: left;
   width: 25%;
   margin-top: 6px;
-  text-align: center;
 }
 
 /* Floating column for inputs: 75% width */
 .col-75 {
   float: left;
-  width: 75%;
+  width: 100%;
   margin-top: 10px;
 }
 
@@ -79,5 +84,10 @@ a {
   button[class="isbar-save"] {
     width: 100%;
     margin-top: 0;
+  }
+  .container {
+    margin: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }
