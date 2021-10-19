@@ -7,7 +7,10 @@ export class Introduction extends React.Component {
     }
     render(){
         return(
-            <div>Introduction</div>
+            <div>
+                <h2>Introduction</h2>
+                <p>content</p>
+                </div>
         )
     }
 }
