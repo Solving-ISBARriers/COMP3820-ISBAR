@@ -5,7 +5,7 @@ import { Introduction } from "./Introduction";
 import { Recommendation } from "./Recommendation";
 import { Situation } from "./Situation";
 
-export class IsbarSimpleApp extends React.Component {
+export class IsbarComplexApp extends React.Component {
 
     constructor(props){
         super(props)

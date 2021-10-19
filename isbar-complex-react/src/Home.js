@@ -2,6 +2,7 @@
 import React from "react";
 import { IsbarClientProvider } from "./IsbarFhirClient";
 import { IsbarSimpleApp } from "./IsbarSimpleApp";
+import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
 import { BrowserRouter, Link } from "react-router-dom";
 
 export default class Home extends React.Component {
@@ -50,7 +51,7 @@ class AppController extends React.Component {
                 )
             } else {
                 return (
-                    <IsbarSimpleApp />
+                    <IsbarComplexApp />
                 )
             }
         }
