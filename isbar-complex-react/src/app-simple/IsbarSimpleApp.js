@@ -1,11 +1,9 @@
 import React from "react";
 import TextInputField from "./TextInputField";
-import TextAreaField from "./TextAreaField";
-import { IsbarClientContext } from "./IsbarFhirClient";
+import { IsbarClientContext } from "../IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { IsbarDoc } from "./IsbarDoc";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { IsbarClientProvider } from "./IsbarFhirClient";
 
 
 // Class for the input field group.
@@ -21,13 +19,16 @@ export class IsbarSimpleApp extends React.Component {
       error: null,
       // true if questionnaireResponse exists
       responseExist: false,
-
       patient: null,
+      // questionnaire object that will be stored or created
       questionnaire: null,
+      // questionnaire response object
       questionnaireResponse: null,
       // turns true if it's isobar
       isIsobar: false,
+      // indicates saved state
       saveState: "edited",
+      // type of current form
       formState: "ISOBAR"
       // would be good if we have a array of question-answer pair.
     };
@@ -224,7 +225,7 @@ export class IsbarSimpleApp extends React.Component {
               item={this.state.questionnaireResponse.item[4]}
               handleChange={this.handleChange.bind(this)}
             />
-            <TextAreaField
+            <TextInputField
               index="5"
               formID="recommendation"
               label="Recommendation"

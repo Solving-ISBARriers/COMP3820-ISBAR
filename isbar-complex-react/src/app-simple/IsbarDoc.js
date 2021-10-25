@@ -32,11 +32,7 @@ const styles = StyleSheet.create({
 export const IsbarDoc = (props) => {
 
     var content = ["N/A", "N/A", "N/A", "N/A", "N/A"]
-    // console.log("called")
-    // console.log(props.content)
     props.content.item.forEach((element, index) => {
-        // console.log(typeof element)
-        // console.log(element)
         if (typeof element.answer !== 'undefined') {
 
             content[index] = element.answer[0].valueString

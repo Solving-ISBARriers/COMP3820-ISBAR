@@ -9,7 +9,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Launcher from './Launcher';
 import Home from "./Home"
 import './App.css';
-import { IsbarSimpleContainer } from './IsbarSimpleContainer';
+
 
 
 
