@@ -123,3 +123,13 @@ a {
   font-weight: 600;
   font-size: 30px;
 }
+
+.app-complex{
+  /* width: 100vw; */
+  /* height: 100vh; */
+}
+.app-content{
+
+  width: 100vw;
+  height: 90vh;
+}
