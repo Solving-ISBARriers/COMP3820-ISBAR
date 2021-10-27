@@ -23,7 +23,6 @@ export class IsbarClientProvider extends React.Component {
             (error) => this.setState({ error })
         );
     }
-    
     render() {
         
         return (

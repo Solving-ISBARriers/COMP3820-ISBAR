@@ -3,6 +3,7 @@ import React from "react";
 import { IsbarClientProvider } from "./IsbarFhirClient";
 import { IsbarSimpleApp } from "./app-simple/IsbarSimpleApp";
 import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
+import { IsbarComplexDevelopment } from "./app-complex/IsbarComplexDevelopment";
 
 export default class Home extends React.Component {
 
@@ -50,7 +51,7 @@ class AppController extends React.Component {
                 )
             } else {
                 return (
-                    <IsbarComplexApp />
+                    <IsbarComplexDevelopment />
                 )
             }
         }
