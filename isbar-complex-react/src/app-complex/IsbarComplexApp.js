@@ -19,13 +19,14 @@ export class IsbarComplexApp extends React.Component {
                 </div>
 
                 <div className="footer">
-                    {/* &larr; */}
+                    <div className="arrow">&larr;</div>
+                    
                     <button className="nav-button"  onClick={() => this.setState({current:"I"})}>I</button>
                     <button className="nav-button"  onClick={() => this.setState({current:"S"})}>S</button>
                     <button className="nav-button"  onClick={() => this.setState({current:"B"})}>B</button>
                     <button className="nav-button"  onClick={() => this.setState({current:"A"})}>A</button>
                     <button className="nav-button"  onClick={() => this.setState({current:"R"})}>R</button>
-                    {/* &rarr; */}
+                    <div className="arrow">&rarr;</div>
                 </div>
 
             </div>

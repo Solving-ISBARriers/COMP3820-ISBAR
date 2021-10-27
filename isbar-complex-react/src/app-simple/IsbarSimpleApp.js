@@ -8,6 +8,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 
 // Class for the input field group.
 export class IsbarSimpleApp extends React.Component {
+  
   // the this.context.client is the client object!!!
   static contextType = IsbarClientContext;
 
