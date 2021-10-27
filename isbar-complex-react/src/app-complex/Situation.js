@@ -61,10 +61,23 @@ export class Situation extends React.Component {
                     <sl-textarea size="medium" resize="auto" label="Other diagnosis/problem"></sl-textarea>
                     <mb-input path="name[0].given" label="Reason for transfer"></mb-input>
                     <div class="table-container">
-                        <h3>Airway</h3>
-                        <sl-checkbox>Patent</sl-checkbox>
-                        <sl-checkbox>Compromised</sl-checkbox>
-                        <sl-checkbox>Ventilated</sl-checkbox>
+                        <table>
+                            <tr>
+                                <th>Airway</th>
+                                <th>Breathing</th>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Patent</sl-checkbox></td>
+                                <td><sl-checkbox>Unremarkable</sl-checkbox></td>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Compromised</sl-checkbox></td>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Ventilated</sl-checkbox></td>
+                            </tr>                           
+                            
+                        </table>
                     </div>
 
                     

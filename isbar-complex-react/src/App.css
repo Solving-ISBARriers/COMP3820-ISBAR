@@ -20,6 +20,7 @@ label {
   font-size: 2em;
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
+  color:#fff !important;
 }
 
 /* Style the submit button */
@@ -132,4 +133,29 @@ a {
 
   width: 100vw;
   height: 90vh;
+}
+
+table{
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  
+}
+
+.checkbox {
+  color: #fff !important;
+}
+
+--sl--input-color{
+  color: #fff !important;
+
+}
+
+:root{
+  --sl-input-color: white;
+  
 }
