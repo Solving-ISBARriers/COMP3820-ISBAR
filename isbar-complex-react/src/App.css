@@ -139,21 +139,17 @@ table{
   width: 100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
+th{
+  font-size: large;
+}
+
+td, th {  
   text-align: left;
   padding: 8px;
   
 }
 
-.checkbox {
-  color: #fff !important;
-}
 
---sl--input-color{
-  color: #fff !important;
-
-}
 
 :root{
   --sl-input-color: white;

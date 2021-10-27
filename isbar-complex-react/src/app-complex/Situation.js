@@ -72,9 +72,11 @@ export class Situation extends React.Component {
                             </tr>
                             <tr>
                                 <td><sl-checkbox>Compromised</sl-checkbox></td>
+                                <td><sl-checkbox>Shallow</sl-checkbox></td>
                             </tr>
                             <tr>
                                 <td><sl-checkbox>Ventilated</sl-checkbox></td>
+                                <td><sl-checkbox>Deep</sl-checkbox></td>
                             </tr>                           
                             
                         </table>
