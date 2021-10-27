@@ -9,6 +9,7 @@ import Patient from "./Patient";
 export class Situation extends React.Component {
 
     static contextType = IsbarClientContext;
+    
 
     constructor(props){
         super(props)
@@ -34,14 +35,14 @@ export class Situation extends React.Component {
         
     }
 
+   
+
+    
     componentDidMount() {
         // load client from the client context
         const client = this.context.client;
-        console.log("Patient id Test" + this.context.client.patient.id);       
-        console.log("Patient id Test2" + client.request(`Patient/${this.context.client.patient.id}`));
-        console.log("Patient name" + <Patient />) 
-    }     
-    
+         
+    }      
     
 
 
@@ -49,13 +50,27 @@ export class Situation extends React.Component {
     
     render(){
         return(
-            <div  class="container  mx-auto px-10 sm:px-0 max-w-7xl py-50">
-                <h2 class="text-2xl font semi-bold font-sans">Patient Details</h2>
-                <h2 id="patient"></h2>
+            <div  class="container  mx-auto px-10 sm:px-0 max-w-7xl py-10">
+                <h2 class="text-3xl font semi-bold font-sans">Situation</h2>
                 <Patient />
+                <mb-fhir-form class="flex flex-col gap-6 m-5 " onClick={this.handleSubmit} >               
+                    <mb-context path="resourceType" data="Patient"> </mb-context>
+                    <mb-date label="Date of transfer" /> 
+                    <mb-input  path="name[0].given" label="Patient Status" class=" "> </mb-input>
+                    <sl-textarea size="medium" resize="auto" label="Principal diagnosis/problem"></sl-textarea>
+                    <sl-textarea size="medium" resize="auto" label="Other diagnosis/problem"></sl-textarea>
+                    <mb-input path="name[0].given" label="Reason for transfer"></mb-input>
+                    <div class="table-container">
+                        <h3>Airway</h3>
+                        <sl-checkbox>Patent</sl-checkbox>
+                        <sl-checkbox>Compromised</sl-checkbox>
+                        <sl-checkbox>Ventilated</sl-checkbox>
+                    </div>
 
-                <mb-fhir-form class="flex flex gap-3" >               
-                    <mb-input label="Principle Diagnosis/Problem" />              
+                    
+                    <mb-submit>
+                        <sl-button type="info">Submit</sl-button>
+                    </mb-submit>                      
                     
                 </mb-fhir-form>
 
