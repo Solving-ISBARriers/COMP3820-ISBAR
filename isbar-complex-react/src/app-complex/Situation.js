@@ -55,7 +55,7 @@ export class Situation extends React.Component {
                 <h2 id="patient"></h2>
                 <Patient />
                 <mb-fhir-form class="flex flex gap-3" >
-                    <mb-context path="resourceType" data="Patient" ></mb-context>                    
+                    <mb-context path="resourceType" ></mb-context>                    
                     <mb-input path path="name[0].given" label="Name" />                   
                     
                 </mb-fhir-form>

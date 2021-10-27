@@ -26,10 +26,14 @@ class AppController extends React.Component {
         }
     }
 
+    backToMenu(){
+        this.setState({isMenu: true})
+        
+    }
+
     render() {
 
         if (this.state.isMenu) {
-            console.log("Menu")
             return (
                 // menu
                 <div className="main-menu-container">
@@ -44,10 +48,9 @@ class AppController extends React.Component {
                 </div>
             )
         } else {
-            console.log("App")
             if (this.state.isSimple) {
                 return (
-                    <IsbarSimpleApp />
+                    <IsbarSimpleApp goBack={this.backToMenu.bind(this)}/>
                 )
             } else {
                 return (

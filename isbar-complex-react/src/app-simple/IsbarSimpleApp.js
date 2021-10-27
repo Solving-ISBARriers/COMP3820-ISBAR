@@ -8,7 +8,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 
 // Class for the input field group.
 export class IsbarSimpleApp extends React.Component {
-  
+
   // the this.context.client is the client object!!!
   static contextType = IsbarClientContext;
 
@@ -168,96 +168,107 @@ export class IsbarSimpleApp extends React.Component {
 
     if (this.state.loaded) {
       return (
-        
-          <div className="container">
 
-            <label>
-              Is ISOBAR:
-              <input
-                name="isISOBAR"
-                type="checkbox"
-                checked={this.state.isIsobar}
-                onChange={() => this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))}
-              />
-            </label>
-            <p>
-              State:
-              {this.state.saveState}
-            </p>
+        <div className="container">
+          <div id="simple-header">
+            <button id="go-back-button" onClick={this.props.goBack}> Back to Menu </button>
+            <h1>ISBAR</h1>
+            <div id="simple-header-content">
+              <p className="simple-state">
+                State:
+                {this.state.saveState}
+              </p>
+              <label className="simple-toggle">
+                Is ISOBAR:
+                <input
+                  name="isISOBAR"
+                  type="checkbox"
+                  checked={this.state.isIsobar}
+                  onChange={() => this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))}
+                />
+              </label>
 
-            <TextInputField
-              index="0"
-              formID="introduction"
-              label="Introduction"
-              placeholder="Introduction"
-              item={this.state.questionnaireResponse.item[0]}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <TextInputField
-              index="1"
-              formID="situation"
-              label="Situation"
-              placeholder="Situation"
-              item={this.state.questionnaireResponse.item[1]}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <TextInputField
-              index="2"
-              formID="Observation"
-              label="Observation"
-              placeholder="Observation"
-              item={this.state.questionnaireResponse.item[2]}
-              render={this.state.isIsobar}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <TextInputField
-              index="3"
-              formID="background"
-              label="Background"
-              placeholder="Background"
-              item={this.state.questionnaireResponse.item[3]}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <TextInputField
-              index="4"
-              formID="assessment"
-              label="Assessment"
-              placeholder="Assessment"
-              item={this.state.questionnaireResponse.item[4]}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <TextInputField
-              index="5"
-              formID="recommendation"
-              label="Recommendation"
-              placeholder="Recommendation"
-              item={this.state.questionnaireResponse.item[5]}
-              handleChange={this.handleChange.bind(this)}
-            />
-            <button
-              className="isbar-save"
-              onClick={() => this.updateResponse()}
-            >
-              Save
-            </button>
-
-            <button className="isbar-save">
-              <PDFDownloadLink
-                document={
-                  <IsbarDoc content={this.state.questionnaireResponse} />
-                }
-                fileName="isbar.pdf"
-              >
-                {({ blob, url, loading, error }) =>
-                  loading ? "Preparing" : "Print"
-                }
-              </PDFDownloadLink>
-            </button>
+            </div>
           </div>
-        
+
+          <TextInputField
+            index="0"
+            formID="introduction"
+            label="Introduction"
+            placeholder="Introduction"
+            item={this.state.questionnaireResponse.item[0]}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <TextInputField
+            index="1"
+            formID="situation"
+            label="Situation"
+            placeholder="Situation"
+            item={this.state.questionnaireResponse.item[1]}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <TextInputField
+            index="2"
+            formID="Observation"
+            label="Observation"
+            placeholder="Observation"
+            item={this.state.questionnaireResponse.item[2]}
+            render={this.state.isIsobar}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <TextInputField
+            index="3"
+            formID="background"
+            label="Background"
+            placeholder="Background"
+            item={this.state.questionnaireResponse.item[3]}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <TextInputField
+            index="4"
+            formID="assessment"
+            label="Assessment"
+            placeholder="Assessment"
+            item={this.state.questionnaireResponse.item[4]}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <TextInputField
+            index="5"
+            formID="recommendation"
+            label="Recommendation"
+            placeholder="Recommendation"
+            item={this.state.questionnaireResponse.item[5]}
+            handleChange={this.handleChange.bind(this)}
+          />
+          <button
+            className="isbar-save"
+            onClick={() => this.updateResponse()}
+          >
+            Save
+          </button>
+
+          <button className="isbar-save">
+            <PDFDownloadLink
+              document={
+                <IsbarDoc content={this.state.questionnaireResponse} />
+              }
+              fileName="isbar.pdf"
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Preparing" : "Print"
+              }
+            </PDFDownloadLink>
+          </button>
+        </div>
+
       )
     } else {
-      return <div className="isbar-loading">Loading the ISBAR form..</div>;
+      return (
+
+        <div className="loading-container">
+          Loading simple ISBAR form...
+        </div>
+      )
     }
   }
 }

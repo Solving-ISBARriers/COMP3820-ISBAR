@@ -67,6 +67,51 @@ a {
 .row{
   width: 100%;
 }
+
+#simple-header{
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  /* justify-content: ; */
+}
+#simple-header h1{
+  flex-grow: 1;
+  text-align: center;
+}
+#simple-header-content{
+  /* flex-grow: 1; */
+  justify-content: flex-end;
+  text-align: end;
+  
+}
+
+#simple-header-content .simple-toggle{
+  font-size: 15px;
+  /* flex-grow: 1; */
+  /* text-align: center; */
+}
+
+#simple-header-content .simple-state{
+  font-size: 15px;
+  /* flex-grow: 1; */
+}
+
+#go-back-button{
+  background-color: #455d84;
+  border:none;
+  /* border-radius: 10px; */
+  color: white;
+  font-weight: 600;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+  font-size: 20px;
+  flex-grow: 0;
+}
+#go-back-button:hover{
+  color: yellow;
+}
+
 /* Clear floats after the columns */
 .row:after {
   /* width: 100%; */
@@ -103,6 +148,9 @@ a {
   button[class="isbar-save"] {
     width: 100%;
     margin-top: 0;
+  }
+  #go-back-button{
+    font-size: 15px;
   }
 }
 
@@ -151,4 +199,13 @@ a {
 
   width: 100vw;
   height: 90vh;
+}
+
+.loading-container{
+  display:flex;
+
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  /* align-content: center; */
 }

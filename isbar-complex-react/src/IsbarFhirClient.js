@@ -9,7 +9,7 @@ import { oauth2 as SMART } from "fhirclient";
 export const IsbarClientContext = React.createContext({});
 
 export class IsbarClientProvider extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             client: null,
@@ -24,7 +24,7 @@ export class IsbarClientProvider extends React.Component {
         );
     }
     render() {
-        
+
         return (
             // When the client is not loaded, it displays authorizing message.
             // Once the client is loaded, display the child components.
@@ -40,11 +40,15 @@ export class IsbarClientProvider extends React.Component {
 
                         // if client is already available render the subtree (patient and input in this case.)
                         if (client) {
-                            
+
                             return this.props.children;
                         }
                         // client is undefined until SMART.ready() is fulfilled. show loading message
-                        return "Authorizing...";
+                        return (
+                            <div className="loading-container">
+                                Launching the ISBAR handover form..
+                            </div>
+                        )
                     }}
                 </IsbarClientContext.Consumer>
             </IsbarClientContext.Provider>
