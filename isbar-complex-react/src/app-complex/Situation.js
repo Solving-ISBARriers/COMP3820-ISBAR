@@ -38,7 +38,8 @@ export class Situation extends React.Component {
         // load client from the client context
         const client = this.context.client;
         console.log("Patient id Test" + this.context.client.patient.id);       
-        console.log("Patient id Test2" + client.request(`Patient/${this.context.client.patient.id}`)); 
+        console.log("Patient id Test2" + client.request(`Patient/${this.context.client.patient.id}`));
+        console.log("Patient name" + <Patient />) 
     }    
       
     
