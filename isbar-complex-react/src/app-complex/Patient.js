@@ -10,6 +10,8 @@ function PatientName({ name = [] }) {
     return <h1>{entry.given.join(" ") + " " + entry.family}</h1>;
 }
 
+
+
 function PatientBanner(patient) {
     return (
         <div>
@@ -20,6 +22,8 @@ function PatientBanner(patient) {
             <span>
                 DOB: <b>{patient.birthDate}</b>
             </span>
+            
+          
         </div>
     );
 }
