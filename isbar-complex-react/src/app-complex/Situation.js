@@ -40,8 +40,7 @@ export class Situation extends React.Component {
         console.log("Patient id Test" + this.context.client.patient.id);       
         console.log("Patient id Test2" + client.request(`Patient/${this.context.client.patient.id}`));
         console.log("Patient name" + <Patient />) 
-    }    
-      
+    }     
     
     
 
@@ -54,9 +53,9 @@ export class Situation extends React.Component {
                 <h2 class="text-2xl font semi-bold font-sans">Patient Details</h2>
                 <h2 id="patient"></h2>
                 <Patient />
-                <mb-fhir-form class="flex flex gap-3" >
-                    <mb-context path="resourceType" data="Patient" ></mb-context>                    
-                    <mb-input path path="name[0].given" label="Name" />                   
+
+                <mb-fhir-form class="flex flex gap-3" >               
+                    <mb-input label="Principle Diagnosis/Problem" />              
                     
                 </mb-fhir-form>
 
