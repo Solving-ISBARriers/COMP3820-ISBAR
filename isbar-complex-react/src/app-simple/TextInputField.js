@@ -42,12 +42,12 @@ export default class TextInputField extends React.Component {
       return (<div></div>)
     } else {
       return (
-        <div className="row">
-          <div className="col-25">
+        <div className="textarea-container row">
+          <div className="textarea-label">
             <label htmlFor={this.props.formID}>{this.props.label}</label>
           </div>
 
-          <div className="col-75">
+          <div className="textarea-content">
             <textarea
               style={{ resize: "none" }}
               id={this.props.formID}
