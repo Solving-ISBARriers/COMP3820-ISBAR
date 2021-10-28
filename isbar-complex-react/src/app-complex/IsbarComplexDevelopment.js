@@ -14,7 +14,8 @@ export class IsbarComplexDevelopment extends React.Component {
         this.state = {
             // state for the app display
             current: "I",
-            loaded: false
+            loaded: false,
+            carePlan: null
             // initialise careplan resource?
         }
     }
@@ -33,6 +34,10 @@ export class IsbarComplexDevelopment extends React.Component {
 
     LoadCarePlan(){
         return this.context.client.request("CarePlan?patient=" + this.context.client.patient.id)
+        .then( res => {
+            // filter careplan
+
+        })
     }
 
     render() {

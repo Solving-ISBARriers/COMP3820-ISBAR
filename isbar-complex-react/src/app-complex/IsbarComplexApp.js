@@ -10,7 +10,7 @@ export class IsbarComplexApp extends React.Component {
     render() {
         return (
             <div className="app-complex">
-                <div className="app-content">
+                <div className="container">
 
                     <h2 className="section-title">Introduction</h2>
                     <Introduction />

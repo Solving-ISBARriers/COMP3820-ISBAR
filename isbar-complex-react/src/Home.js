@@ -54,7 +54,8 @@ class AppController extends React.Component {
                 )
             } else {
                 return (
-                    <IsbarComplexDevelopment />
+                    // <IsbarComplexDevelopment />
+                    <IsbarComplexApp />
                 )
             }
         }
