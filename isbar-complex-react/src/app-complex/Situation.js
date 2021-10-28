@@ -33,9 +33,7 @@ export class Situation extends React.Component {
             // would be good if we have a array of question-answer pair.
           };            
         
-    }
-
-   
+    }  
 
     
     componentDidMount() {
@@ -59,7 +57,9 @@ export class Situation extends React.Component {
                     <mb-input  path="name[0].given" label="Patient Status" class=" "> </mb-input>
                     <sl-textarea size="medium" resize="auto" label="Principal diagnosis/problem"></sl-textarea>
                     <sl-textarea size="medium" resize="auto" label="Other diagnosis/problem"></sl-textarea>
-                    <mb-input path="name[0].given" label="Reason for transfer"></mb-input>
+                    <mb-input path="name[0].given" label="Reason for transfer"></mb-input>  
+                    <mb-input path="name[0].given" label="Reason for transfer"></mb-input>                 
+                    
                     <div class="table-container">
                         <h3>Observations</h3>
                         <table>
@@ -134,8 +134,7 @@ export class Situation extends React.Component {
                     
                     <mb-submit>
                         <sl-button type="info">Submit</sl-button>
-                    </mb-submit>                      
-                    
+                    </mb-submit>                     
                 </mb-fhir-form>
 
                 
