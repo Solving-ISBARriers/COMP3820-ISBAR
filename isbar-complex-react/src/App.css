@@ -77,11 +77,12 @@ textarea {
   width: 100%;
   height: auto;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc;  
   border-radius: 5px;
   box-sizing: border-box;
-  resize: vertical;
+  /* resize: vertical; */
   font-family: "Open Sans", sans-serif;
+  line-height: 20px;
 }
 
 /* Style the label to display next to the inputs */

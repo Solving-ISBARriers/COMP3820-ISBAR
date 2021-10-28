@@ -1,5 +1,5 @@
 // React script for input fields
-import React from "react";
+import React, { useRef } from "react";
 
 // This is the class for single unit of text input. this incldes textarea and the label.
 // props contain questionnaireresponse object.
@@ -10,31 +10,36 @@ export default class TextInputField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "",
+      rows:3,
+      minRows: 2,
+      maxRows: 10
     }
 
     this.handleChange = this.handleChange.bind(this)
   }
-
-  componentDidMount() {
-    if (!this.props.item.hasOwnProperty('answer')) {
-      // if there is no answer field for current response object
-      this.setState({ value: "" });
-    } else {
-      this.setState({ value: this.props.item.answer[0].valueString });
+  
+  handleChange(event){
+    
+    this.props.handleChange(event)
+		const textareaLineHeight = 20;
+		const { minRows, maxRows } = this.state;
+		const prevRows = event.target.rows;
+  	event.target.rows = minRows; 
+		
+		const curRows = ~~(event.target.scrollHeight / textareaLineHeight);
+    
+    if (curRows === prevRows) {
+    	event.target.rows = curRows;
     }
-  }
-
-  handleChange(event) {
-
-    // update the field
-    this.setState({ value: event.target.value });
-    this.props.handleChange(event, this.props.index);
-  }
-
-  // value of this text area
-  getValue() {
-    return this.state.value
+		
+		if (curRows >= maxRows) {
+			event.target.rows = maxRows;	
+		}
+    
+  	this.setState({
+      rows: curRows < maxRows ? curRows : maxRows,
+    });
+    
   }
 
   render() {
@@ -45,18 +50,17 @@ export default class TextInputField extends React.Component {
       return (
         <div className="simple-textarea-container">
           <div className="simple-textarea-label">
-            <label htmlFor={this.props.formID}>{this.props.label}</label>
+            <label>{this.props.label}</label>
           </div>
 
           <div className="simple-textarea-content">
             <textarea
-              style={{ resize: "auto" }}
-              id={this.props.formID}
-              name={this.props.formID}
+              ref={this.textArea}
+              rows={this.state.rows}
+              style={{resize:"none"}}
               placeholder={this.props.placeholder}
-              value={this.state.value}
+              value={this.props.value}
               onChange={this.handleChange} />
-
           </div>
         </div>
       )

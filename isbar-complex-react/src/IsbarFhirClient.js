@@ -12,17 +12,26 @@ export class IsbarClientProvider extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            client: null,
-            error: null
+            
+            client: null, // client object
+            error: null, // error message
+            simpleForms: null, // simple isbar forms (questionnaireResponses)
+            complexForms: null // complex isbar forms ()
         }
     }
+
     componentDidMount() {
         // Wait until the SMART client is ready, then save the client object as its state.
         SMART.ready().then(
             (client) => this.setState({ client }),
             (error) => this.setState({ error })
-        );
+        )
+        // Load the relevant resources
     }
+
+    
+
+
     render() {
 
         return (
@@ -31,7 +40,7 @@ export class IsbarClientProvider extends React.Component {
             <IsbarClientContext.Provider value={this.state || {}}>
                 <IsbarClientContext.Consumer>
                     {({ client, error }) => {
-                        console.log("Load success!");
+                        console.log("Client");
                         console.log(client);
                         // any error that SMART.ready() may have been rejected with
                         if (error) {

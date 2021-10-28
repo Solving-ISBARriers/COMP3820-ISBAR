@@ -27,9 +27,6 @@ function PatientBanner(patient) {
             <span>
                 DOB: <b>{patient.address[0].city}</b>
             </span>   
-                     
-                     
-          
         </div>
     );
 }

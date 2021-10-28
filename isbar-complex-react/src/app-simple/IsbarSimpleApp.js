@@ -18,20 +18,19 @@ export class IsbarSimpleApp extends React.Component {
       // used true if data is loaded
       loaded: false,
       error: null,
-      // true if questionnaireResponse exists
-      responseExist: false,
-      patient: null,
       // questionnaire object that will be stored or created
       questionnaire: null,
       // questionnaire response object
-      questionnaireResponse: null,
+      content: null,
       // turns true if it's isobar
       isIsobar: false,
       // indicates saved state
-      saveState: "edited",
+      saved: "edited",
       // type of current form
       formState: "ISOBAR"
     };
+
+    this.updateResponse = this.updateResponse.bind(this)
   }
 
   componentDidMount() {
@@ -99,7 +98,7 @@ export class IsbarSimpleApp extends React.Component {
         console.log(result);
         // save the response object, finish loading
         this.setState({
-          questionnaireResponse: result,
+          content: result,
           loaded: true,
           error: null,
         });
@@ -126,13 +125,13 @@ export class IsbarSimpleApp extends React.Component {
   // function to send update request
   updateResponse() {
     console.log(
-      "Updated response: " + JSON.stringify(this.state.questionnaireResponse)
+      "Updated response: " + JSON.stringify(this.state.content)
     );
     this.context.client
-      .update(this.state.questionnaireResponse)
+      .update(this.state.content)
       .then((response) => {
         console.log(response);
-        this.setState({ saveState: "saved" })
+        this.setState({ saved: "saved" })
       })
       .catch(console.error);
   }
@@ -141,8 +140,8 @@ export class IsbarSimpleApp extends React.Component {
   // this is the function for changing value
   // changes answer string in the questionnaireresponse object with given index
   // updates questionnaireresponse state
-  handleChange(event, index) {
-    var response = this.state.questionnaireResponse;
+  updateResponse(event, index) {
+    var response = this.state.content;
 
     if (response.item[index].hasOwnProperty("answer")) {
       response.item[index].answer[0].valueString = event.target.value;
@@ -153,14 +152,13 @@ export class IsbarSimpleApp extends React.Component {
         },
       ];
     }
+    this.setState({ content: response });
 
-    this.setState({ questionnaireResponse: response });
-    if (this.state.saveState === "saved") {
-      this.setState({ saveState: "edited" })
+    // change the saved state
+    if (this.state.saved === "saved") {
+      this.setState({ saved: "edited" })
     }
   }
-
-  printPDF() { }
 
   // Load the text fields after the questionnaire and questionnaire responses are loaded.
   render() {
@@ -176,7 +174,7 @@ export class IsbarSimpleApp extends React.Component {
             <div id="simple-header-content">
               <p className="simple-state">
                 State:
-                {this.state.saveState}
+                {this.state.saved}
               </p>
               <label className="simple-toggle">
                 Is ISOBAR:
@@ -192,53 +190,65 @@ export class IsbarSimpleApp extends React.Component {
           </div>
 
           <TextInputField
-            index="0"
-            formID="introduction"
             label="Introduction"
             placeholder="Introduction"
-            item={this.state.questionnaireResponse.item[0]}
-            handleChange={this.handleChange.bind(this)}
+            value={
+              this.state.content.item[0].hasOwnProperty('answer')
+              ? this.state.content.item[0].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 0)}
           />
           <TextInputField
-            index="1"
-            formID="situation"
             label="Situation"
             placeholder="Situation"
-            item={this.state.questionnaireResponse.item[1]}
-            handleChange={this.handleChange.bind(this)}
+            value={
+              this.state.content.item[1].hasOwnProperty('answer')
+              ? this.state.content.item[1].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 1)}
           />
           <TextInputField
-            index="2"
-            formID="Observation"
             label="Observation"
             placeholder="Observation"
-            item={this.state.questionnaireResponse.item[2]}
-            render={this.state.isIsobar}
-            handleChange={this.handleChange.bind(this)}
+            render={false}
+            value={
+              this.state.content.item[2].hasOwnProperty('answer')
+              ? this.state.content.item[2].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 2)}
           />
           <TextInputField
-            index="3"
-            formID="background"
             label="Background"
             placeholder="Background"
-            item={this.state.questionnaireResponse.item[3]}
-            handleChange={this.handleChange.bind(this)}
+            value={
+              this.state.content.item[3].hasOwnProperty('answer')
+              ? this.state.content.item[3].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 3)}
           />
           <TextInputField
-            index="4"
-            formID="assessment"
             label="Assessment"
             placeholder="Assessment"
-            item={this.state.questionnaireResponse.item[4]}
-            handleChange={this.handleChange.bind(this)}
+            value={
+              this.state.content.item[4].hasOwnProperty('answer')
+              ? this.state.content.item[4].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 4)}
           />
           <TextInputField
-            index="5"
-            formID="recommendation"
             label="Recommendation"
             placeholder="Recommendation"
-            item={this.state.questionnaireResponse.item[5]}
-            handleChange={this.handleChange.bind(this)}
+            value={
+              this.state.content.item[5].hasOwnProperty('answer')
+              ? this.state.content.item[5].answer[0].valueString
+              : ""
+            }
+            handleChange={(e) => this.updateResponse(e, 5)}
           />
           <button
             className="isbar-save"
@@ -250,7 +260,7 @@ export class IsbarSimpleApp extends React.Component {
           <button className="isbar-save">
             <PDFDownloadLink
               document={
-                <SimplePDF content={this.state.questionnaireResponse} />
+                <SimplePDF content={this.state.content} />
               }
               fileName="isbar.pdf"
             >
