@@ -4,6 +4,8 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { ReactDOM } from "react";
+import TextField from '@mui/material/TextField'
 
 
 // Class for the input field group.
@@ -153,11 +155,16 @@ export class IsbarSimpleApp extends React.Component {
       ];
     }
     this.setState({ content: response });
-
     // change the saved state
-    if (this.state.saved === "saved") {
-      this.setState({ saved: "edited" })
-    }
+    // if (this.state.saved === "saved") {
+    //   this.setState({ saved: "edited" })
+    // }
+  }
+  
+  getFieldValue(index){
+    return this.state.content.item[index].hasOwnProperty('answer')
+    ? this.state.content.item[index].answer[0].valueString
+    : ""
   }
 
   // Load the text fields after the questionnaire and questionnaire responses are loaded.
@@ -189,67 +196,37 @@ export class IsbarSimpleApp extends React.Component {
             </div>
           </div>
 
-          <TextInputField
-            label="Introduction"
-            placeholder="Introduction"
-            value={
-              this.state.content.item[0].hasOwnProperty('answer')
-              ? this.state.content.item[0].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 0)}
+          <TextField fullWidth multiline
+          placeholder="Introduction"
+          value={this.getFieldValue(0)}
+          onChange={(e) => this.updateResponse(e, 0)}
           />
-          <TextInputField
-            label="Situation"
-            placeholder="Situation"
-            value={
-              this.state.content.item[1].hasOwnProperty('answer')
-              ? this.state.content.item[1].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 1)}
+          <TextField fullWidth multiline
+          placeholder="Situation"
+          value={this.getFieldValue(1)}
+          onChange={(e) => this.updateResponse(e, 1)}
           />
-          <TextInputField
-            label="Observation"
-            placeholder="Observation"
-            render={false}
-            value={
-              this.state.content.item[2].hasOwnProperty('answer')
-              ? this.state.content.item[2].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 2)}
+          <TextField fullWidth multiline
+          placeholder="Observation"
+          value={this.getFieldValue(2)}
+          onChange={(e) => this.updateResponse(e, 2)}
           />
-          <TextInputField
-            label="Background"
-            placeholder="Background"
-            value={
-              this.state.content.item[3].hasOwnProperty('answer')
-              ? this.state.content.item[3].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 3)}
+          <TextField fullWidth multiline
+          placeholder="Background"
+          value={this.getFieldValue(3)}
+          onChange={(e) => this.updateResponse(e, 3)}
           />
-          <TextInputField
-            label="Assessment"
-            placeholder="Assessment"
-            value={
-              this.state.content.item[4].hasOwnProperty('answer')
-              ? this.state.content.item[4].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 4)}
+          <TextField fullWidth multiline
+          placeholder="Assessment"
+          value={this.getFieldValue(4)}
+          onChange={(e) => this.updateResponse(e, 4)}
           />
-          <TextInputField
-            label="Recommendation"
-            placeholder="Recommendation"
-            value={
-              this.state.content.item[5].hasOwnProperty('answer')
-              ? this.state.content.item[5].answer[0].valueString
-              : ""
-            }
-            handleChange={(e) => this.updateResponse(e, 5)}
+          <TextField fullWidth multiline
+          placeholder="Recommendation"
+          value={this.getFieldValue(5)}
+          onChange={(e) => this.updateResponse(e, 5)}
           />
+          
           <button
             className="isbar-save"
             onClick={() => this.updateResponse()}

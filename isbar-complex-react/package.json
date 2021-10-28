@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.5",
+    "@mui/material": "^5.0.6",
     "@react-pdf/renderer": "^1.6.17",
     "@shoelace-style/react": "^2.0.0-beta.58",
     "@shoelace-style/shoelace": "^2.0.0-beta.58",

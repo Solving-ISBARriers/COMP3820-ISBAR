@@ -1,5 +1,5 @@
-// React script for input fields
-import React, { useRef } from "react";
+// React script for textarea
+import React from "react";
 
 // This is the class for single unit of text input. this incldes textarea and the label.
 // props contain questionnaireresponse object.
