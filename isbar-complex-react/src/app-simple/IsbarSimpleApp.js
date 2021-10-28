@@ -2,7 +2,7 @@ import React from "react";
 import TextInputField from "./TextInputField";
 import { IsbarClientContext } from "../IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
-import { IsbarDoc } from "./IsbarDoc";
+import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 
@@ -250,7 +250,7 @@ export class IsbarSimpleApp extends React.Component {
           <button className="isbar-save">
             <PDFDownloadLink
               document={
-                <IsbarDoc content={this.state.questionnaireResponse} />
+                <SimplePDF content={this.state.questionnaireResponse} />
               }
               fileName="isbar.pdf"
             >

@@ -46,6 +46,30 @@
   color: yellow;
 }
 
+
+.simple-textarea-container{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.simple-textarea-label{
+
+  font-size: 0.5em;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.simple-textarea-content{
+  width: 100%;
+}
+
+
+
+/********** End of simple-specific style ***********/
+
 /* Style inputs, select elements and textareas */
 input[type="text"],
 select,
@@ -90,8 +114,8 @@ a {
 /* Style the container */
 .container {
   border-radius: 5px;
-  background-color: #455d84;
-  color: #fff;
+  /* background-color: #455d84; */
+  /* color: #fff; */
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 5%;
@@ -136,24 +160,6 @@ a {
   /* padding: 3%; */
 }
 
-.textarea-container{
-  display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  align-items: flex-start;
-  flex-direction: column;
-}
-
-.textarea-label{
-
-  font-size: 0.5em;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-}
-
-.textarea-content{
-  width: 100%;
-}
 
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */

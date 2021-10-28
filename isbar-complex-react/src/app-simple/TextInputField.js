@@ -18,6 +18,7 @@ export default class TextInputField extends React.Component {
 
   componentDidMount() {
     if (!this.props.item.hasOwnProperty('answer')) {
+      // if there is no answer field for current response object
       this.setState({ value: "" });
     } else {
       this.setState({ value: this.props.item.answer[0].valueString });
@@ -42,12 +43,12 @@ export default class TextInputField extends React.Component {
       return (<div></div>)
     } else {
       return (
-        <div className="textarea-container row">
-          <div className="textarea-label">
+        <div className="simple-textarea-container">
+          <div className="simple-textarea-label">
             <label htmlFor={this.props.formID}>{this.props.label}</label>
           </div>
 
-          <div className="textarea-content">
+          <div className="simple-textarea-content">
             <textarea
               style={{ resize: "auto" }}
               id={this.props.formID}
@@ -57,7 +58,6 @@ export default class TextInputField extends React.Component {
               onChange={this.handleChange} />
 
           </div>
-
         </div>
       )
     }

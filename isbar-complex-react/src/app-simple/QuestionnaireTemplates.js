@@ -1,5 +1,4 @@
-
-// file to store questionnaire structure
+// file to store questionnaire json file 
 
 export const isbarQuestionnaire = {
     "resourceType": "Questionnaire",

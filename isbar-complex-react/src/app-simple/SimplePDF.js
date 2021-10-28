@@ -15,6 +15,8 @@ import { Document, Page, View, Text, StyleSheet, Font } from '@react-pdf/rendere
 //     src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
 // })
 
+// This is the pdf file that will be generated
+
 const styles = StyleSheet.create({
     page: {
         // fontFamily: 'OpenSans',
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
         fontSize: '16pt',
     }
 });
-export const IsbarDoc = (props) => {
+export const SimplePDF = (props) => {
 
     var content = ["N/A", "N/A", "N/A", "N/A", "N/A"]
     props.content.item.forEach((element, index) => {
