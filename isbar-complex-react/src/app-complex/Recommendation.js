@@ -3,13 +3,16 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 
 export class Recommendation extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
     }
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                <sl-input> </sl-input>
+                <sl-form>
+                    <sl-textarea rows={4}>
+                    </sl-textarea>
+                </sl-form>
             </div>
         )
     }
