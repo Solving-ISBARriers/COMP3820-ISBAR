@@ -121,11 +121,12 @@ export class Situation extends React.Component {
                             <th>Resp Rate</th>
                             <th>Blood Pressure</th>                            
                             <tr>
-                                <td></td>
+                                <td><sl-input placeholder="Temp celcius "></sl-input></td>
+                                <td><sl-input placeholder="Beats/minuite"></sl-input></td>
+                                <td><sl-input placeholder="Resp Rate "></sl-input></td>
+                                <td><sl-input placeholder="mm Hg "></sl-input></td>
                             </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
+                            
                         </table>
 
                     </div>
