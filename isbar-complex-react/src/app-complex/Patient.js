@@ -8,21 +8,27 @@ function PatientName({ name = [] }) {
         return <h1>No Name</h1>;
     }
     return <h1>{entry.given.join(" ") + " " + entry.family}</h1>;
+
 }
 
 
 
 function PatientBanner(patient) {
+    console.log(patient);
     return (
         <div>
             <PatientName name={patient.name} />
             <span>
-                Gender: <b>{patient.gender}</b>,{" "}
+                Gender: <b>{patient.gender}</b>{" "}
             </span>
             <span>
                 DOB: <b>{patient.birthDate}</b>
-            </span>
-            
+            </span>  
+            <span>
+                DOB: <b>{patient.address[0].city}</b>
+            </span>   
+                     
+                     
           
         </div>
     );

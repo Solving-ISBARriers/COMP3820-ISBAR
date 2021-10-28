@@ -8,7 +8,7 @@ export class Recommendation extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div class="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
                 <sl-form>
                     <sl-textarea rows={4}>
                     </sl-textarea>

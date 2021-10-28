@@ -46,10 +46,13 @@ a {
   border-radius: 5px;
   background-color: #455d84;
   color: #fff;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
   padding-bottom: 5%;
   margin: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+  
 }
 
 .container .section-title{
