@@ -50,12 +50,12 @@ export class Situation extends React.Component {
     
     render(){
         return(
-            <div  class="container  mx-auto px-10 sm:px-0 max-w-7xl py-10">
+            <div  class="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
                 <h2 class="text-3xl font semi-bold font-sans">Situation</h2>
                 <Patient />
-                <mb-fhir-form class="flex flex-col gap-6 m-5 " onClick={this.handleSubmit} >               
+                <mb-fhir-form class="flex flex-col gap-3 m-5 " onClick={this.handleSubmit} >               
                     <mb-context path="resourceType" data="Patient"> </mb-context>
-                    <mb-date label="Date of transfer"> </mb-date>
+                    <mb-date class="py-10 " label="Date of transfer"> </mb-date>
                     <mb-input  path="name[0].given" label="Patient Status" class=" "> </mb-input>
                     <sl-textarea size="medium" resize="auto" label="Principal diagnosis/problem"></sl-textarea>
                     <sl-textarea size="medium" resize="auto" label="Other diagnosis/problem"></sl-textarea>
@@ -102,7 +102,7 @@ export class Situation extends React.Component {
                                 <td></td>
                                 <td><sl-checkbox>Slow</sl-checkbox></td>
                                 <td><sl-checkbox>Cyanotic</sl-checkbox></td>
-                                <td><sl-checkbox>Delirium</sl-checkbox></td>
+                                <td></td>
                                 <td><sl-checkbox>Sleep disturbance</sl-checkbox></td>
                             </tr> 
                             <tr>
