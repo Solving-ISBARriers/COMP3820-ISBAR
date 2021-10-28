@@ -1,4 +1,5 @@
 import React from "react";
+import '@shoelace-style/shoelace/dist/themes/light.css';
 
 export class Recommendation extends React.Component {
 
@@ -7,7 +8,9 @@ export class Recommendation extends React.Component {
     }
     render(){
         return(
-            <div>Recommendation</div>
+            <div>
+                <sl-input> </sl-input>
+            </div>
         )
     }
 }
