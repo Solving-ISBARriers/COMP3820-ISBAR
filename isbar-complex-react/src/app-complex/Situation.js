@@ -109,9 +109,25 @@ export class Situation extends React.Component {
                                 <td></td>
                                 <td><sl-checkbox>Audible Wheeze</sl-checkbox></td>
                                 <td></td>
-                            </tr>                         
+                            </tr>                      
                             
                         </table>
+                    </div>
+                    <div>
+                        <h3>Vitals</h3>
+                        <table>
+                            <th>Temp</th>
+                            <th>Pulse</th>
+                            <th>Resp Rate</th>
+                            <th>Blood Pressure</th>                            
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+
                     </div>
 
                     
