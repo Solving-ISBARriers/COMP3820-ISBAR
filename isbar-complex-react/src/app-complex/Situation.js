@@ -9,6 +9,7 @@ import Patient from "./Patient";
 export class Situation extends React.Component {
 
     static contextType = IsbarClientContext;
+    
 
     constructor(props){
         super(props)
@@ -34,15 +35,14 @@ export class Situation extends React.Component {
         
     }
 
+   
+
+    
     componentDidMount() {
         // load client from the client context
         const client = this.context.client;
-        console.log("Patient id Test" + this.context.client.patient.id);       
-        console.log("Patient id Test2" + client.request(`Patient/${this.context.client.patient.id}`));
-        console.log("Patient name" + <Patient />) 
-    }    
-      
-    
+         
+    }      
     
 
 
@@ -50,13 +50,91 @@ export class Situation extends React.Component {
     
     render(){
         return(
-            <div  class="container  mx-auto px-10 sm:px-0 max-w-7xl py-50">
-                <h2 class="text-2xl font semi-bold font-sans">Patient Details</h2>
-                <h2 id="patient"></h2>
+            <div  class="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
+                <h2 class="text-3xl font semi-bold font-sans">Situation</h2>
                 <Patient />
-                <mb-fhir-form class="flex flex gap-3" >
-                    <mb-context path="resourceType" ></mb-context>                    
-                    <mb-input path path="name[0].given" label="Name" />                   
+                <mb-fhir-form class="flex flex-col gap-3 m-5 " onClick={this.handleSubmit} >               
+                    <mb-context path="resourceType" data="Patient"> </mb-context>
+                    <mb-date class="py-10 " label="Date of transfer"> </mb-date>
+                    <mb-input  path="name[0].given" label="Patient Status" class=" "> </mb-input>
+                    <sl-textarea size="medium" resize="auto" label="Principal diagnosis/problem"></sl-textarea>
+                    <sl-textarea size="medium" resize="auto" label="Other diagnosis/problem"></sl-textarea>
+                    <mb-input path="name[0].given" label="Reason for transfer"></mb-input>
+                    <div class="table-container">
+                        <h3>Observations</h3>
+                        <table>
+                            <tr>
+                                <th>Airway</th>
+                                <th>Breathing</th>
+                                <th>Skin Colour</th>
+                                <th>Mental</th>
+                                <th>Behaviour</th>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Patent</sl-checkbox></td>
+                                <td><sl-checkbox>Unremarkable</sl-checkbox></td>
+                                <td><sl-checkbox>Unremarkable</sl-checkbox></td>
+                                <td><sl-checkbox>Cognitive impairment</sl-checkbox></td>
+                                <td><sl-checkbox>Verbal aggression</sl-checkbox></td>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Compromised</sl-checkbox></td>
+                                <td><sl-checkbox>Shallow</sl-checkbox></td>
+                                <td><sl-checkbox>Pale</sl-checkbox></td>
+                                <td><sl-checkbox>Depression</sl-checkbox></td>
+                                <td><sl-checkbox>Harm to others</sl-checkbox></td>
+                            </tr>
+                            <tr>
+                                <td><sl-checkbox>Ventilated</sl-checkbox></td>
+                                <td><sl-checkbox>Deep</sl-checkbox></td>
+                                <td><sl-checkbox>Flushed</sl-checkbox></td>
+                                <td><sl-checkbox>Dementia</sl-checkbox></td>
+                                <td><sl-checkbox>Harm to self</sl-checkbox></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><sl-checkbox>Rapid</sl-checkbox></td>
+                                <td><sl-checkbox>Mottled</sl-checkbox></td>
+                                <td><sl-checkbox>Delirium</sl-checkbox></td>
+                                <td><sl-checkbox>Sleep disturbance</sl-checkbox></td>
+                            </tr> 
+                            <tr>
+                                <td></td>
+                                <td><sl-checkbox>Slow</sl-checkbox></td>
+                                <td><sl-checkbox>Cyanotic</sl-checkbox></td>
+                                <td></td>
+                                <td><sl-checkbox>Sleep disturbance</sl-checkbox></td>
+                            </tr> 
+                            <tr>
+                                <td></td>
+                                <td><sl-checkbox>Audible Wheeze</sl-checkbox></td>
+                                <td></td>
+                            </tr>                      
+                            
+                        </table>
+                    </div>
+                    <div>
+                        <h3>Vitals</h3>
+                        <table>
+                            <th>Temp</th>
+                            <th>Pulse</th>
+                            <th>Resp Rate</th>
+                            <th>Blood Pressure</th>                            
+                            <tr>
+                                <td><sl-input placeholder="Temp celcius "></sl-input></td>
+                                <td><sl-input placeholder="Beats/minuite"></sl-input></td>
+                                <td><sl-input placeholder="Resp Rate "></sl-input></td>
+                                <td><sl-input placeholder="mm Hg "></sl-input></td>
+                            </tr>
+                            
+                        </table>
+
+                    </div>
+
+                    
+                    <mb-submit>
+                        <sl-button type="info">Submit</sl-button>
+                    </mb-submit>                      
                     
                 </mb-fhir-form>
 
