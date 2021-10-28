@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@react-pdf/renderer": "^1.6.17",
+    "@shoelace-style/react": "^2.0.0-beta.58",
     "@shoelace-style/shoelace": "^2.0.0-beta.58",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
