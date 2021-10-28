@@ -1,5 +1,51 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
+/* Simple version specific styling */
+
+#simple-header{
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  /* justify-content: ; */
+}
+#simple-header h1{
+  flex-grow: 1;
+  text-align: center;
+}
+#simple-header-content{
+  /* flex-grow: 1; */
+  justify-content: flex-end;
+  text-align: end;
+  
+}
+
+#simple-header-content .simple-toggle{
+  font-size: 15px;
+  /* flex-grow: 1; */
+  /* text-align: center; */
+}
+
+#simple-header-content .simple-state{
+  font-size: 15px;
+  /* flex-grow: 1; */
+}
+
+#go-back-button{
+  background-color: #455d84;
+  border:none;
+  /* border-radius: 10px; */
+  color: white;
+  font-weight: 600;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+  font-size: 20px;
+  flex-grow: 0;
+}
+#go-back-button:hover{
+  color: yellow;
+}
+
 /* Style inputs, select elements and textareas */
 input[type="text"],
 select,
@@ -79,50 +125,6 @@ a {
 
 .row{
   width: 100%;
-}
-
-#simple-header{
-  /* width: 100%; */
-  display: flex;
-  flex-direction: row;
-  /* justify-content: ; */
-}
-#simple-header h1{
-  flex-grow: 1;
-  text-align: center;
-}
-#simple-header-content{
-  /* flex-grow: 1; */
-  justify-content: flex-end;
-  text-align: end;
-  
-}
-
-#simple-header-content .simple-toggle{
-  font-size: 15px;
-  /* flex-grow: 1; */
-  /* text-align: center; */
-}
-
-#simple-header-content .simple-state{
-  font-size: 15px;
-  /* flex-grow: 1; */
-}
-
-#go-back-button{
-  background-color: #455d84;
-  border:none;
-  /* border-radius: 10px; */
-  color: white;
-  font-weight: 600;
-  padding-left: 10px;
-  padding-right: 10px;
-  
-  font-size: 20px;
-  flex-grow: 0;
-}
-#go-back-button:hover{
-  color: yellow;
 }
 
 /* Clear floats after the columns */

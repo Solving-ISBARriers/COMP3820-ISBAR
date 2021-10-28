@@ -49,7 +49,7 @@ export default class TextInputField extends React.Component {
 
           <div className="textarea-content">
             <textarea
-              style={{ resize: "none" }}
+              style={{ resize: "auto" }}
               id={this.props.formID}
               name={this.props.formID}
               placeholder={this.props.placeholder}

@@ -31,7 +31,6 @@ export class IsbarSimpleApp extends React.Component {
       saveState: "edited",
       // type of current form
       formState: "ISOBAR"
-      // would be good if we have a array of question-answer pair.
     };
   }
 
@@ -42,10 +41,11 @@ export class IsbarSimpleApp extends React.Component {
     // Promise to load/create questionnaire
     client.request("Questionnaire?name=" + isbarQuestionnaire.name)
       .then((response) => {
+        
         // Check if questionnaire exist or not
-
         console.log("Questionnaires:");
         console.log(response);
+
         if (response.total === 0) {
           // there are no questionnaire object - create one
           return client.create(isbarQuestionnaire);
