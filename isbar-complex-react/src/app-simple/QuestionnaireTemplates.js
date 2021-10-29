@@ -55,6 +55,9 @@ export const isbarQuestionnaire = {
       // Reference the questionnaire
       questionnaire: "Questionnaire/" + questionnaireID,
       status: "in-progress",
+      subject: {
+        reference: "Patient/" + patientID
+      },
       source: {
         // refer to current patient
         reference: "Patient/" + patientID,
