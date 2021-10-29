@@ -11,6 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { FormGroup } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 
 function createData(airway, breathing, skinColour, mentalState, behaviour) {
@@ -19,29 +20,53 @@ function createData(airway, breathing, skinColour, mentalState, behaviour) {
 
 const rows = [
   createData(
-    <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />,
-    <Checkbox label="Label" />,
-    6.0,
-    24,
-    4.0
+    <FormControlLabel control={<Checkbox />} label="Patent" />,
+    <FormControlLabel control={<Checkbox />} label="Unremarkable" />,
+    <FormControlLabel control={<Checkbox />} label="Unremarkable" />,
+    <FormControlLabel control={<Checkbox />} label="Cognitive impairment" />,
+    <FormControlLabel control={<Checkbox />} label="Verbal aggression" />
   ),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData(
+    <FormControlLabel control={<Checkbox />} label="Compromised" />,
+    <FormControlLabel control={<Checkbox />} label="Shallow" />,
+    <FormControlLabel control={<Checkbox />} label="Pale" />,
+    <FormControlLabel control={<Checkbox />} label="Depression" />,
+    <FormControlLabel control={<Checkbox />} label="Harm to others" />
+  ),
+  createData(
+    <FormControlLabel control={<Checkbox />} label="Ventilated" />,
+    <FormControlLabel control={<Checkbox />} label="Deep" />,
+    <FormControlLabel control={<Checkbox />} label="Flushed" />,
+    <FormControlLabel control={<Checkbox />} label="Dementia" />,
+    <FormControlLabel control={<Checkbox />} label="Harm to self" />
+  ),
+  createData(
+    "",
+    <FormControlLabel control={<Checkbox />} label="Slow" />,
+    <FormControlLabel control={<Checkbox />} label="Cyanotic" />,
+    "",
+    <FormControlLabel control={<Checkbox />} label="Sleep disturbance" />
+  ),
+  createData(
+    "",
+    <FormControlLabel control={<Checkbox />} label="Audible Wheeze" />,
+    "",
+    "",
+    ""
+  ),
 ];
 
 export default function BasicTable() {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 850 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Airway</TableCell>
-            <TableCell align="right">Breathing</TableCell>
-            <TableCell align="right">Skin Colour</TableCell>
-            <TableCell align="right">Mental State</TableCell>
-            <TableCell align="right">Behaviour</TableCell>
+            <TableCell>Breathing</TableCell>
+            <TableCell>Skin Colour</TableCell>
+            <TableCell>Mental State</TableCell>
+            <TableCell>Behaviour</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,13 +75,13 @@ export default function BasicTable() {
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" align="right" scope="row">
+              <TableCell component="th" align="left" scope="row">
                 {row.airway}
               </TableCell>
-              <TableCell align="right">{row.breathing}</TableCell>
-              <TableCell align="right">{row.skinColour}</TableCell>
-              <TableCell align="right">{row.mentalState}</TableCell>
-              <TableCell align="right">{row.behaviour}</TableCell>
+              <TableCell>{row.breathing}</TableCell>
+              <TableCell>{row.skinColour}</TableCell>
+              <TableCell>{row.mentalState}</TableCell>
+              <TableCell>{row.behaviour}</TableCell>
             </TableRow>
           ))}
         </TableBody>
