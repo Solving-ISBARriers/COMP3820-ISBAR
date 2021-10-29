@@ -79,6 +79,11 @@ class AppController extends React.Component {
         })
     }
 
+    // method to create a simple isbar questionnaireResponse
+    createSimpleIsbar(){
+        
+    }
+
     render() {
 
         if (this.state.isMenu) {
@@ -98,7 +103,7 @@ class AppController extends React.Component {
         } else {
             if (this.state.isSimple) {
                 return (
-                    <IsbarSimpleApp goBack={this.backToMenu.bind(this)} />
+                    <IsbarSimpleApp goBack={this.backToMenu.bind(this)} content={"content"}/>
                 )
             } else {
                 return (

@@ -1,12 +1,13 @@
 import React from "react";
-import TextInputField from "./TextInputField";
+// import TextInputField from "./TextInputField";
 import { IsbarClientContext } from "../IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { ReactDOM } from "react";
+// import { ReactDOM } from "react";
 import TextField from '@mui/material/TextField'
 import simpleQuestionnaire from './res/simpleQuestionnaire'
+import { client } from "fhirclient";
 
 
 // Class for the input field group.
@@ -21,8 +22,6 @@ export class IsbarSimpleApp extends React.Component {
       // used true if data is loaded
       loaded: false,
       error: null,
-      // questionnaire object that will be stored or created
-      questionnaire: null,
       // questionnaire response object
       content: null,
       // turns true if it's isobar
@@ -37,80 +36,8 @@ export class IsbarSimpleApp extends React.Component {
   }
 
   componentDidMount() {
-    console.log(simpleQuestionnaire)
-    // load client from the client context
-    const client = this.context.client;
-
-    // Promise to load/create questionnaire
-    client.request("Questionnaire?name=" + isbarQuestionnaire.name)
-      .then((response) => {
-        
-        // Check if questionnaire exist or not
-        console.log("Questionnaires:");
-        console.log(response);
-
-        if (response.total === 0) {
-          // there are no questionnaire object - create one
-          return client.create(simpleQuestionnaire);
-        } else {
-          // return the existing questionnaire to be saved
-          return response.entry[0].resource;
-        }
-      })
-      .then((result) => {
-        // save questionnaire, request questionnaireResponse
-
-        this.setState({ questionnaire: result });
-        return client.request(
-          "QuestionnaireResponse?source=Patient/" +
-          this.context.client.patient.id
-        );
-      })
-      .then((response) => {
-        // Check if there's an existing questionnaireResponse
-
-        console.log("Questionnaire Responses:");
-        console.log(response);
-        var qResponse;
-
-        if (response.total > 0) {
-          if (
-            response.entry.some((element) => {
-              qResponse = element.resource;
-              return this.checkExistingResponse(element.resource);
-            })
-          ) {
-
-            // response that fulfills the criteria exists
-            console.log("Selected Response");
-            console.log(qResponse)
-
-            return qResponse;
-          }
-        }
-        // no isbar responses - create one
-        console.log(
-          "No ISBAR questionnaire response from this patient. Creating one.."
-        );
-        return client.create(newQuestionnaireResponse(
-          this.state.questionnaire.id,
-          this.context.client.patient.id
-        ));
-      })
-      .then((result) => {
-        console.log("Questionnaire response result");
-        console.log(result);
-        // save the response object, finish loading
-        this.setState({
-          content: result,
-          loaded: true,
-          error: null,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        this.setState({ error, loaded: false });
-      });
+    this.context.client.user.read().then(console.log)
+    this.setState({content: this.props.content})
   }
 
   // check if the given resource is QuestionnaireResponse for isbar
