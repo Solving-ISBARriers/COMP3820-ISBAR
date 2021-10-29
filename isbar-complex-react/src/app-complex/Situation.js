@@ -2,8 +2,68 @@ import React from "react";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import "medblocks-ui";
 import { IsbarClientContext } from "../IsbarFhirClient";
-import Patient from "./Patient";
 import TextField from "@mui/material/TextField";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+
+function createData(airway, breathing, skinColour, mentalState, behaviour) {
+  return { airway, breathing, skinColour, mentalState, behaviour };
+}
+
+const rows = [
+  createData(
+    <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />,
+    <Checkbox label="Label" />,
+    6.0,
+    24,
+    4.0
+  ),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
+];
+
+export default function BasicTable() {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Airway</TableCell>
+            <TableCell align="right">Breathing</TableCell>
+            <TableCell align="right">Skin Colour</TableCell>
+            <TableCell align="right">Mental State</TableCell>
+            <TableCell align="right">Behaviour</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" align="right" scope="row">
+                {row.airway}
+              </TableCell>
+              <TableCell align="right">{row.breathing}</TableCell>
+              <TableCell align="right">{row.skinColour}</TableCell>
+              <TableCell align="right">{row.mentalState}</TableCell>
+              <TableCell align="right">{row.behaviour}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
 
 export class Situation extends React.Component {
   static contextType = IsbarClientContext;
@@ -52,7 +112,10 @@ export class Situation extends React.Component {
         <h3>Reason For transfer</h3>
         <TextField fullWidth multiline placeholder="Reason For transfer" />
 
-        <div class="table-container">
+        <h3>Observations</h3>
+        <BasicTable />
+
+        {/* <div class="table-container">
           <h3>Observations</h3>
           <table>
             <tr>
@@ -149,7 +212,7 @@ export class Situation extends React.Component {
               <td></td>
             </tr>
           </table>
-        </div>
+        </div> */}
         <div>
           <h3>Vitals</h3>
           <table>
