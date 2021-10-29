@@ -46,18 +46,11 @@ export class Situation extends React.Component {
         <h3>Principle Diagnosis</h3>
         <TextField fullWidth multiline placeholder="Principle Diagnosis" />
 
-        <sl-textarea
-          size="medium"
-          resize="auto"
-          label="Other diagnosis/problem"
-        ></sl-textarea>
-        <mb-input path="name[0].given" label="Reason for transfer"></mb-input>
-        <sl-textarea
-          placeholder="Test"
-          resize="auto"
-          label="Test"
-          size="large"
-        ></sl-textarea>
+        <h3>Other Diagnosis/problems</h3>
+        <TextField fullWidth multiline placeholder="Other Diagnosis/problems" />
+
+        <h3>Reason For transfer</h3>
+        <TextField fullWidth multiline placeholder="Reason For transfer" />
 
         <div class="table-container">
           <h3>Observations</h3>
