@@ -1,32 +1,30 @@
 import React from "react";
-import { IsbarContentField } from "./IsbarContentField";
+import { Assessment } from "./Assessment";
+import { Background } from "./Background";
+import { Introduction } from "./Introduction";
+import { Recommendation } from "./Recommendation";
+import { Situation } from "./Situation";
 
 export class IsbarComplexApp extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            // state for the app display
-            current: "I"
-        }
-    }
     render() {
         return (
             <div className="app-complex">
-                <div className="app-content">
+                <div className="container">
 
-                <IsbarContentField current={this.state.current}/>
+                    <h2 className="section-title">Introduction</h2>
+                    <Introduction />
+                    <h2 className="section-title">Situation</h2>
+                    <Situation />
+                    <h2 className="section-title">Background</h2>
+                    <Background />
+                    <h2 className="section-title">Assessment</h2>
+                    <Assessment />
+                    <h2 className="section-title">Recommendation</h2>
+                    <Recommendation />
+
                 </div>
 
-                <div className="footer">
-                    {/* &larr; */}
-                    <button className="nav-button"  onClick={() => this.setState({current:"I"})}>I</button>
-                    <button className="nav-button"  onClick={() => this.setState({current:"S"})}>S</button>
-                    <button className="nav-button"  onClick={() => this.setState({current:"B"})}>B</button>
-                    <button className="nav-button"  onClick={() => this.setState({current:"A"})}>A</button>
-                    <button className="nav-button"  onClick={() => this.setState({current:"R"})}>R</button>
-                    {/* &rarr; */}
-                </div>
 
             </div>
 

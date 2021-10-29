@@ -29,6 +29,10 @@ export default class Launcher extends React.Component {
     }
     
     render() {
-        return "Launching...";
+        return (
+            <div className="loading-container">
+                Launching the ISBAR handover form..
+            </div>
+            )
     }
 }

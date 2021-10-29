@@ -1,13 +1,19 @@
 import React from "react";
+import '@shoelace-style/shoelace/dist/themes/light.css';
 
 export class Recommendation extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
     }
-    render(){
-        return(
-            <div>Recommendation</div>
+    render() {
+        return (
+            <div class="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
+                <sl-form>
+                    <sl-textarea rows={4}>
+                    </sl-textarea>
+                </sl-form>
+            </div>
         )
     }
 }

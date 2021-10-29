@@ -1,10 +1,10 @@
+// file to store questionnaire json file 
 
-// file to store questionnaire related data.
 export const isbarQuestionnaire = {
     "resourceType": "Questionnaire",
     "title": "questionnaireTitle",
     "name": "isbar-simple",
-    "status": "draft",
+    "status": "active",
     // Introduction
     "item": [{
         "linkid": "1",

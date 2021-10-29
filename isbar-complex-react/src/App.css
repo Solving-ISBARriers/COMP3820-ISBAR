@@ -1,17 +1,88 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
+/* Simple version specific styling */
+
+#simple-header{
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  /* justify-content: ; */
+}
+#simple-header h1{
+  flex-grow: 1;
+  text-align: center;
+}
+#simple-header-content{
+  /* flex-grow: 1; */
+  justify-content: flex-end;
+  text-align: end;
+  
+}
+
+#simple-header-content .simple-toggle{
+  font-size: 15px;
+  /* flex-grow: 1; */
+  /* text-align: center; */
+}
+
+#simple-header-content .simple-state{
+  font-size: 15px;
+  /* flex-grow: 1; */
+}
+
+#go-back-button{
+  background-color: #455d84;
+  border:none;
+  /* border-radius: 10px; */
+  color: white;
+  font-weight: 600;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+  font-size: 20px;
+  flex-grow: 0;
+}
+#go-back-button:hover{
+  color: yellow;
+}
+
+
+.simple-textarea-container{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.simple-textarea-label{
+
+  font-size: 0.5em;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.simple-textarea-content{
+  width: 100%;
+}
+
+
+
+/********** End of simple-specific style ***********/
+
 /* Style inputs, select elements and textareas */
 input[type="text"],
 select,
 textarea {
   width: 100%;
   height: auto;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;  
+  border-radius: 5px;
   box-sizing: border-box;
-  resize: vertical;
+  /* resize: vertical; */
   font-family: "Open Sans", sans-serif;
+  line-height: 20px;
 }
 
 /* Style the label to display next to the inputs */
@@ -35,21 +106,28 @@ button[class="isbar-save"] {
   float: right;
   text-decoration: none;
 }
+
 a {
   text-decoration: none;
   color: white;
 }
 
-.home-nav a{
-  text-decoration: none;
-  color: black;
-}
-
 /* Style the container */
 .container {
   border-radius: 5px;
-  background-color: #455d84;
-  color: #fff;
+  /* background-color: #455d84; */
+  /* color: #fff; */
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 5%;
+  margin: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+  
+}
+
+.container .section-title{
+  font-size: 30px;
   padding-left: 10%;
   padding-right: 20%;
   margin: 0 5%;
@@ -70,13 +148,20 @@ a {
   margin-top: 10px;
 }
 
+.row{
+  width: 100%;
+}
+
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
-  padding: 3%;
+  /* width: 100%; */
+  /* content: ""; */
+  /* display: table; */
+  /* clear: both; */
+  /* padding: 3%; */
 }
+
+
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
@@ -85,6 +170,9 @@ a {
   button[class="isbar-save"] {
     width: 100%;
     margin-top: 0;
+  }
+  #go-back-button{
+    font-size: 15px;
   }
 }
 
@@ -133,6 +221,15 @@ a {
 
   width: 100vw;
   height: 90vh;
+}
+
+.loading-container{
+  display:flex;
+
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  /* align-content: center; */
 }
 
 table{
