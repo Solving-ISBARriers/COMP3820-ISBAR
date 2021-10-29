@@ -6,6 +6,7 @@ import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ReactDOM } from "react";
 import TextField from '@mui/material/TextField'
+import simpleQuestionnaire from './res/simpleQuestionnaire'
 
 
 // Class for the input field group.
@@ -36,6 +37,7 @@ export class IsbarSimpleApp extends React.Component {
   }
 
   componentDidMount() {
+    console.log(simpleQuestionnaire)
     // load client from the client context
     const client = this.context.client;
 
@@ -49,7 +51,7 @@ export class IsbarSimpleApp extends React.Component {
 
         if (response.total === 0) {
           // there are no questionnaire object - create one
-          return client.create(isbarQuestionnaire);
+          return client.create(simpleQuestionnaire);
         } else {
           // return the existing questionnaire to be saved
           return response.entry[0].resource;
@@ -142,6 +144,7 @@ export class IsbarSimpleApp extends React.Component {
   // this is the function for changing value
   // changes answer string in the questionnaireresponse object with given index
   // updates questionnaireresponse state
+  // TODO: make it smooth
   updateResponse(event, index) {
     var response = this.state.content;
 
@@ -156,9 +159,9 @@ export class IsbarSimpleApp extends React.Component {
     }
     this.setState({ content: response });
     // change the saved state
-    // if (this.state.saved === "saved") {
-    //   this.setState({ saved: "edited" })
-    // }
+    if (this.state.saved === "saved") {
+      this.setState({ saved: "edited" })
+    }
   }
   
   getFieldValue(index){

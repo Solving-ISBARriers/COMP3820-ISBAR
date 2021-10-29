@@ -4,7 +4,7 @@ export const isbarQuestionnaire = {
     "resourceType": "Questionnaire",
     "title": "questionnaireTitle",
     "name": "isbar-simple",
-    "status": "draft",
+    "status": "active",
     // Introduction
     "item": [{
         "linkid": "1",

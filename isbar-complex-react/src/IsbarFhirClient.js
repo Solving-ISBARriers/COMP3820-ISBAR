@@ -2,7 +2,7 @@
 // Client context is created and updated.
 
 import React from "react";
-import { oauth2 as SMART } from "fhirclient";
+import { client, oauth2 as SMART } from "fhirclient";
 
 // React client context so it is accessible in differernt parts of code.
 // by exporting, it should be accessible from various part of the code.
@@ -28,9 +28,6 @@ export class IsbarClientProvider extends React.Component {
         )
         // Load the relevant resources
     }
-
-    
-
 
     render() {
 
