@@ -229,12 +229,12 @@ function newQuestionnaireResponse(questionnaireID, patientID, sourceID) {
     },
     // extension not used because resolving reference requires extra effort. 
     // Instead, author section is used.
-    // extension: [{
-    //   url:"http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
-    //   valueReference:{
-    //     reference: "Practitioner/" + sourceID
-    //   }
-    // }],
+    extension: [{
+      url:"http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
+      valueReference:{
+        reference: "Practitioner/" + sourceID
+      }
+    }],
     item: [
       {
         linkId: "1",

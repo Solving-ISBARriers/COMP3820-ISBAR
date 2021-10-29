@@ -4,7 +4,6 @@ import { IsbarClientProvider } from "./IsbarFhirClient";
 import { IsbarSimpleApp } from "./app-simple/IsbarSimpleApp";
 import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
 import { IsbarComplexDevelopment } from "./app-complex/IsbarComplexDevelopment";
-// import { newQuestionnaireResponse } from "./app-simple/QuestionnaireTemplates";
 import { IsbarClientContext } from "./IsbarFhirClient";
 import { Stack, Box, Container, Accordion, AccordionSummary, Typography, Button, AccordionDetails } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -41,7 +40,6 @@ class AppController extends React.Component {
     componentDidMount() {
 
         // Load questionnaire and simple isbar forms for this patient
-
         const loadSimple = this.loadQuestionnaireID()
             // .then(() => this.createSimpleIsbar())
             .then((res) => this.loadSimpleIsbars(res))
@@ -90,9 +88,9 @@ class AppController extends React.Component {
         return this.context.client.request(
             // currently, retrieves all responses about this patient
             "QuestionnaireResponse?questionnaire=" + questionnaireID
-            + "&patient=Patient/" + this.context.client.patient.id, 
+            + "&patient=Patient/" + this.context.client.patient.id,
             // resolves references connected to questionnaire
-            {resolveReferences: ["author", "extension[1].valueReference"]}
+            { resolveReferences: ["author", "extension[1].valueReference"] }
         ).then((result) => {
             // console.log(result)
             // console.log(questionnaireID)
@@ -102,111 +100,75 @@ class AppController extends React.Component {
         }).catch(console.error)
     }
 
-    // createSimpleIsbar() {
-    //     return this.context.client.create(newQuestionnaireResponse(
-    //         this.state.questionnaireID,
-    //         this.context.client.patient.id
-    //     )).then((res) => console.log(res))
-    //         .catch(console.error)
-    // }
-    // this is the callback function to be called when create new is pressed
-    // renders isbarsimpleapp with create=true
-    openSimpleIsbarNew() {
-
-        this.setState({ createNew: true },
-            () => { this.setState({ isMenu: false, isSimple: true }) })
-    }
-
-
-    //function to get simeple version of isbar
-    getSimpleIsbar() {
-
-    }
-
+    // What a mess! requires cleaning..
     render() {
 
-        if (this.state.loaded) {
-            if (this.state.isMenu) {
-                return (
-                    // // menu
-                    <div>
-                        <Box sx={{
-                            padding: '3%'
+        if (this.state.loaded && this.state.isMenu) {
+            return (
+                <div>
+                    <Box sx={{
+                        padding: '3%'
+                    }}>
+                        {/* Heading needs fixing */}
+                        <Typography sx={{
+                            width: '100%',
+                            textAlign: 'center',
+                            fontSize: '30px'
                         }}>
-                            {/* Heading needs fixing */}
-                            <Typography sx={{
-                                width: '100%',
-                                textAlign: 'center',
-                                fontSize: '30px'
-                            }}>
-                                ISBAR Handover Form
-                            </Typography>
-                            {/* Stack requires positioning */}
-                            <Stack spacing={2}
-                                sx={{
+                            ISBAR Handover Form
+                        </Typography>
 
-                                }}
-                            >
+                        {/* Stack requires positioning */}
+                        <Stack spacing={2}
+                            sx={{
 
-                                <Accordion defaultExpanded={true}>
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel1bh-content"
-                                        id="panel1bh-header"
+                            }}
+                        >
+                            <Accordion defaultExpanded={true}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1bh-content"
+                                    id="panel1bh-header"
+                                >
+                                    <Typography sx={{ width: '70%', flexShrink: 0 }}>
+                                        Simple ISBAR handover forms
+                                    </Typography>
+                                    <Button
+                                        onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: true })}
                                     >
-                                        <Typography sx={{ width: '70%', flexShrink: 0 }}>
-                                            Simple ISBAR handover forms
-                                        </Typography>
-                                        <Button
-                                            onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: true })}
-                                        >
-                                            Create new
-                                        </Button>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <SimpleHistory data={this.state.simpleResponses} />
-                                    </AccordionDetails>
-                                </Accordion>
+                                        Create new
+                                    </Button>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <SimpleHistory data={this.state.simpleResponses} />
+                                </AccordionDetails>
+                            </Accordion>
+                        </Stack>
+                    </Box>
 
-                            </Stack>
+                    <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
+                        Complex ISBAR
+                    </button>
+                </div>
+            )
+        } else if (this.state.loaded && this.state.isSimple) {
 
-
-                        </Box>
-
-                        <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
-                            Complex ISBAR
-                        </button>
-                    </div>
-                    // <div className="main-menu-container">
-                    //     <h2 className="menu-title">ISBAR Form</h2>
-                    //     <button className="main-menu-button" onClick={() => this.setState({ isSimple: true, isMenu: false })}>
-                    //         Simple ISBAR
-                    //     </button>
-
-                    //     <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
-                    //         Complex ISBAR
-                    //     </button>
-                    // </div>
-                )
-            } else {
-                if (this.state.isSimple) {
-                    return (
-                        <IsbarSimpleApp
-                            goBack={this.backToMenu.bind(this)}
-                            content={"content"} // this is the response object passed.
-                            create={this.state.createNew}
-                            questionnaireID={this.state.questionnaireID}
-                        />
-                    )
-                } else {
-                    return (
-                        // <IsbarComplexDevelopment />
-                        <IsbarComplexApp />
-                    )
-                }
-            }
+            return (
+                <IsbarSimpleApp
+                    goBack={this.backToMenu.bind(this)}
+                    content={"content"} // this is the response object passed.
+                    create={this.state.createNew}
+                    questionnaireID={this.state.questionnaireID}
+                />
+            )
+        } else if (this.state.loaded && this.state.isSimple) {
+            return (
+                // <IsbarComplexDevelopment />
+                <IsbarComplexApp />
+            )
         } else {
             return (<div>Loading</div>)
+
         }
     }
 }
