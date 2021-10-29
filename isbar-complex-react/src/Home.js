@@ -6,6 +6,9 @@ import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
 import { IsbarComplexDevelopment } from "./app-complex/IsbarComplexDevelopment";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./app-simple/QuestionnaireTemplates";
 import { IsbarClientContext } from "./IsbarFhirClient";
+import { Stack, Box, Container, Accordion,AccordionSummary, Typography, Button, AccordionDetails } from '@mui/material'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {SimpleHistory} from "./SimpleHistory";
 
 export default class Home extends React.Component {
 
@@ -21,6 +24,7 @@ export default class Home extends React.Component {
 // this component loads and displays the questionnaireResponse
 class AppController extends React.Component {
 
+    // include client 
     static contextType = IsbarClientContext;
     constructor(props) {
         super(props)
@@ -29,7 +33,7 @@ class AppController extends React.Component {
             isMenu: true,
             isSimple: true,
             simpleResponses: null,
-            questionnaireID: null
+
         }
     }
     componentDidMount() {
@@ -64,7 +68,7 @@ class AppController extends React.Component {
             }).then((result) => {
                 this.setState({ questionnaireID: result.id })
                 return result.id
-            })
+            }).catch(console.error)
     }
 
     // Returns a promise for loading simple isbar forms given questionnaire id.
@@ -76,34 +80,80 @@ class AppController extends React.Component {
         ).then((result) => {
             this.setState({ simpleResponses: result })
             return result
-        })
+        }).catch(console.error)
     }
 
-    // method to create a simple isbar questionnaireResponse
-    createSimpleIsbar(){
-        
+    //function to get simeple version of isbar
+    getSimpleIsbar() {
+
     }
 
     render() {
 
         if (this.state.isMenu) {
             return (
-                // menu
-                <div className="main-menu-container">
-                    <h2 className="menu-title">ISBAR Form</h2>
-                    <button className="main-menu-button" onClick={() => this.setState({ isSimple: true, isMenu: false })}>
-                        Simple ISBAR
-                    </button>
+                // // menu
+                <div>
+                <Box sx={{
+                    padding: '3%'
+                }}>
+                    {/* Heading needs fixing */}
+                    <Typography sx={{
+                        width: '100%', 
+                        textAlign:'center',
+                        fontSize: '30px'
+                        }}>
+                        ISBAR Handover Form
+                    </Typography>
+                    {/* Stack requires positioning */}
+                    <Stack spacing={2}
+                    sx={{
 
-                    <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
-                        Complex ISBAR
-                    </button>
+                    }}
+                    >
+                    
+                    <Accordion defaultExpanded={true}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1bh-content"
+                            id="panel1bh-header"
+                        >
+                        <Typography sx={{ width: '70%', flexShrink: 0 }}>
+                        Simple ISBAR handover forms
+                        </Typography>
+                        <Button>
+                        Create new
+                        </Button>
+                        </ AccordionSummary>
+                        <AccordionDetails>
+                            <SimpleHistory />
+                        </AccordionDetails>
+                    </Accordion>
+
+                    </Stack>
+
+
+                </Box>
+
+                <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
+                         Complex ISBAR
+                     </button>
                 </div>
+                // <div className="main-menu-container">
+                //     <h2 className="menu-title">ISBAR Form</h2>
+                //     <button className="main-menu-button" onClick={() => this.setState({ isSimple: true, isMenu: false })}>
+                //         Simple ISBAR
+                //     </button>
+
+                //     <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
+                //         Complex ISBAR
+                //     </button>
+                // </div>
             )
         } else {
             if (this.state.isSimple) {
                 return (
-                    <IsbarSimpleApp goBack={this.backToMenu.bind(this)} content={"content"}/>
+                    <IsbarSimpleApp goBack={this.backToMenu.bind(this)} content={"content"} />
                 )
             } else {
                 return (

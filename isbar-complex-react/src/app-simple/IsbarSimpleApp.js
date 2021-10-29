@@ -4,9 +4,7 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-// import { ReactDOM } from "react";
 import TextField from '@mui/material/TextField'
-import simpleQuestionnaire from './res/simpleQuestionnaire'
 import { client } from "fhirclient";
 
 
@@ -20,7 +18,7 @@ export class IsbarSimpleApp extends React.Component {
     super(props);
     this.state = {
       // used true if data is loaded
-      loaded: false,
+      loaded: true,
       error: null,
       // questionnaire response object
       content: null,
@@ -95,6 +93,13 @@ export class IsbarSimpleApp extends React.Component {
     return this.state.content.item[index].hasOwnProperty('answer')
     ? this.state.content.item[index].answer[0].valueString
     : ""
+  }
+
+  createSimpleIsbar(){
+    return client.create(newQuestionnaireResponse(
+      this.state.questionnaireID,
+      this.context.client.patient.id
+    )).catch(console.error)
   }
 
   // Load the text fields after the questionnaire and questionnaire responses are loaded.
