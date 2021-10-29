@@ -1,6 +1,7 @@
 import React from "react";
 import { TableBody, TableContainer, Table, TableHead, TableCell, TableRow, Paper } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid'
+import { getSimpleName } from "./common/DisplayHelper";
 
 // this displays the list of previous simple isbar entries
 // takes in the bundle from response
@@ -11,7 +12,7 @@ export class SimpleHistory extends React.Component {
         super(props)
         this.state = {
             fields: [
-                { field: 'date', headerName: 'Date', width: 70 },
+                { field: 'lastUpdated', headerName: 'Last Updated', width:200},
                 { field: 'author', headerName: 'Author', width: 140 },
                 { field: 'id', headerName: 'ID', width: 210 },
                 { field: 'recipient', headerName: 'Recipient', width: 140 },
@@ -33,6 +34,7 @@ export class SimpleHistory extends React.Component {
         }
     }
 
+    // manually resolve the recipient..
     updateTable() {
         const newContent = []
         console.log(this.props.data)
@@ -40,28 +42,28 @@ export class SimpleHistory extends React.Component {
             
             this.props.data.entry.forEach((element, index) => {
                 // element is each resource in the bundle
-                console.log(element)
+                // console.log(element)
                 const resource = element.resource
                 const entry = {
-                    date: '-',
+                    lastUpdated:'-',
                     id: '-',
                     author: '-',
                     recipient: '-'
                 }
 
-                if(resource.hasOwnProperty('authored')){
-                    entry.date = resource.authored
+                if(resource.meta.hasOwnProperty('lastUpdated')){
+                    entry.lastUpdated = resource.meta.lastUpdated
                 }
                 if(resource.hasOwnProperty('id')){
                     entry.id = resource.id
                 }
                 if(resource.hasOwnProperty('author')){
-                    entry.author = resource.author
+                    entry.author = getSimpleName(resource.author.name[0])
                 }
                 if(resource.hasOwnProperty('reviewer')){
-                    entry.reviewer = resource.reviewer
+                    entry.recipient = resource.reviewer
                 }
-                console.log(entry)
+                // console.log(entry)
                 newContent.push(entry)
                 // console.log(newContent)
             });

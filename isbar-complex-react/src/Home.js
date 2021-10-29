@@ -4,7 +4,7 @@ import { IsbarClientProvider } from "./IsbarFhirClient";
 import { IsbarSimpleApp } from "./app-simple/IsbarSimpleApp";
 import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
 import { IsbarComplexDevelopment } from "./app-complex/IsbarComplexDevelopment";
-import { isbarQuestionnaire, newQuestionnaireResponse } from "./app-simple/QuestionnaireTemplates";
+// import { newQuestionnaireResponse } from "./app-simple/QuestionnaireTemplates";
 import { IsbarClientContext } from "./IsbarFhirClient";
 import { Stack, Box, Container, Accordion, AccordionSummary, Typography, Button, AccordionDetails } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -34,18 +34,19 @@ class AppController extends React.Component {
             isSimple: true,
             questionnaireID: null,
             simpleResponses: null,
+            createNew: false,
 
         }
     }
     componentDidMount() {
 
         // Load questionnaire and simple isbar forms for this patient
-        
+
         const loadSimple = this.loadQuestionnaireID()
             // .then(() => this.createSimpleIsbar())
             .then((res) => this.loadSimpleIsbars(res))
             .then(() => this.setState({ loaded: true }))
-
+        this.context.client.request("Practitioner/e443ac58-8ece-4385-8d55-775c1b8f3a37").then(console.log)
         // wait till all promises resolved
         Promise.all([loadSimple]).then(() => console.log("all loaded"))
     }
@@ -64,7 +65,7 @@ class AppController extends React.Component {
         // make server calls 
         return this.context.client.request("Questionnaire?name=" + isbarQuestionnaire.name)
             .then((response) => {
-                
+
                 if (response.total === 0) {
                     // there are no questionnaire object - create one
                     return this.context.client.create(isbarQuestionnaire);
@@ -89,8 +90,11 @@ class AppController extends React.Component {
         return this.context.client.request(
             // currently, retrieves all responses about this patient
             "QuestionnaireResponse?questionnaire=" + questionnaireID
-            + "&patient=Patient/" + this.context.client.patient.id 
+            + "&patient=Patient/" + this.context.client.patient.id, 
+            // resolves references connected to questionnaire
+            {resolveReferences: ["author", "extension[1].valueReference"]}
         ).then((result) => {
+            // console.log(result)
             // console.log(questionnaireID)
             this.setState({ simpleResponses: result })
             // console.log(result)
@@ -98,13 +102,21 @@ class AppController extends React.Component {
         }).catch(console.error)
     }
 
-    createSimpleIsbar() {
-        return this.context.client.create(newQuestionnaireResponse(
-            this.state.questionnaireID,
-            this.context.client.patient.id
-        )).then((res) => console.log(res))
-        .catch(console.error)
+    // createSimpleIsbar() {
+    //     return this.context.client.create(newQuestionnaireResponse(
+    //         this.state.questionnaireID,
+    //         this.context.client.patient.id
+    //     )).then((res) => console.log(res))
+    //         .catch(console.error)
+    // }
+    // this is the callback function to be called when create new is pressed
+    // renders isbarsimpleapp with create=true
+    openSimpleIsbarNew() {
+
+        this.setState({ createNew: true },
+            () => { this.setState({ isMenu: false, isSimple: true }) })
     }
+
 
     //function to get simeple version of isbar
     getSimpleIsbar() {
@@ -114,7 +126,6 @@ class AppController extends React.Component {
     render() {
 
         if (this.state.loaded) {
-
             if (this.state.isMenu) {
                 return (
                     // // menu
@@ -146,7 +157,9 @@ class AppController extends React.Component {
                                         <Typography sx={{ width: '70%', flexShrink: 0 }}>
                                             Simple ISBAR handover forms
                                         </Typography>
-                                        <Button>
+                                        <Button
+                                            onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: true })}
+                                        >
                                             Create new
                                         </Button>
                                     </AccordionSummary>
@@ -178,7 +191,12 @@ class AppController extends React.Component {
             } else {
                 if (this.state.isSimple) {
                     return (
-                        <IsbarSimpleApp goBack={this.backToMenu.bind(this)} content={"content"} />
+                        <IsbarSimpleApp
+                            goBack={this.backToMenu.bind(this)}
+                            content={"content"} // this is the response object passed.
+                            create={this.state.createNew}
+                            questionnaireID={this.state.questionnaireID}
+                        />
                     )
                 } else {
                     return (
@@ -187,9 +205,56 @@ class AppController extends React.Component {
                     )
                 }
             }
-        } else{
-            return(<div>Loading</div>)
+        } else {
+            return (<div>Loading</div>)
         }
     }
 }
+
+
+
+const isbarQuestionnaire = {
+    "resourceType": "Questionnaire",
+    "title": "questionnaireTitle",
+    "name": "isbar-simple",
+    "status": "active",
+    // Introduction
+    "item": [{
+        "linkid": "1",
+        "text": "I:Identify",
+        "type": "text" // free text
+    },
+    // Situation
+    {
+        "linkid": "2",
+        "text": "S:Situation",
+        "type": "text" // free text
+    },
+    // Observation. Enable option is not included, because it could be handled by js.
+    {
+        "linkid": "3",
+        "text": "O:Observation",
+        "type": "text" // free text
+    },
+    // Background
+    {
+        "linkid": "4",
+        "text": "B:Background",
+        "type": "text" // free text
+    },
+    // assessment
+    {
+        "linkid": "5",
+        "text": "A:Assessment",
+        "type": "text" // free text
+    },
+    // Recommendation
+    {
+        "linkid": "6",
+        "text": "R:Recommendation",
+        "type": "text" // free text
+    }]
+}
+
+
 
