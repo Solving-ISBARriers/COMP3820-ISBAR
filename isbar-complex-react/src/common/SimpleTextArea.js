@@ -20,6 +20,11 @@ export default class SimpleTextArea extends React.Component {
     componentDidMount() {
         this.setState({ value: this.props.initialValue })
     }
+    
+    // clear timeout when user is in different screen
+    componentWillUnmount(){
+        clearTimeout(this.state.timeout)
+    }
     handleChange(event) {
 
         // set the value of this field
@@ -43,7 +48,16 @@ export default class SimpleTextArea extends React.Component {
                 />
             )
         } else {
-            return (<div></div>)
+            return (
+                <TextField fullWidth multiline
+                    placeholder={this.props.placeholder}
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                    sx={{
+                        display: 'none'
+                    }}
+                />
+                )
         }
     }
 }

@@ -1,12 +1,10 @@
 import React from "react";
-// import TextInputField from "./TextInputField";
 import { IsbarClientContext } from "../IsbarFhirClient";
-// import { isbarQuestionnaire, newQuestionnaireResponse } from "./QuestionnaireTemplates";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import TextField from '@mui/material/TextField'
-import { client } from "fhirclient";
 import SimpleTextArea from "../common/SimpleTextArea";
+import { Stack, Grid, Typography, Slider } from '@mui/material'
+import { FormGroup, FormControl, FormControlLabel, Switch } from "@mui/material";
 
 
 // Class for the input field group.
@@ -48,7 +46,7 @@ export class IsbarSimpleApp extends React.Component {
       // always create a new form when approached this way
       this.context.client.create(newForm)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.setState({ content: res, loaded: true })
         })
     } else {
@@ -56,14 +54,14 @@ export class IsbarSimpleApp extends React.Component {
       // note we are not directly modifying the file in parent.
       // parent will fetch the updated version via database query
       this.context.client.request("QuestionnaireResponse/" + this.props.formID)
-      .then((res) => this.setState({content: res, loaded: true}))
+        .then((res) => this.setState({ content: res, loaded: true }))
     }
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.uploadToServer()
   }
-  
+
   // function to send upload request
   // checks if requires uploading
   uploadToServer() {
@@ -104,29 +102,24 @@ export class IsbarSimpleApp extends React.Component {
 
     if (this.state.loaded) {
       return (
+        <Stack spacing={2}
+          sx={{
+            padding: '5% 3% 5% 3%'
+          }}>
 
-        <div className="container">
-          <div id="simple-header">
-            <button id="go-back-button" onClick={this.props.goBack}> Back to Menu </button>
-            <h1>ISBAR</h1>
-            <div id="simple-header-content">
-              <p className="simple-state">
-                State:
-                {this.state.saved}
-              </p>
-              <label className="simple-toggle">
-                Is ISOBAR:
-                <input
-                  name="isISOBAR"
-                  type="checkbox"
-                  checked={this.state.isIsobar}
-                  onChange={() => this.setState(prevState => ({ isIsobar: !prevState.isIsobar }))}
-                />
-              </label>
-
-            </div>
-          </div>
-
+          <Typography variant='h2'>
+            Simple ISBAR Form
+          </Typography>
+          <Grid>
+            <FormControlLabel
+              value="ISOBAR"
+              control={<Switch />}
+              label="ISOBAR"
+              labelPlacement="start"
+              onChange={(event) => this.setState({isIsobar: event.target.checked})}
+            >
+            </FormControlLabel>
+          </Grid>
           <SimpleTextArea
             initialValue={this.getFieldValue(0)}
             placeholder="Introduction"
@@ -164,13 +157,6 @@ export class IsbarSimpleApp extends React.Component {
             updateField={(value) => this.updateFieldValue(value, 5)}
           />
 
-          <button
-            className="isbar-save"
-            onClick={() => this.updateResponse()}
-          >
-            Save
-          </button>
-
           <button className="isbar-save">
             <PDFDownloadLink
               document={
@@ -183,7 +169,8 @@ export class IsbarSimpleApp extends React.Component {
               }
             </PDFDownloadLink>
           </button>
-        </div>
+
+        </Stack >
 
       )
     } else {

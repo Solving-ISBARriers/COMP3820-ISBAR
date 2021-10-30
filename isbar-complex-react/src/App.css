@@ -96,13 +96,12 @@ textarea {
 }
 
 /* Style the label to display next to the inputs */
-label {
+/* label {
   display: inline-block;
   font-size: 2em;
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
-  color:#fff !important;
-}
+} */
 
 /* Style the submit button */
 button[class="isbar-save"] {
