@@ -93,7 +93,7 @@ class AppController extends React.Component {
             + "&patient=Patient/" + this.context.client.patient.id,
             // resolves references connected to questionnaire
             // this was not used because it caused corruption, and the data had to be loaded again.
-            { resolveReferences: ["author", "extension[1].valueReference"] }
+            { resolveReferences: ["author"] }
         ).then((result) => {
             // console.log(result)
             // console.log(questionnaireID)

@@ -5,6 +5,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import SimpleTextArea from "../common/SimpleTextArea";
 import { Stack, Grid, Typography, Slider } from '@mui/material'
 import { FormGroup, FormControl, FormControlLabel, Switch } from "@mui/material";
+import FHIRAutocomplete from "../common/FHIRAutocomplete";
 
 
 // Class for the input field group.
@@ -25,7 +26,8 @@ export class IsbarSimpleApp extends React.Component {
       // indicates saved state
       isNew: false,
       // indicates updated state.
-      uploaded: true
+      uploaded: true,
+      practitioners: []
     };
 
     this.updateFieldValue = this.updateFieldValue.bind(this)
@@ -56,6 +58,8 @@ export class IsbarSimpleApp extends React.Component {
       this.context.client.request("QuestionnaireResponse/" + this.props.formID)
         .then((res) => this.setState({ content: res, loaded: true }))
     }
+    // get all the practitioners
+    this.getAllPractitioner()
   }
 
   componentDidUpdate() {
@@ -78,6 +82,24 @@ export class IsbarSimpleApp extends React.Component {
     return this.state.content.item[index].hasOwnProperty('answer')
       ? this.state.content.item[index].answer[0].valueString
       : ""
+  }
+
+  getAllPractitioner(){
+
+    this.context.client.request("Practitioner", {pageLimit:0})
+    .then((res) => {
+      // this processing is based on smart cilent api. may not be suitable for big systems
+      // with thousands of practitioners?
+      const resultArray = []
+      res.forEach(element => {
+        element.entry.forEach(element => {
+          resultArray.push(element)
+        })
+      });
+      console.log(resultArray)
+      this.setState({practitioners:resultArray})
+      console.log(res)
+    })
   }
 
   // update the isbar form field of given index to the value given
@@ -119,6 +141,12 @@ export class IsbarSimpleApp extends React.Component {
               onChange={(event) => this.setState({isIsobar: event.target.checked})}
             >
             </FormControlLabel>
+            <FHIRAutocomplete
+            resourceName="Practitioner"
+            query={[]}
+            >
+
+            </FHIRAutocomplete>
           </Grid>
           <SimpleTextArea
             initialValue={this.getFieldValue(0)}
