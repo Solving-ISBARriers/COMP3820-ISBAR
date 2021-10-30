@@ -34,8 +34,10 @@ class AppController extends React.Component {
             questionnaireID: null,
             simpleResponses: null,
             createNew: false,
-
+            // id of current simple form
+            simpleFormID: null
         }
+        this.editSimpleForm = this.editSimpleForm.bind(this)
     }
     componentDidMount() {
 
@@ -44,7 +46,7 @@ class AppController extends React.Component {
             // .then(() => this.createSimpleIsbar())
             .then((res) => this.loadSimpleIsbars(res))
             .then(() => this.setState({ loaded: true }))
-        this.context.client.request("Practitioner/e443ac58-8ece-4385-8d55-775c1b8f3a37").then(console.log)
+        // this.context.client.request("Practitioner/e443ac58-8ece-4385-8d55-775c1b8f3a37").then(console.log)
         // wait till all promises resolved
         Promise.all([loadSimple]).then(() => console.log("all loaded"))
     }
@@ -90,6 +92,7 @@ class AppController extends React.Component {
             "QuestionnaireResponse?questionnaire=" + questionnaireID
             + "&patient=Patient/" + this.context.client.patient.id,
             // resolves references connected to questionnaire
+            // this was not used because it caused corruption, and the data had to be loaded again.
             { resolveReferences: ["author", "extension[1].valueReference"] }
         ).then((result) => {
             // console.log(result)
@@ -98,6 +101,18 @@ class AppController extends React.Component {
             // console.log(result)
             return result
         }).catch(console.error)
+    }
+
+    // opens existing form to edit. id is the questionnaireResponse id.
+    editSimpleForm(id){
+        // the simple form should be passed as a prop to child object?
+        const response = this.state.simpleResponses.entry.filter((element) => element.resource.id === id)
+        console.log(response)
+        console.log(response[0].resource.id)
+        // search the server for questionnaireResponse with same id
+        // The resource is retrieved again rather than being set from the bundle
+        // because bundle contains resolved references, it results in corruption
+        this.setState({simpleFormID: response[0].resource.id, isMenu: false, isSimple: true, createNew: false})
     }
 
     // What a mess! requires cleaning..
@@ -140,7 +155,10 @@ class AppController extends React.Component {
                                     </Button>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <SimpleHistory data={this.state.simpleResponses} />
+                                    <SimpleHistory 
+                                    data={this.state.simpleResponses} 
+                                    editForm={(id) => this.editSimpleForm(id)}
+                                    />
                                 </AccordionDetails>
                             </Accordion>
                         </Stack>
@@ -156,7 +174,7 @@ class AppController extends React.Component {
             return (
                 <IsbarSimpleApp
                     goBack={this.backToMenu.bind(this)}
-                    content={"content"} // this is the response object passed.
+                    formID={this.state.simpleFormID} // this is the response object passed.
                     create={this.state.createNew}
                     questionnaireID={this.state.questionnaireID}
                 />

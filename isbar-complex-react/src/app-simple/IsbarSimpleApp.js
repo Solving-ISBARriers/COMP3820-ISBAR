@@ -27,13 +27,14 @@ export class IsbarSimpleApp extends React.Component {
       // indicates saved state
       isNew: false,
       // indicates updated state.
-      uploaded: false
+      uploaded: true
     };
 
     this.updateFieldValue = this.updateFieldValue.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    console.log(this.props.create)
     if (this.props.create) {
       // create new resource and store that 
       // now the question is.. do we have to create the resource in the server?
@@ -47,12 +48,15 @@ export class IsbarSimpleApp extends React.Component {
       // always create a new form when approached this way
       this.context.client.create(newForm)
         .then((res) => {
-          this.setState({ content: res, loaded: true, uploaded: true })
+          console.log(res)
+          this.setState({ content: res, loaded: true })
         })
     } else {
+
       // note we are not directly modifying the file in parent.
       // parent will fetch the updated version via database query
-      this.setState({ content: this.props.content, loaded: true })
+      this.context.client.request("QuestionnaireResponse/" + this.props.formID)
+      .then((res) => this.setState({content: res, loaded: true}))
     }
   }
 

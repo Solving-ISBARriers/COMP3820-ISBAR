@@ -30,6 +30,16 @@
   /* flex-grow: 1; */
 }
 
+.simple-table--cell{
+  font-weight: bold;
+  color: #276FC7;
+}
+.simple-table--cell:hover{
+  color: #77AFF7;
+  cursor: pointer;
+  /* background-color: #F4F9FD; */
+}
+
 #go-back-button{
   background-color: #455d84;
   border:none;

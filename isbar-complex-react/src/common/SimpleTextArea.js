@@ -17,7 +17,7 @@ export default class SimpleTextArea extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentWillUnmount() {
+    componentDidMount() {
         this.setState({ value: this.props.initialValue })
     }
     handleChange(event) {

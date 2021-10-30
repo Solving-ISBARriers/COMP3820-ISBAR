@@ -3,6 +3,7 @@ import { TableBody, TableContainer, Table, TableHead, TableCell, TableRow, Paper
 import { DataGrid } from '@mui/x-data-grid'
 import { getSimpleName, getDateTimeString } from "./common/DisplayHelper";
 import { IsbarClientContext } from "./IsbarFhirClient";
+import { Edit } from "@mui/icons-material";
 
 // this displays the list of previous simple isbar entries
 // takes in the bundle from response
@@ -14,11 +15,39 @@ export class SimpleHistory extends React.Component {
         super(props)
         this.state = {
             fields: [
-                { field: 'lastUpdated', headerName: 'Last Updated', width: 200 },
-                { field: 'author', headerName: 'Author', width: 140 },
-                { field: 'id', headerName: 'ID', width: 210 },
-                { field: 'recipient', headerName: 'Recipient', width: 140 },
-                { field: 'action', headerName: 'Action', width: 70 },
+                {
+                    field: 'lastUpdated',
+                    headerName: 'Last Updated',
+                    description: "Time last updated",
+                    flex: 2
+                },
+                {
+                    field: 'id',
+                    headerName: 'ID',
+                    description: "Form ID",
+                    flex: 2
+                },
+                {
+                    field: 'author',
+                    headerName: 'Author',
+                    description: "Author of the form",
+                    flex: 3
+                },
+                {
+                    field: 'recipient',
+                    headerName: 'Recipient',
+                    description: "Receiving party of the form",
+                    flex: 3
+                },
+                {
+                    field: 'action',
+                    headerName: 'Action',
+                    description: "Actions allowed on the form",
+                    cellClassName: 'simple-table--cell',
+                    align: 'center',
+                    headerAlign: 'center',
+                    width: 100
+                },
             ],
             entries: null
         }
@@ -46,13 +75,16 @@ export class SimpleHistory extends React.Component {
                 // element is each resource in the bundle
                 // console.log(element)
                 const resource = element.resource
+                // this.context.client.delete("QuestionnaireResponse/"+resource.id)})}
+
                 // default content for the fields.
                 // Also displayed while resolving promises
                 const entry = {
                     lastUpdated: 'Loading',
                     id: 'Loading',
                     author: 'Loading',
-                    recipient: 'Loading'
+                    recipient: 'Loading',
+                    action: null
                 }
                 // set new content??
                 if (resource.meta.hasOwnProperty('lastUpdated')) {
@@ -64,6 +96,7 @@ export class SimpleHistory extends React.Component {
                 if (resource.hasOwnProperty('author')) {
                     entry.author = getSimpleName(resource.author.name[0])
                 }
+                entry.action = "EDIT"
                 newContent.push(entry)
             });
 
@@ -86,6 +119,15 @@ export class SimpleHistory extends React.Component {
             console.log("no existing entry")
         }
         this.setState({ entries: newContent })
+            
+    }
+
+    handleCellClick(cellParam) {
+        // handle cell click
+        if (cellParam.colDef.field === "action") {
+            // edit button is pressed. cell id is the form id
+            this.props.editForm(cellParam.id)
+        }
     }
 
     render() {
@@ -100,7 +142,13 @@ export class SimpleHistory extends React.Component {
                         columns={this.state.fields}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        checkboxSelection
+                        disableColumnMenu={true}
+                        disableSelectionOnClick={true}
+                        onCellClick={(param) => {
+                            if (param.colDef.field === "action") {
+                                this.props.editForm(param.id)
+                            }
+                        }}
                     />
                 </div>
             )
