@@ -25,7 +25,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           {/* The actual app */}
-          <Route path="/app" component={Home} exact/>
+          <Route path="/isbar-app" component={Home} exact/>
 
           {/* Launcher for smart app */}
           <Route path="/" component={Launcher} exact />
