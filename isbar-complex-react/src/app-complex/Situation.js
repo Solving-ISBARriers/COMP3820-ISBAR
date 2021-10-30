@@ -1,6 +1,4 @@
 import React from "react";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import "medblocks-ui";
 import { IsbarClientContext } from "../IsbarFhirClient";
 import TextField from "@mui/material/TextField";
 import Table from "@mui/material/Table";
