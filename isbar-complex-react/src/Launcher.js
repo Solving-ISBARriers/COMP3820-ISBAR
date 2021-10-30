@@ -20,7 +20,7 @@ export default class Launcher extends React.Component {
         SMART.authorize({
             clientId: "my-client-id",
             scope: "launch openid fhirUser patient/*.read patient/*.write",
-            redirectUri: "./isbar-app",
+            redirectUri: "/isbar-app",
             iss:
                 "https://launch.smarthealthit.org/v/r3/sim/" +
                 "eyJoIjoiMSIsImIiOiJmMDQ2MjkzNi1lYjRiLTRkYT" +
