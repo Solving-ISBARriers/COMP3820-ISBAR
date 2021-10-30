@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/isbar-complex-react/static/css/main.b71968a1.chunk.css",
+    "main.js": "/isbar-complex-react/static/js/main.5efce61b.chunk.js",
+    "main.js.map": "/isbar-complex-react/static/js/main.5efce61b.chunk.js.map",
+    "runtime-main.js": "/isbar-complex-react/static/js/runtime-main.348897c9.js",
+    "runtime-main.js.map": "/isbar-complex-react/static/js/runtime-main.348897c9.js.map",
+    "static/js/2.9013b9e8.chunk.js": "/isbar-complex-react/static/js/2.9013b9e8.chunk.js",
+    "static/js/2.9013b9e8.chunk.js.map": "/isbar-complex-react/static/js/2.9013b9e8.chunk.js.map",
+    "index.html": "/isbar-complex-react/index.html",
+    "static/css/main.b71968a1.chunk.css.map": "/isbar-complex-react/static/css/main.b71968a1.chunk.css.map",
+    "static/js/2.9013b9e8.chunk.js.LICENSE.txt": "/isbar-complex-react/static/js/2.9013b9e8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.348897c9.js",
+    "static/js/2.9013b9e8.chunk.js",
+    "static/css/main.b71968a1.chunk.css",
+    "static/js/main.5efce61b.chunk.js"
+  ]
+}
