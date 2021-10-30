@@ -27,11 +27,12 @@ class App extends React.Component {
   render() {
     return (
       // This runs the launcher first, which redirects to the main screen.
+      
       <BrowserRouter>
         <Switch>
           {/* The actual app */}
           <Route path="/isbar-app" component={Home} exact/>
-
+          
           {/* Launcher for smart app */}
           <Route path="/" component={Launcher} exact />
         </Switch>

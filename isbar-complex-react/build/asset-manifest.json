@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/isbar-complex-react/static/css/main.b71968a1.chunk.css",
-    "main.js": "/isbar-complex-react/static/js/main.5efce61b.chunk.js",
-    "main.js.map": "/isbar-complex-react/static/js/main.5efce61b.chunk.js.map",
+    "main.js": "/isbar-complex-react/static/js/main.b59ec6ea.chunk.js",
+    "main.js.map": "/isbar-complex-react/static/js/main.b59ec6ea.chunk.js.map",
     "runtime-main.js": "/isbar-complex-react/static/js/runtime-main.348897c9.js",
     "runtime-main.js.map": "/isbar-complex-react/static/js/runtime-main.348897c9.js.map",
     "static/js/2.9013b9e8.chunk.js": "/isbar-complex-react/static/js/2.9013b9e8.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.348897c9.js",
     "static/js/2.9013b9e8.chunk.js",
     "static/css/main.b71968a1.chunk.css",
-    "static/js/main.5efce61b.chunk.js"
+    "static/js/main.b59ec6ea.chunk.js"
   ]
 }
