@@ -21,6 +21,7 @@ export default class Launcher extends React.Component {
             clientId: "my-client-id",
             scope: "launch openid fhirUser patient/*.read patient/*.write",
             redirectUri: "./isbar-app",
+            iss: "https://launch.smarthealthit.org/v/r3/sim/",
             
             // Redirect to main screen.
             
