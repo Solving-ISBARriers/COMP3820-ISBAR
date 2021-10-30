@@ -1,0 +1,67 @@
+{
+    "resourceType": "QuestionnaireResponse",
+    "text": { "name": "isbar-simple-response" },
+    
+    
+    "questionnaire": "",
+    "status": "in-progress",
+    "source": {
+      "reference": ""
+    },
+    "item": [
+      {
+        "linkId": "1",
+        "text": "I:Identify",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      },
+      {
+        "linkId": "2",
+        "text": "S:Situation",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      },
+      {
+        "linkId": "3",
+        "text": "O:Observation",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      },
+      {
+        "linkId": "4",
+        "text": "B:Background",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      },
+      {
+        "linkId": "5",
+        "text": "A:Assessment",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      },
+      {
+        "linkId": "6",
+        "text": "R:Recommendation",
+        "answer": [
+          {
+            "valueString": ""
+          }
+        ]
+      }
+    ]
+  }

@@ -10,11 +10,6 @@ import Launcher from './Launcher';
 import Home from "./Home"
 import './App.css';
 
-
-
-
-
-
 /*
  The top application object. Responsible for:
  - Loading patient information
@@ -30,7 +25,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           {/* The actual app */}
-          <Route path="/isbar-app" component={Home} exact/>
+          <Route path="/app" component={Home} exact/>
 
           {/* Launcher for smart app */}
           <Route path="/" component={Launcher} exact />
