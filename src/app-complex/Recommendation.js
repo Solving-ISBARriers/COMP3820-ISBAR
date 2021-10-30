@@ -1,5 +1,5 @@
 import React from "react";
-import '@shoelace-style/shoelace/dist/themes/light.css';
+
 
 export class Recommendation extends React.Component {
 
