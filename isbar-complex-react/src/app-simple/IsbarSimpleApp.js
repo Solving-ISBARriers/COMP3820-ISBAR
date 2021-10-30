@@ -34,8 +34,6 @@ export class IsbarSimpleApp extends React.Component {
   }
 
   componentWillMount() {
-    // console.log("component mounted")
-    // console.log(this.props.create)
     if (this.props.create) {
       // create new resource and store that 
       // now the question is.. do we have to create the resource in the server?
@@ -58,7 +56,12 @@ export class IsbarSimpleApp extends React.Component {
     }
   }
 
+  componentDidUpdate(){
+    this.uploadToServer()
+  }
+  
   // function to send upload request
+  // checks if requires uploading
   uploadToServer() {
     if (!this.state.uploaded) {
       this.context.client.update(this.state.content)
@@ -124,37 +127,37 @@ export class IsbarSimpleApp extends React.Component {
             initialValue={this.getFieldValue(0)}
             placeholder="Introduction"
             visible={true}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 0)}
           />
           <SimpleTextArea
             initialValue={this.getFieldValue(1)}
             placeholder="Situation"
             visible={true}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 1)}
           />
           <SimpleTextArea
             initialValue={this.getFieldValue(2)}
             placeholder="Observation"
             visible={this.state.isIsobar}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 2)}
           />
           <SimpleTextArea
             initialValue={this.getFieldValue(3)}
             placeholder="Background"
             visible={true}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 3)}
           />
           <SimpleTextArea
             initialValue={this.getFieldValue(4)}
             placeholder="Assessment"
             visible={true}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 4)}
           />
           <SimpleTextArea
             initialValue={this.getFieldValue(5)}
             placeholder="Recommendation"
             visible={true}
-            updateField={(content) => console.log(content)}
+            updateField={(value) => this.updateFieldValue(value, 5)}
           />
 
           <button
@@ -183,7 +186,7 @@ export class IsbarSimpleApp extends React.Component {
       return (
 
         <div className="loading-container">
-          Loading simple ISBAR form...
+          Creating new form..
         </div>
       )
     }
