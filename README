@@ -1,6 +1,0 @@
-This document is for COMP3820 Team Solving ISBARriers.
-
-Project resources:
-SMART app testing environment: https://launch.smarthealthit.org/
-Public FHIR endpoint: https://r4.smarthealthit.org/
-FHIR client library: https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js
