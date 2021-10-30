@@ -124,7 +124,7 @@ class AppController extends React.Component {
 
                             }}
                         >
-                            <Accordion defaultExpanded={true}>
+                            <Accordion defaultExpanded={false}>
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1bh-content"
