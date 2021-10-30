@@ -161,7 +161,7 @@ class AppController extends React.Component {
                     questionnaireID={this.state.questionnaireID}
                 />
             )
-        } else if (this.state.loaded && this.state.isSimple) {
+        } else if (this.state.loaded && !this.state.isSimple) {
             return (
                 // <IsbarComplexDevelopment />
                 <IsbarComplexApp />
