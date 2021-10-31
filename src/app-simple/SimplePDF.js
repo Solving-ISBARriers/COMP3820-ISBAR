@@ -88,16 +88,20 @@ export const SimplePDF = (props) => {
                         <Text style={styles.content}>{content[1]}</Text>
                     </View>
                     <View style={styles.section}>
-                        <Text style={styles.heading}>Background</Text>
+                        <Text style={styles.heading}>Observation</Text>
                         <Text style={styles.content}>{content[2]}</Text>
                     </View>
                     <View style={styles.section}>
-                        <Text style={styles.heading}>Assessment</Text>
+                        <Text style={styles.heading}>Background</Text>
                         <Text style={styles.content}>{content[3]}</Text>
                     </View>
                     <View style={styles.section}>
-                        <Text style={styles.heading}>Recommendation</Text>
+                        <Text style={styles.heading}>Assessment</Text>
                         <Text style={styles.content}>{content[4]}</Text>
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.heading}>Recommendation</Text>
+                        <Text style={styles.content}>{content[5]}</Text>
                     </View>
                 </Page>
             </Document>

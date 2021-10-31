@@ -88,7 +88,7 @@ export class IsbarSimpleApp extends React.Component {
     if (!this.state.published) {
       this.context.client.create(this.state.content)
         .then((res) => {
-
+          console.log(res)
           this.setState({ content: res, published: true })
         })
     }
