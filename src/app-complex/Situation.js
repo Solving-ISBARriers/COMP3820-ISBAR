@@ -43,6 +43,67 @@ export function AirwaySelect() {
   );
 }
 
+export function BreathingSelect() {
+    const [options, setBreathing] = React.useState("");
+  
+    const handleChange = (event) => {
+      setBreathing(event.target.value);
+    };
+  
+    return (
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="breathingSelect">Breathing</InputLabel>
+          <Select
+            labelId="Breathing"
+            id="breathingSelect"
+            value={options}
+            label="Options"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>Unremarkable</MenuItem>
+            <MenuItem value={20}>Shallow</MenuItem>
+            <MenuItem value={30}>Deep</MenuItem>
+            <MenuItem value={40}>Rapid</MenuItem>
+            <MenuItem value={50}>Slow</MenuItem>
+            <MenuItem value={60}>Laboured</MenuItem>
+            <MenuItem value={70}>Audible wheeze</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+    );
+  }
+
+export function PulseSelect() {
+    const [options, setPulse] = React.useState("");
+  
+    const handleChange = (event) => {
+      setPulse(event.target.value);
+    };
+  
+    return (
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="pulseSelect">Pulse</InputLabel>
+          <Select
+            labelId="Pulse"
+            id="pulseSelect"
+            value={options}
+            label="Options"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>Unremarkable</MenuItem>
+            <MenuItem value={20}>Regular</MenuItem>
+            <MenuItem value={30}>Slow</MenuItem>
+            <MenuItem value={40}>Strong</MenuItem>
+            <MenuItem value={50}>Weak</MenuItem>
+            <MenuItem value={60}>Rapid</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+    );
+  }
+
 export class Situation extends React.Component {
   static contextType = IsbarClientContext;
 
@@ -91,7 +152,17 @@ export class Situation extends React.Component {
         <TextField fullWidth multiline placeholder="Reason For transfer" />
 
         <h3>Observations</h3>
+
+        <h5>Airway</h5>
         <AirwaySelect />
+
+        <h5>Breathing</h5>
+        <BreathingSelect />
+
+        <h5>Pulse</h5>
+        <PulseSelect />
+
+        
       </div>
     );
   }
