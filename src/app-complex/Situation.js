@@ -137,7 +137,7 @@ export class Situation extends React.Component {
 
   render() {
     return (
-      <div className="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
+      <div className="container  ">
         
         <h3>Patient Status</h3>
         <TextField fullWidth multiline placeholder="Patient Status" />
