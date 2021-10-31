@@ -3,7 +3,7 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import SimpleTextArea from "../common/SimpleTextArea";
-import { Stack, Grid, Typography, Slider } from '@mui/material'
+import { Stack, Grid, Typography, Button } from '@mui/material'
 import { FormControlLabel, Switch } from "@mui/material";
 import FHIRAutocomplete from "../common/FHIRAutocomplete";
 import { getSimpleName } from "../common/DisplayHelper";
@@ -57,10 +57,11 @@ export class IsbarSimpleApp extends React.Component {
       this.context.client.request("QuestionnaireResponse/" + this.props.formID)
         .then((res) => {
           // res is the questionnaire object
+          console.log(res)
           this.setState({ content: res })
           // turn on isobar if the given form is isobar
-          if(res.items[2].hasOwnProperty('answer')){
-            this.setState({isIsobar: true})
+          if (res.item[2].hasOwnProperty('answer')) {
+            this.setState({ isIsobar: true })
           }
           if (res.hasOwnProperty('extension')) {
 
@@ -70,171 +71,187 @@ export class IsbarSimpleApp extends React.Component {
         .then((res) => {
           // res is practitioner resource of recipient practitioner
           this.setState({ recipient: res, loaded: true })
-        
+
         })
     }
   }
 
-componentDidUpdate() {
-  this.uploadToServer()
-}
-
-// function to send upload request
-// checks if requires uploading
-uploadToServer() {
-  if (!this.state.uploaded) {
-    // console.log(this.state.content)
-    this.context.client.update(this.state.content)
-      .then((res) => {
-        this.setState({ uploaded: true })
-        console.log(res)
-      })
+  componentDidUpdate() {
+    this.uploadToServer()
   }
-}
 
-getFieldValue(index) {
-  return this.state.content.item[index].hasOwnProperty('answer')
-    ? this.state.content.item[index].answer[0].valueString
-    : ""
-}
-
-// update the isbar form field of given index to the value given
-updateFieldValue(value, index) {
-  const prevContent = this.state.content
-  if (prevContent.item[index].hasOwnProperty('answer')) {
-    prevContent.item[index].answer[0].valueString = value
-  } else {
-    prevContent.item[index].answer = [{
-      valueString: value
-    }]
-  }
-  this.setState({ content: prevContent, uploaded: false })
-}
-
-// gets triggered when recipient is selected
-// value is the value from the autocomplete
-onRecipientSelect(value) {
-  // reviewer is the name of extension
-  const newContent = this.state.content
-  // console.log(newContent)
-  if (newContent.extension) {
-    if (newContent.extension[0].hasOwnProperty('valueReference')) {
-      newContent.extension[0].valueReference.reference = "Practitioner/" + value.id
-    } else {
-      newContent.extension[0].valueReference = {
-        reference: "Practitioner/" + value.id
-      }
+  // function to send upload request
+  // checks if requires uploading
+  uploadToServer() {
+    if (!this.state.uploaded) {
+      // console.log(this.state.content)
+      this.context.client.update(this.state.content)
+        .then((res) => {
+          this.setState({ uploaded: true })
+          console.log(res)
+        })
     }
-  } else {
-    newContent.extension = [{
-      url: "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
-      valueReference: {
-        reference: "Practitioner/" + value.id
+  }
+
+  getFieldValue(index) {
+    return this.state.content.item[index].hasOwnProperty('answer')
+      ? this.state.content.item[index].answer[0].valueString
+      : ""
+  }
+
+  // update the isbar form field of given index to the value given
+  updateFieldValue(value, index) {
+    const prevContent = this.state.content
+    if (prevContent.item[index].hasOwnProperty('answer')) {
+      prevContent.item[index].answer[0].valueString = value
+    } else {
+      prevContent.item[index].answer = [{
+        valueString: value
+      }]
+    }
+    this.setState({ content: prevContent, uploaded: false })
+  }
+
+  // gets triggered when recipient is selected
+  // value is the value from the autocomplete
+  onRecipientSelect(value) {
+    // reviewer is the name of extension
+    const newContent = this.state.content
+    // console.log(newContent)
+    if (newContent.extension) {
+      if (newContent.extension[0].hasOwnProperty('valueReference')) {
+        newContent.extension[0].valueReference.reference = "Practitioner/" + value.id
+      } else {
+        newContent.extension[0].valueReference = {
+          reference: "Practitioner/" + value.id
+        }
       }
-    }]
+    } else {
+      newContent.extension = [{
+        url: "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
+        valueReference: {
+          reference: "Practitioner/" + value.id
+        }
+      }]
+    }
+    this.setState({ content: newContent, uploaded: false })
   }
-  this.setState({ content: newContent, uploaded: false })
-}
 
-// Load the text fields after the questionnaire and questionnaire responses are loaded.
-render() {
-  // questionnaire response object
+  // Load the text fields after the questionnaire and questionnaire responses are loaded.
+  render() {
+    // questionnaire response object
 
-  if (this.state.loaded) {
-    return (
-      <Stack spacing={2}
-        sx={{
-          padding: '5% 3% 5% 3%'
-        }}>
+    if (this.state.loaded) {
+      return (
+        <Stack spacing={3}
+          sx={{
+            padding: '5% 3% 5% 3%'
+          }}>
 
-        <Typography variant='h2'>
-          Simple ISBAR Form
-        </Typography>
-        <Grid>
-          <FormControlLabel
-            value="ISOBAR"
-            control={<Switch />}
-            checked={this.state.isIsobar}
-            label="ISOBAR"
-            labelPlacement="start"
-            onChange={(event) => this.setState({ isIsobar: event.target.checked })}
-          >
-          </FormControlLabel>
-          <FHIRAutocomplete
-            resourceName="Practitioner"
-            searchTerm="name"
-            label="Recipient"
-            id="recipientAutocomplete"
-            initialValue={{
-              label: getSimpleName(this.state.recipient.name[0]), 
-              id: this.state.recipient.id }}
-            queries={[]}
-            onSelect={(value) => this.onRecipientSelect(value)}
-            getLabel={(resource) => getSimpleName(resource.name[0])}
+          <Typography variant='h2'>
+            Simple ISBAR Form
+          </Typography>
+          <Grid container spacing={2}
           >
 
-          </FHIRAutocomplete>
-        </Grid>
-        <SimpleTextArea
-          initialValue={this.getFieldValue(0)}
-          placeholder="Introduction"
-          visible={true}
-          updateField={(value) => this.updateFieldValue(value, 0)}
-        />
-        <SimpleTextArea
-          initialValue={this.getFieldValue(1)}
-          placeholder="Situation"
-          visible={true}
-          updateField={(value) => this.updateFieldValue(value, 1)}
-        />
-        <SimpleTextArea
-          initialValue={this.getFieldValue(2)}
-          placeholder="Observation"
-          visible={this.state.isIsobar}
-          updateField={(value) => this.updateFieldValue(value, 2)}
-        />
-        <SimpleTextArea
-          initialValue={this.getFieldValue(3)}
-          placeholder="Background"
-          visible={true}
-          updateField={(value) => this.updateFieldValue(value, 3)}
-        />
-        <SimpleTextArea
-          initialValue={this.getFieldValue(4)}
-          placeholder="Assessment"
-          visible={true}
-          updateField={(value) => this.updateFieldValue(value, 4)}
-        />
-        <SimpleTextArea
-          initialValue={this.getFieldValue(5)}
-          placeholder="Recommendation"
-          visible={true}
-          updateField={(value) => this.updateFieldValue(value, 5)}
-        />
+            <Grid item xs={6}>
+              <FHIRAutocomplete
+                resourceName="Practitioner"
+                searchTerm="name"
+                label="Recipient"
+                id="recipientAutocomplete"
+                initialValue={{
+                  label: getSimpleName(this.state.recipient.name[0]),
+                  id: this.state.recipient.id
+                }}
+                queries={[]}
+                onSelect={(value) => this.onRecipientSelect(value)}
+                getLabel={(resource) => getSimpleName(resource.name[0])}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <FormControlLabel
+                value="ISOBAR"
+                control={<Switch />}
+                checked={this.state.isIsobar}
+                label="ISOBAR"
+                labelPlacement="start"
+                onChange={(event) => this.setState({ isIsobar: event.target.checked })}
+                sx={{
+                  alignSelf: 'center'
+                }}
+              />
+            </Grid>
+            <Grid item xs={3}>
 
-        <button className="isbar-save">
-          <PDFDownloadLink
-            document={
-              <SimplePDF content={this.state.content} />
-            }
-            fileName="isbar.pdf"
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? "Preparing" : "Print"
-            }
-          </PDFDownloadLink>
-        </button>
-      </Stack >
-    )
-  } else {
-    return (
+              <Button>
+                <PDFDownloadLink
+                  document={
+                    <SimplePDF content={this.state.content} />
+                  }
+                  fileName="isbar.pdf"
+                >
+                  {({ blob, url, loading, error }) =>
+                    loading ? "Preparing" : "Print"
+                  }
+                </PDFDownloadLink>
+              </Button>
+            </Grid>
+          </Grid>
+          <SimpleTextArea
+            initialValue={this.getFieldValue(0)}
+            placeholder="Introduction"
+            label="Introduction"
+            visible={true}
+            updateField={(value) => this.updateFieldValue(value, 0)}
+          />
+          <SimpleTextArea
+            initialValue={this.getFieldValue(1)}
+            placeholder="Situation"
+            label="Situation"
+            visible={true}
+            updateField={(value) => this.updateFieldValue(value, 1)}
+          />
+          <SimpleTextArea
+            initialValue={this.getFieldValue(2)}
+            placeholder="Observation"
+            label="Observation"
+            visible={this.state.isIsobar}
+            updateField={(value) => this.updateFieldValue(value, 2)}
+          />
+          <SimpleTextArea
+            initialValue={this.getFieldValue(3)}
+            placeholder="Background"
+            label="Background"
+            visible={true}
+            updateField={(value) => this.updateFieldValue(value, 3)}
+          />
+          <SimpleTextArea
+            initialValue={this.getFieldValue(4)}
+            placeholder="Assessment"
+            label="Assessment"
+            visible={true}
+            updateField={(value) => this.updateFieldValue(value, 4)}
+          />
+          <SimpleTextArea
+            initialValue={this.getFieldValue(5)}
+            placeholder="Recommendation"
+            label="Recommendation"
+            visible={true}
+            updateField={(value) => this.updateFieldValue(value, 5)}
+          />
 
-      <div className="loading-container">
-        Loading ISBAR form
-      </div>
-    )
+        </Stack >
+      )
+    } else {
+      return (
+
+        <div className="loading-container">
+          Loading ISBAR form
+        </div>
+      )
+    }
   }
-}
 }
 
 // function that returns a new response

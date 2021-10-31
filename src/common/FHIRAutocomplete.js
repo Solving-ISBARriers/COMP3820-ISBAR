@@ -112,7 +112,8 @@ export default class FHIRAutocomplete extends React.Component {
                         label={this.props.label}
                         helperText={this.state.loading? "Loading..." : ""}
                         sx={{
-                            borderColor: '#ffffff'
+                            borderWidth:'0'
+                            
                         }}
                         // variant="standard"
                         // helperText={this.props.helperText}

@@ -1,5 +1,7 @@
 import React from "react";
 import TextField from '@mui/material/TextField'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
 // this text area calls parent callback 5 secs after no button press.
 // updateField callback function given as the prop will fire when 
@@ -20,9 +22,9 @@ export default class SimpleTextArea extends React.Component {
     componentDidMount() {
         this.setState({ value: this.props.initialValue })
     }
-    
+
     // clear timeout when user is in different screen
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout(this.state.timeout)
     }
     handleChange(event) {
@@ -41,23 +43,34 @@ export default class SimpleTextArea extends React.Component {
     render() {
         if (this.props.visible) {
             return (
-                <TextField fullWidth multiline
-                    placeholder={this.props.placeholder}
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                />
+                <Stack spacing={1}>
+                    <Typography variant='p'>
+                        {this.props.label}
+                    </Typography>
+
+                    <TextField fullWidth multiline
+                        placeholder={this.props.placeholder}
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                </Stack>
             )
         } else {
             return (
-                <TextField fullWidth multiline
-                    placeholder={this.props.placeholder}
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    sx={{
-                        display: 'none'
-                    }}
-                />
-                )
+                <Stack spacing={1} 
+                sx={{
+                    display: 'none'
+                }}>
+                    <Typography variant='h5'>
+                        {this.props.label}
+                    </Typography>
+                    <TextField fullWidth multiline
+                        placeholder={this.props.placeholder}
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                </Stack>
+            )
         }
     }
 }
