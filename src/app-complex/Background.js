@@ -6,6 +6,21 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import { experimentalStyled as styled } from '@mui/material/styles';
+
+import Paper from '@mui/material/Paper';
+
+
+
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    
+    
+  }));
+  
+
 
 export class Background extends React.Component {
 
@@ -17,130 +32,217 @@ export class Background extends React.Component {
             <div className="container">
             <FormControl Component="fieldset">
             <h3>Alerts</h3>
-                <FormGroup aria-label="position" row={4}>
-
-                    <FormControlLabel
-                        value="Forensic"
-                        control={<Checkbox />}
-                        label="Forensic"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '34ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={4} columns={16}>
+                    <Grid item xs={8}>
+                        <Item>                                   
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1 },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                 <FormControlLabel
+                                    value="Forensic"
+                                    control={<Checkbox />}
+                                    label="Forensic"  
+                                    labelPlacement="start"                                  
+                                    />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Microbiological"
+                                    control={<Checkbox />}
+                                    label="Microbiological"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" labelPlacement="end"/>
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Bariatric Patient"
+                                    control={<Checkbox />}
+                                    label="Bariatric Patient"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Fall Risk"
+                                    control={<Checkbox />}
+                                    label="Fall Risk"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Infectious Risk"
+                                    control={<Checkbox />}
+                                    label="Infectious Risk"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Pressure Ulcer Risk"
+                                    control={<Checkbox />}
+                                    label="Pressure Ulcer Risk"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Smoker"
+                                    control={<Checkbox />}
+                                    label="Smoker"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>                    
+                </Grid>
                 </Box>
-                <FormControlLabel
-                        value="Microbiological"
-                        control={<Checkbox />}
-                        label="Microbiological"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '28ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
+                //Split
+                <Box sx={{ flexGrow: 1 }}>
+                    <h4>Mental Health Act:</h4>
+                <Grid container spacing={4} columns={16}>
+                    <Grid item xs={8}>
+                        <Item>                                   
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1 },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                 <FormControlLabel
+                                    value="Voluntary"
+                                    control={<Checkbox />}
+                                    label="Voluntary"  
+                                    labelPlacement="start"                                  
+                                    />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Involuntary"
+                                    control={<Checkbox />}
+                                    label="Involuntary"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" labelPlacement="end"/>
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Risk Assessment"
+                                    control={<Checkbox />}
+                                    label="Risk Assessment"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>                   
+                </Grid>
                 </Box>
-                </FormGroup>
                 
-                <FormGroup aria-label="position" row>
-                    <FormControlLabel
-                        value="Bariatric Patient"
-                        control={<Checkbox />}
-                        label="Bariatric Patient"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '29ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                    >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                    </Box>
-                    <FormControlLabel
-                        value="Falls Risk"
-                        control={<Checkbox />}
-                        label="Falls Risk"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '32ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
-                <FormGroup aria-label="position" row>
-                    <FormControlLabel
-                        value="Infectious Risk"
-                        control={<Checkbox />}
-                        label="Infectious Risk"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '30ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                    >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                <FormControlLabel
-                        value="Pressure Ulcer Risk"
-                        control={<Checkbox />}
-                        label="Pressure Ulcer Risk"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '25ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
-
-                <FormGroup aria-label="position" row>
-
-                    <FormControlLabel
-                        value="Smoker"
-                        control={<Checkbox />}
-                        label="Smoker"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '35ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
 
                 <FormLabel component="legend">Mental Health Act:</FormLabel>
                 <FormGroup aria-label="position" row>

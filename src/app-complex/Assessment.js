@@ -8,13 +8,15 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+
 import { experimentalStyled as styled } from '@mui/material/styles';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(5),
-    textAlign: 'center',
+    
     color: theme.palette.text.secondary,
   }));
 
@@ -33,7 +35,7 @@ export class Assessment extends React.Component {
               <h3>Latest clinical assessment:</h3>
             </div>             
             <TextField style ={{width: '100%'}} aria-label="minimum height" minRows={4} multiline placeholder ="Latest clinical assessment" spacing={2} id="outlined-search" type="search" />         
-            <div >    
+            <div>    
               <h3>Vital Signs:</h3>
               <Box sx={{ width: '100%' }}>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
