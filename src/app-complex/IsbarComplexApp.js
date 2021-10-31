@@ -4,6 +4,7 @@ import { Background } from "./Background";
 import { Introduction } from "./Introduction";
 import { Recommendation } from "./Recommendation";
 import { Situation } from "./Situation";
+import Patient from "./Patient";
 
 export class IsbarComplexApp extends React.Component {
 
@@ -11,7 +12,7 @@ export class IsbarComplexApp extends React.Component {
         return (
             <div className="app-complex">
                 <div className="container">
-
+                    <Patient />
                     <h2 className="section-title">Introduction</h2>
                     <Introduction />
                     <h2 className="section-title">Situation</h2>

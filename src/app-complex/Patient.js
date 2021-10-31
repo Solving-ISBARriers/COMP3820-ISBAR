@@ -1,6 +1,7 @@
 import React from "react";
 import { IsbarClientContext } from "../IsbarFhirClient";
 
+
 function PatientName({ name = [] }) {
     let entry =
         name.find(nameRecord => nameRecord.use === "official") || name[0];
@@ -16,16 +17,16 @@ function PatientName({ name = [] }) {
 function PatientBanner(patient) {
     console.log(patient);
     return (
-        <div>
+        <div className="container" >
             <PatientName name={patient.name} />
-            <span>
+            <span >
                 Gender: <b>{patient.gender}</b>{" "}
             </span>
             <span>
                 DOB: <b>{patient.birthDate}</b>
             </span>  
             <span>
-                DOB: <b>{patient.address[0].city}</b>
+                Address: <b>{patient.address[0].city}</b>
             </span>   
         </div>
     );

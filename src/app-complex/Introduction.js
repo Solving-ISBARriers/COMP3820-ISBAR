@@ -22,23 +22,48 @@ export class Introduction extends React.Component {
     }
     render(){
         return(
-            <div className="container">
-                
+            <div className="container">               
+                <h3>Date/Time</h3>
+                <TextField id="date" label="Date of transfer" variant="standard" />
                 <Grid container spacing={2} >
                 <Grid item xs={6}>
-                    <Box component="span" sx={{ p: 3, border: '3px' }}>
-                        
-                            
-                             <h3>Date/Time</h3>
+                    <Box component="span">                       
+                    <h3>   Patient Transfer Details</h3>                      
+                        <Box >
+                                <FormControl sx={{ m: 1,width: '45%' }}>
+                                    Category of transfer
+                                    <InputLabel sx={{ m: 1}} id="category-of-transfer"></InputLabel>
+                                    <Select
+                                        labelId="category-of-transfer"
+                                        id="category-of-transfer"
+                                        label="category-of-transfer"
+                                    >
+                                        <MenuItem>Emergency</MenuItem>
+                                        <MenuItem>Elective</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ m: 1,width: '45%' }}>
+                                    Type of transfer
+                                    <InputLabel id="type-of-transfer"></InputLabel>
+                                    <Select
+                                        labelId="type-of-transfer"
+                                        id="type-of-transfer"
+                                        label="type-of-transfer"
+                                    >
+                                        <MenuItem>One Way</MenuItem>
+                                        <MenuItem>Return</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                
+                            </Box>
                            
-                        
                     </Box>
                 </Grid>
                 <Grid item xs={6} sx={{ flexGrow: 1 }}>
                     
                     <Box component="span" sx={{ p: 3, border: '3px' }}>
                         
-                                <h3>Practitioner</h3>
+                                <h3>Referring Practitioner</h3>
                                 
                             <Box
                                 component="form"
@@ -51,12 +76,11 @@ export class Introduction extends React.Component {
                                 autoComplete="off"
                             ></Box>
                             
-                            <Box sx={{ display: 'flex',textAlign: 'justify', m: 1 }}>
-                                <Typography>Name</Typography><Typography color="blue">llllllllllllllllllllllllllllllllllllll</Typography><Typography> Role</Typography></Box>
+                            
                             
                             <TextField 
                                 id="practitioner-name"
-                                defaultValue="practitioner name"
+                                label="Referring Practitioner"
                                 multiline
                                 sx={{ p: 1,width: '45%' }}
                                 />
@@ -65,7 +89,7 @@ export class Introduction extends React.Component {
                           
                             <TextField 
                                 id="practitioner-role"
-                                defaultValue="practitioner role"
+                                label="Role"
                                 multiline
                                 sx={{ p: 1,width: '45%' }}
                                 />
@@ -78,10 +102,10 @@ export class Introduction extends React.Component {
                                 autoComplete="off"
                             >
                             </Box>
-                            <Typography>Location</Typography>
+                            <h4>Location</h4>                    
                             <TextField 
                                 id="practitioner-location"
-                                defaultValue="practitioner location"
+                                label="Practice"
                                 fullWidth
                                 sx={{ width: '90%' }}
                                 multiline/>     
@@ -89,99 +113,46 @@ export class Introduction extends React.Component {
                     
                 </Grid>
                 <Grid item xs={6}>
-                <Box component="span" sx={{ p: 3, border: '3px' }}>
+                <Box component="span" sx={{ p: 3, border: '3px' }}>                        
                         
-                        
-                             <h3>   Next Practitioner</h3>
-                        
-                            
-                            <Box >
-                                <FormControl sx={{ m: 1,width: '45%' }}>
-                                    Category of transfer
-                                    <InputLabel id="category-of-transfer">-Select-</InputLabel>
-                                    <Select
-                                        labelId="category-of-transfer"
-                                        id="category-of-transfer"
-                                        label="category-of-transfer"
-                                    >
-                                        <MenuItem>Emergency</MenuItem>
-                                        <MenuItem>Elective</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <FormControl sx={{ m: 1,width: '45%' }}>
-                                    Type of transfer
-                                    <InputLabel id="type-of-transfer">-Select-</InputLabel>
-                                    <Select
-                                        labelId="type-of-transfer"
-                                        id="type-of-transfer"
-                                        label="type-of-transfer"
-                                    >
-                                        <MenuItem>One Way</MenuItem>
-                                        <MenuItem>Return</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                
-                            </Box>
-                            
-                            
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& .MuiTextField-root': { m: 1, maxWidth:'100%'},
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-                            </Box>
-                           <Typography>Reason for transfer</Typography>
-                            <TextField 
-                                id="reason-for-transfor"
-                                placeholder="Type at least 3 characters to search"
-                                fullWidth
-                                sx={{ width: '90%' }}
-                                multiline/>     
-                        
-                    </Box>
+                        <h3>   Next Practitioner</h3>
+                       
+                        <Box
+                           component="form"
+                           sx={{
+                               '& .MuiTextField-root': { m: 1},width:'100%'
+                             }}
+                           noValidate
+                           autoComplete="off"
+                       ></Box>
+                       
+                       <Typography>Name</Typography>
+                       <TextField 
+                           id="next-practitioner-name"
+                           placeholder="Type Name"
+                           sx={{ width: '45%' }}
+                           multiline/>
+                   
+                       
+                       <Typography>Role</Typography>
+                       <TextField 
+                           id="next-practitioner-role"
+                           placeholder="Type Role"
+                           sx={{ width: '45%' }}
+                           multiline/>
+                           
+                       <Typography>Location</Typography>
+                       <TextField 
+                           id="next-practitioner-location"
+                           placeholder="Type Location"
+                           fullWidth
+                           sx={{width: '90%' }}
+                           multiline/>     
+                   
+               </Box>
+                
                 </Grid>
                 <Grid item xs={6}>
-                <Box component="span" sx={{ p: 3, border: '3px' }}>
-                        
-                        
-                             <h3>   Next Practitioner</h3>
-                            
-                             <Box
-                                component="form"
-                                sx={{
-                                    '& .MuiTextField-root': { m: 1},width:'100%'
-                                  }}
-                                noValidate
-                                autoComplete="off"
-                            ></Box>
-                            
-                            <Typography>Name</Typography>
-                            <TextField 
-                                id="next-practitioner-name"
-                                placeholder="Type Name"
-                                sx={{ width: '45%' }}
-                                multiline/>
-                        
-                            
-                            <Typography>Role</Typography>
-                            <TextField 
-                                id="next-practitioner-role"
-                                placeholder="Type Role"
-                                sx={{ width: '45%' }}
-                                multiline/>
-                                
-                            <Typography>Location</Typography>
-                            <TextField 
-                                id="next-practitioner-location"
-                                placeholder="Type Location"
-                                fullWidth
-                                sx={{width: '90%' }}
-                                multiline/>     
-                        
-                    </Box>
                 </Grid>
                 </Grid>
                 
