@@ -1,19 +1,28 @@
 import React from "react";
-
+import SimpleTextArea from "../common/SimpleTextArea";
 
 export class Recommendation extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state ={
+            value: "",
+        }
     }
+
+    updateField(value){
+        this.setState({value: value})
+    }
+
     render() {
         return (
-            <div class="container  mx-auto px-10 sm:px-8 max-w-7xl py-10">
-                <sl-form>
-                    <sl-textarea rows={4}>
-                    </sl-textarea>
-                </sl-form>
-            </div>
+            <SimpleTextArea
+              initialValue={""}
+              placeholder="Recommendation"
+              label="Recommendation"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value)}
+            />
         )
     }
 }

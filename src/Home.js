@@ -5,7 +5,7 @@ import { IsbarSimpleApp } from "./app-simple/IsbarSimpleApp";
 import { IsbarComplexApp } from "./app-complex/IsbarComplexApp";
 import { IsbarComplexDevelopment } from "./app-complex/IsbarComplexDevelopment";
 import { IsbarClientContext } from "./IsbarFhirClient";
-import { Stack, Box, Container, Accordion, AccordionSummary, Typography, Button, AccordionDetails } from '@mui/material'
+import { Stack, Box, Grid, Accordion, AccordionSummary, Typography, Button, AccordionDetails } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SimpleHistory } from "./SimpleHistory";
 
@@ -53,10 +53,10 @@ class AppController extends React.Component {
 
     backToMenu() {
         // change the statte to come back to menu, and start loading
-        this.setState({isMenu: true, loaded: false})
+        this.setState({ isMenu: true, loaded: false })
         this.loadSimpleIsbars(this.state.questionnaireID)
-        .then(() => this.setState({loaded: true}))
-        
+            .then(() => this.setState({ loaded: true }))
+
     }
 
     // Returns a promise that loads questionnaire ID using questionnaire template
@@ -106,7 +106,7 @@ class AppController extends React.Component {
     }
 
     // opens existing form to edit. id is the questionnaireResponse id.
-    editSimpleForm(id){
+    editSimpleForm(id) {
         // the simple form should be passed as a prop to child object?
         const response = this.state.simpleResponses.entry.filter((element) => element.resource.id === id)
         console.log(response)
@@ -114,62 +114,84 @@ class AppController extends React.Component {
         // search the server for questionnaireResponse with same id
         // The resource is retrieved again rather than being set from the bundle
         // because bundle contains resolved references, it results in corruption
-        this.setState({simpleFormID: response[0].resource.id, isMenu: false, isSimple: true, createNew: false})
+        this.setState({ simpleFormID: response[0].resource.id, isMenu: false, isSimple: true, createNew: false })
     }
 
     // What a mess! requires cleaning..
     render() {
 
         if (this.state.loaded && this.state.isMenu) {
+            // this is the menu. 
             return (
-                <div>
-                    <Box sx={{
-                        padding: '3%'
-                    }}>
-                        {/* Heading needs fixing */}
-                        <Typography sx={{
+                
+                <Stack spacing={5} sx={{ padding: '3%' }}>
+
+                    <Typography variant='h1'
+                        sx={{
                             width: '100%',
                             textAlign: 'center',
-                            fontSize: '30px'
+                            fontSize: '50px'
                         }}>
-                            ISBAR Handover Form
-                        </Typography>
-
-                        {/* Stack requires positioning */}
-                        <Stack spacing={2}
-                            sx={{
-
-                            }}
+                        ISBAR Handover Form
+                    </Typography>
+                    <Accordion defaultExpanded={false}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1bh-content"
+                            id="panel1bh-header"
                         >
-                            <Accordion defaultExpanded={false}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1bh-content"
-                                    id="panel1bh-header"
-                                >
-                                    <Typography sx={{ width: '70%', flexShrink: 0 }}>
-                                        Simple ISBAR handover forms
-                                    </Typography>
-                                    <Button
-                                        onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: true })}
-                                    >
-                                        Create new
-                                    </Button>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <SimpleHistory 
-                                    data={this.state.simpleResponses} 
-                                    editForm={(id) => this.editSimpleForm(id)}
-                                    />
-                                </AccordionDetails>
-                            </Accordion>
-                        </Stack>
-                    </Box>
+                            <Typography variant='h5'
+                                sx={{ width: '80%' }}>
+                                Simple ISBAR handover forms
+                            </Typography>
 
-                    <button className="main-menu-button" onClick={() => this.setState({ isSimple: false, isMenu: false })}>
-                        Complex ISBAR
-                    </button>
-                </div>
+                            <Button
+                                size='medium'
+                                variant='outlined'
+                                sx={{ width: '18%', marginRight: '2%' }}
+                                onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: true })}
+                            >
+                                Create
+                            </Button>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <SimpleHistory
+                                data={this.state.simpleResponses}
+                                editForm={(id) => this.editSimpleForm(id)}
+                            />
+                        </AccordionDetails>
+                    </Accordion>
+
+                    <Accordion defaultExpanded={false}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1bh-content"
+                            id="panel1bh-header"
+                        >
+                            <Typography variant='h5'
+                                sx={{ width: '80%' }}>
+                                Complex ISBAR handover forms
+                            </Typography>
+
+                            <Button
+                                size='medium'
+                                variant='outlined'
+                                sx={{ width: '18%', marginRight: '2%' }}
+                                onClick={() => this.setState({ createNew: true, isMenu: false, isSimple: false })}
+                            >
+                                Create
+                            </Button>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <SimpleHistory
+                                data={this.state.simpleResponses}
+                                editForm={(id) => this.editSimpleForm(id)}
+                            />
+                        </AccordionDetails>
+                    </Accordion>
+
+                </Stack>
+                
             )
         } else if (this.state.loaded && this.state.isSimple) {
 
