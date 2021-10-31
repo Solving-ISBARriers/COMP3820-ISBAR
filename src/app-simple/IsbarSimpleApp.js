@@ -172,7 +172,9 @@ export class IsbarSimpleApp extends React.Component {
               color: "text.primary",
 
             }}>
-              <ArrowBack sx={{
+              <ArrowBack 
+              onClick={this.props.goBack}
+              sx={{
                 fontSize: "30px",
                 // padding: "5px",
                 cursor: "pointer"
