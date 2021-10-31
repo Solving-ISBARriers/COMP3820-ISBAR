@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/COMP3820-ISBAR/public/static/css/main.ba91b63a.chunk.css",
-    "main.js": "/COMP3820-ISBAR/public/static/js/main.f838747f.chunk.js",
-    "main.js.map": "/COMP3820-ISBAR/public/static/js/main.f838747f.chunk.js.map",
-    "runtime-main.js": "/COMP3820-ISBAR/public/static/js/runtime-main.f09ba986.js",
-    "runtime-main.js.map": "/COMP3820-ISBAR/public/static/js/runtime-main.f09ba986.js.map",
-    "static/js/2.1d5a5646.chunk.js": "/COMP3820-ISBAR/public/static/js/2.1d5a5646.chunk.js",
-    "static/js/2.1d5a5646.chunk.js.map": "/COMP3820-ISBAR/public/static/js/2.1d5a5646.chunk.js.map",
-    "index.html": "/COMP3820-ISBAR/public/index.html",
-    "static/css/main.ba91b63a.chunk.css.map": "/COMP3820-ISBAR/public/static/css/main.ba91b63a.chunk.css.map",
-    "static/js/2.1d5a5646.chunk.js.LICENSE.txt": "/COMP3820-ISBAR/public/static/js/2.1d5a5646.chunk.js.LICENSE.txt"
+    "main.css": "/COMP3820-ISBAR/docs/static/css/main.ba91b63a.chunk.css",
+    "main.js": "/COMP3820-ISBAR/docs/static/js/main.f838747f.chunk.js",
+    "main.js.map": "/COMP3820-ISBAR/docs/static/js/main.f838747f.chunk.js.map",
+    "runtime-main.js": "/COMP3820-ISBAR/docs/static/js/runtime-main.f09ba986.js",
+    "runtime-main.js.map": "/COMP3820-ISBAR/docs/static/js/runtime-main.f09ba986.js.map",
+    "static/js/2.1d5a5646.chunk.js": "/COMP3820-ISBAR/docs/static/js/2.1d5a5646.chunk.js",
+    "static/js/2.1d5a5646.chunk.js.map": "/COMP3820-ISBAR/docs/static/js/2.1d5a5646.chunk.js.map",
+    "index.html": "/COMP3820-ISBAR/docs/index.html",
+    "static/css/main.ba91b63a.chunk.css.map": "/COMP3820-ISBAR/docs/static/css/main.ba91b63a.chunk.css.map",
+    "static/js/2.1d5a5646.chunk.js.LICENSE.txt": "/COMP3820-ISBAR/docs/static/js/2.1d5a5646.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f09ba986.js",
