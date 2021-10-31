@@ -1,6 +1,5 @@
 import React from "react";
-import '@shoelace-style/shoelace/dist/themes/light.css';
-import 'medblocks-ui';
+
 import { IsbarClientContext } from "../IsbarFhirClient";
 import Patient from "./Patient";
 
