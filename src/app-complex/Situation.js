@@ -256,8 +256,8 @@ export class Situation extends React.Component {
         <h3>Patient Status</h3>
         <TextField fullWidth multiline placeholder="Patient Status" />
 
-        <h3>Principle Diagnosis</h3>
-        <TextField fullWidth multiline placeholder="Principle Diagnosis" />
+        <h3>Principle Diagnosis/Problem</h3>
+        <TextField fullWidth multiline placeholder="Principle Diagnosis/Problem" />
 
         <h3>Other Diagnosis/problems</h3>
         <TextField fullWidth multiline placeholder="Other Diagnosis/problems" />

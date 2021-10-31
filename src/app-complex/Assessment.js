@@ -7,6 +7,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 
@@ -27,109 +28,57 @@ export class Assessment extends React.Component {
     }
     render(){
         return(
-
-            <React.Fragment>
-            <CssBaseline />
-            <Container fixed>
-              <Box sx={{  height: '5vh' }} />
-            
-
-          
-            <Box
-            
-            component="form"
-            sx={{
-              '& > :not(style)': { m: 1, width: '136ch', },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            
-            
-            
-            <h1><p>Assessment</p></h1>
-
+          <div className="container">                     
             <div>    
-            <h3>Latest clinical assessment:</h3>
-            </div>
-             
-            <TextField fullwidth aria-label="minimum height"
-      minRows={4} multiline placeholder ="Latest clinical assessment" spacing={2} id="outlined-search" type="search" />
-           
-           
-           
-
+              <h3>Latest clinical assessment:</h3>
+            </div>             
+            <TextField style ={{width: '100%'}} aria-label="minimum height" minRows={4} multiline placeholder ="Latest clinical assessment" spacing={2} id="outlined-search" type="search" />         
             <div >    
-            <h3>Vital Signs:</h3>
-          
-          
-          
-            <div style={{ height: 80, width: '100%' }}>
-       <Stack direction="row" spacing={2}>
-           
-           
-            <h3>Resp rate</h3>
-            <TextField  fullwidth  multiline placeholder ="" spacing={2} id="outlined-search" type="search"  style={{ width: 300 }}/>
-            
-            <h3>Temp.</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }} />
-           
-            </Stack>
-    </div>
-            
-           
-           
-    <div style={{ height: 80, width: '100%' }}>
-      <Stack direction="row" spacing={2}>
-           
-           
-            <h3>Pain Score</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }} />
-            <h3>Pulse</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }} />
-           
-            </Stack>
-    </div>
-              
-           
-    <div style={{ height: 80, width: '100%' }}>
-      <Stack direction="row" spacing={2}>
-            <h3>O2 rate/device</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }}/>
-            <h3>B.P.</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }}/>
-           
-            </Stack>
-    </div>  
-           
-           
-    <div style={{ height: 80, width: '100%' }}>
-      <Stack direction="row" spacing={2}> 
-            <h3>Urine output </h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }} />
-            <h3>SpO2</h3>
-            <TextField fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }}/>
-            </Stack>
-    </div>   
-           
-           
-    <div style={{ height: 80, width: '100%' }}>
-      <Stack direction="row" spacing={2}> 
-      <h3>Patient anxiety </h3>
-            <TextField fullwidth multiline placeholder =" " id="outlined-search" type="search" style={{ width: 300 }} />
-            <h3>Hb</h3>
-            <TextField  fullwidth multiline placeholder ="" id="outlined-search" type="search" style={{ width: 300 }}/>
-            </Stack>
-    </div>      
-      
-            </div>
-            
-
-          </Box>
-       
-          </Container>
-    </React.Fragment>
+              <h3>Vital Signs:</h3>
+              <Box sx={{ width: '100%' }}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                  <Grid item xs={6}>
+                    <Item>
+                      <div>                                                
+                        <TextField fullWidth label="Resp rate" id="resprate" />
+                      </div>
+                    </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item>                      
+                      <TextField fullWidth label="Temp" id="temp" />          
+                    </Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Pain Score" id="painscore" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Pulse" id="pulse" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="O2 rate/device" id="O2rate" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Blood Pressure" id="BP" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Urine Output" id="UO" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="SpO2" id="SpO2" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Patient Anxiety" id="anxiety" /></Item>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Item><TextField fullWidth label="Hb" id="Hb" /></Item>
+                  </Grid>              
+                </Grid>
+              </Box>                
+            </div>         
+          </div>
 
         )
+        
     }
 }
