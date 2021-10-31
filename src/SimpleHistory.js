@@ -105,7 +105,7 @@ export class SimpleHistory extends React.Component {
                 if (resource.hasOwnProperty('extension')) {
                     this.context.client.request(resource.extension[0].valueReference.reference)
                         .then((res) => {
-                            console.log(newContent[index])
+                            // console.log(newContent[index])
                             newContent[index].recipient = getSimpleName(res.name[0])
                             // force component update
                             this.forceUpdate()

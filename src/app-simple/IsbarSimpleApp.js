@@ -7,6 +7,7 @@ import { Stack, Grid, Typography, Button } from '@mui/material'
 import { FormControlLabel, Switch } from "@mui/material";
 import FHIRAutocomplete from "../common/FHIRAutocomplete";
 import { getSimpleName } from "../common/DisplayHelper";
+import { ArrowBack } from "@mui/icons-material";
 
 
 // Class for the input field group.
@@ -25,7 +26,7 @@ export class IsbarSimpleApp extends React.Component {
       // turns true if it's isobar
       isIsobar: false,
       // indicates saved state
-      isNew: false,
+      published: false,
       // indicates updated state.
       uploaded: true,
       recipient: null
@@ -33,6 +34,7 @@ export class IsbarSimpleApp extends React.Component {
 
     this.updateFieldValue = this.updateFieldValue.bind(this)
     this.onRecipientSelect = this.onRecipientSelect.bind(this)
+    this.createNewForm = this.createNewForm.bind(this)
   }
 
   componentDidMount() {
@@ -45,11 +47,12 @@ export class IsbarSimpleApp extends React.Component {
         this.context.client.patient.id,
         this.context.client.user.id)
       // always create a new form when approached this way
-      this.context.client.create(newForm)
-        .then((res) => {
-          // console.log(res)
-          this.setState({ content: res, loaded: true })
-        })
+      this.setState({content: newForm, loaded: true})
+      // this.context.client.create(newForm)
+      //   .then((res) => {
+      //     // console.log(res)
+      //     this.setState({ content: res, loaded: true })
+      //   })
     } else {
 
       // note we are not directly modifying the file in parent.
@@ -70,8 +73,19 @@ export class IsbarSimpleApp extends React.Component {
         })
         .then((res) => {
           // res is practitioner resource of recipient practitioner
-          this.setState({ recipient: res, loaded: true })
+          this.setState({ recipient: res, loaded: true, published: true })
 
+        })
+    }
+  }
+
+  createNewForm(){
+    // upload the new form
+    if(!this.state.published){
+      this.context.client.create(this.state.content)
+        .then((res) => {
+          
+          this.setState({ content: res, published: true })
         })
     }
   }
@@ -83,7 +97,7 @@ export class IsbarSimpleApp extends React.Component {
   // function to send upload request
   // checks if requires uploading
   uploadToServer() {
-    if (!this.state.uploaded) {
+    if (!this.state.uploaded && this.state.published) {
       // console.log(this.state.content)
       this.context.client.update(this.state.content)
         .then((res) => {
@@ -143,33 +157,36 @@ export class IsbarSimpleApp extends React.Component {
 
     if (this.state.loaded) {
       return (
-        <Stack spacing={3}
-          sx={{
-            padding: '5% 3% 5% 3%'
-          }}>
+        <Stack spacing={2}>
 
-          <Typography variant='h2'>
-            Simple ISBAR Form
-          </Typography>
-          <Grid container spacing={2}
+          {/* Header grid */}
+          <Grid container spacing={3} align="center" justify="center"
+            sx={{
+              borderBottomWidth: '1px',
+              borderBottomColor: 'text.secondary',
+              borderBottomStyle: 'solid',
+              padding: "10px"
+            }}
           >
+            <Grid item xs={3} sx={{
+              color: "text.primary",
 
-            <Grid item xs={6}>
-              <FHIRAutocomplete
-                resourceName="Practitioner"
-                searchTerm="name"
-                label="Recipient"
-                id="recipientAutocomplete"
-                initialValue={{
-                  label: getSimpleName(this.state.recipient.name[0]),
-                  id: this.state.recipient.id
-                }}
-                queries={[]}
-                onSelect={(value) => this.onRecipientSelect(value)}
-                getLabel={(resource) => getSimpleName(resource.name[0])}
-              />
+            }}>
+              <ArrowBack sx={{
+                fontSize: "30px",
+                // padding: "5px",
+                cursor: "pointer"
+              }} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6}>
+              <Typography variant='h5'
+                align="center"
+              >
+                Simple ISBAR Form
+              </Typography>
+            </Grid>
+
+            <Grid item xs={2}>
               <FormControlLabel
                 value="ISOBAR"
                 control={<Switch />}
@@ -182,66 +199,113 @@ export class IsbarSimpleApp extends React.Component {
                 }}
               />
             </Grid>
-            <Grid item xs={3}>
-
-              <Button>
-                <PDFDownloadLink
-                  document={
-                    <SimplePDF content={this.state.content} />
-                  }
-                  fileName="isbar.pdf"
-                >
-                  {({ blob, url, loading, error }) =>
-                    loading ? "Preparing" : "Print"
-                  }
-                </PDFDownloadLink>
-              </Button>
-            </Grid>
           </Grid>
-          <SimpleTextArea
-            initialValue={this.getFieldValue(0)}
-            placeholder="Introduction"
-            label="Introduction"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 0)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(1)}
-            placeholder="Situation"
-            label="Situation"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 1)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(2)}
-            placeholder="Observation"
-            label="Observation"
-            visible={this.state.isIsobar}
-            updateField={(value) => this.updateFieldValue(value, 2)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(3)}
-            placeholder="Background"
-            label="Background"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 3)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(4)}
-            placeholder="Assessment"
-            label="Assessment"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 4)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(5)}
-            placeholder="Recommendation"
-            label="Recommendation"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 5)}
-          />
 
-        </Stack >
+          <Stack spacing={3}
+            sx={{
+              padding: '3%'
+            }}>
+
+            <Grid container spacing={2}
+            >
+
+              <Grid item xs={8}>
+                <FHIRAutocomplete
+                  resourceName="Practitioner"
+                  searchTerm="name"
+                  label="Recipient"
+                  id="recipientAutocomplete"
+                  initialValue={this.state.recipient ? {
+                    label: getSimpleName(this.state.recipient.name[0]),
+                    id: this.state.recipient.id
+                  } : null}
+                  queries={[]}
+                  onSelect={(value) => this.onRecipientSelect(value)}
+                  getLabel={(resource) => getSimpleName(resource.name[0])}
+                />
+              </Grid>
+
+
+              <Grid item xs={2}
+                justifySelf="center"
+                alignSelf="center"
+              >
+                <Button
+                  size="large"
+                  variant="outlined"
+                >
+                  <PDFDownloadLink
+                    document={
+                      <SimplePDF content={this.state.content} />
+                    }
+                    fileName="isbar.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Preparing" : "Print"
+                    }
+                  </PDFDownloadLink>
+                </Button>
+              </Grid>
+              <Grid item xs={2}
+                justifySelf="center"
+                alignSelf="center"
+              >
+                <Button
+                  size="large"
+                  variant="outlined"
+                  disabled={this.state.published}
+                    onClick={this.createNewForm}
+                > Publish
+                </Button>
+
+              </Grid>
+
+            </Grid>
+            <SimpleTextArea
+              initialValue={this.getFieldValue(0)}
+              placeholder="Introduction"
+              label="Introduction"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 0)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(1)}
+              placeholder="Situation"
+              label="Situation"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 1)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(2)}
+              placeholder="Observation"
+              label="Observation"
+              visible={this.state.isIsobar}
+              updateField={(value) => this.updateFieldValue(value, 2)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(3)}
+              placeholder="Background"
+              label="Background"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 3)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(4)}
+              placeholder="Assessment"
+              label="Assessment"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 4)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(5)}
+              placeholder="Recommendation"
+              label="Recommendation"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 5)}
+            />
+
+          </Stack >
+        </Stack>
       )
     } else {
       return (
@@ -284,7 +348,7 @@ function newQuestionnaireResponse(questionnaireID, patientID, sourceID) {
     extension: [{
       url: "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
       valueReference: {
-        // reference: "Practitioner/"
+        // reference: "Practitioner/" + sourceID
       }
     }],
     item: [

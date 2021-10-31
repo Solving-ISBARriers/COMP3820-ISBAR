@@ -18,8 +18,6 @@ export default class FHIRAutocomplete extends React.Component {
             value: this.props.initialValue,
             // input is what is entered
             input: "",
-            // this displays loading when updating the answerset
-            loading: true,
             timeout: null,
             delay: 500
         }
@@ -74,14 +72,14 @@ export default class FHIRAutocomplete extends React.Component {
 
                 }
                 // console.log(resources)
-                this.setState({ answerSet: resources, loading: false })
+                this.setState({ answerSet: resources })
             })
         
     }
 
     handleInputChange(event, newInput) {
-        console.log(this.state.loading)
-        this.setState({ input: newInput, loading: true })
+        
+        this.setState({ input: newInput })
         
         clearTimeout(this.state.timeout)
         this.setState({
@@ -110,13 +108,10 @@ export default class FHIRAutocomplete extends React.Component {
                 renderInput={(params) => 
                     <TextField {...params}
                         label={this.props.label}
-                        helperText={this.state.loading? "Loading..." : ""}
                         sx={{
                             borderWidth:'0'
                             
                         }}
-                        // variant="standard"
-                        // helperText={this.props.helperText}
                     />
                 }
             />
