@@ -16,13 +16,18 @@ export class Recommendation extends React.Component {
 
     render() {
         return (
-            <SimpleTextArea
-              initialValue={""}
-              placeholder="Recommendation"
-              label="Recommendation"
-              visible={true}
-              updateField={(value) => this.updateFieldValue(value)}
-            />
+            <div className="container">
+                <SimpleTextArea
+                initialValue={""}
+                fullWidth
+                multiline
+                rows={4}
+                placeholder="Recommendation"
+                label="Recommendation"
+                visible={true}
+                updateField={(value) => this.updateFieldValue(value)}
+                />
+            </div>
         )
     }
 }
