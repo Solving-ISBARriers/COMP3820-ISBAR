@@ -242,105 +242,51 @@ export class Background extends React.Component {
                     </Grid>                   
                 </Grid>
                 </Box>
-                
-
-                <FormLabel component="legend">Mental Health Act:</FormLabel>
-                <FormGroup aria-label="position" row>
-
-                    <FormControlLabel
-                        value="Voluntary"
-                        control={<Checkbox />}
-                        label="Voluntary"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '34ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                <FormControlLabel
-                        value="Involuntary"
-                        control={<Checkbox />}
-                        label="Involuntary"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '31ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
-
-                <FormGroup aria-label="position" row>
-
-                    <FormControlLabel
-                        value="Risk Assessment"
-                        control={<Checkbox />}
-                        label="Risk Assessment"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '28ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
-
-                <FormLabel component="legend">Drug Allergy</FormLabel>
-                <FormGroup aria-label="position" row>
-
-                    <FormControlLabel
-                        value="State Drug/Reaction"
-                        control={<Checkbox />}
-                        label="State Drug/Reaction"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '26ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
-
-                <FormGroup aria-label="position" row>
-
-                    <FormControlLabel
-                        value="Other"
-                        control={<Checkbox />}
-                        label="Other"
-                        labelPlacement="start"
-                    />
-                    <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 1, width: '37ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                </FormGroup>
+                <Box sx={{ flexGrow: 1 }}>
+                    <h4>Drug Allergy</h4>
+                <Grid container spacing={4} columns={16}>
+                    <Grid item xs={8}>
+                        <Item>                                   
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 1 },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                 <FormControlLabel
+                                    value="State Drug/Reaction"
+                                    control={<Checkbox />}
+                                    label="State Drug/Reaction"  
+                                    labelPlacement="start"                                  
+                                    />
+                                <TextField id="detial-basic" label="Details" variant="standard" />
+                            </Box>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Item>                            
+                            <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m:1 },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                            >
+                                <FormControlLabel
+                                    value="Other"
+                                    control={<Checkbox />}
+                                    label="Other"
+                                    labelPlacement="start"
+                                />
+                                <TextField id="detial-basic" label="Details" variant="standard" labelPlacement="end"/>
+                            </Box>
+                        </Item>
+                    </Grid>                   
+                </Grid>
+                </Box>           
 
 
                 <h3>Current Episode Medications:</h3>
