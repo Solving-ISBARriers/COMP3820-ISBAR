@@ -23,7 +23,7 @@ export class Recommendation extends React.Component {
                 multiline
                 rows={4}
                 placeholder="Recommendation"
-                label="Recommendation"
+                label=""
                 visible={true}
                 updateField={(value) => this.updateFieldValue(value)}
                 />

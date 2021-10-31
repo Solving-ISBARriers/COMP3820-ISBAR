@@ -23,7 +23,7 @@ function PatientBanner(patient) {
                 Gender: <b>{patient.gender}</b>{" "}
             </span>
             <span>
-                DOB: <b>{patient.birthDate}</b>
+                DOB: <b>{patient.birthDate}</b>{" "}
             </span>  
             <span>
                 Address: <b>{patient.address[0].city}</b>
