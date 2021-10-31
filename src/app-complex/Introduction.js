@@ -7,7 +7,7 @@ export class Introduction extends React.Component {
     }
     render(){
         return(
-            <div>Introduction is changed</div>
+            <div className="container">Introduction </div>
         )
     }
 }
