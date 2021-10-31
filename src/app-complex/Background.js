@@ -14,6 +14,7 @@ export class Background extends React.Component {
     }
     render() {
         return (
+            <div className="container">
             <FormControl Component="fieldset">
             <h3>Alerts</h3>
                 <FormGroup aria-label="position" row={4}>
@@ -53,7 +54,6 @@ export class Background extends React.Component {
                 </FormGroup>
                 
                 <FormGroup aria-label="position" row>
-
                     <FormControlLabel
                         value="Bariatric Patient"
                         control={<Checkbox />}
@@ -67,10 +67,10 @@ export class Background extends React.Component {
                     }}
                     noValidate
                     autoComplete="off"
-                >
+                    >
                     <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
-                <FormControlLabel
+                    </Box>
+                    <FormControlLabel
                         value="Falls Risk"
                         control={<Checkbox />}
                         label="Falls Risk"
@@ -87,9 +87,7 @@ export class Background extends React.Component {
                     <TextField id="detial-basic" label="detial" variant="outlined" />
                 </Box>
                 </FormGroup>
-
                 <FormGroup aria-label="position" row>
-
                     <FormControlLabel
                         value="Infectious Risk"
                         control={<Checkbox />}
@@ -103,7 +101,7 @@ export class Background extends React.Component {
                     }}
                     noValidate
                     autoComplete="off"
-                >
+                    >
                     <TextField id="detial-basic" label="detial" variant="outlined" />
                 </Box>
                 <FormControlLabel
@@ -280,6 +278,7 @@ export class Background extends React.Component {
                 </Box>
 
             </FormControl>
+            </div>
         )
     }
 
