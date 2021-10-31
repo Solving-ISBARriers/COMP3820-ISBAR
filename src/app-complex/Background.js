@@ -176,7 +176,7 @@ export class Background extends React.Component {
                     </Grid>                    
                 </Grid>
                 </Box>
-                //Split
+                
                 <Box sx={{ flexGrow: 1 }}>
                     <h4>Mental Health Act:</h4>
                 <Grid container spacing={4} columns={16}>
@@ -290,40 +290,16 @@ export class Background extends React.Component {
 
 
                 <h3>Current Episode Medications:</h3>
-                <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 0.1, width: '90ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
+                <TextField id="detial-basic" label="Details" variant="outlined" />
+                
 
                 <h3>Investigations:</h3>
-                <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 0.1, width: '90ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
+                <TextField id="detial-basic" label="Details" variant="outlined" />
+                
 
                 <h3>Specialty-Specific Information:</h3>
-                <Box
-                      component="form"
-                      sx={{
-                        '& > :not(style)': { m: 0.1, width: '90ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField id="detial-basic" label="detial" variant="outlined" />
-                </Box>
+                <TextField id="detial-basic" label="Details" variant="outlined" />
+                
 
             </FormControl>
             </div>
