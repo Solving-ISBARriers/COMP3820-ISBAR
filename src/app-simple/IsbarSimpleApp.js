@@ -3,9 +3,11 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 import { SimplePDF } from "./SimplePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import SimpleTextArea from "../common/SimpleTextArea";
-import { Stack, Grid, Typography, Slider } from '@mui/material'
-import { FormGroup, FormControl, FormControlLabel, Switch } from "@mui/material";
+import { Stack, Grid, Typography, Button } from '@mui/material'
+import { FormControlLabel, Switch } from "@mui/material";
 import FHIRAutocomplete from "../common/FHIRAutocomplete";
+import { getSimpleName } from "../common/DisplayHelper";
+import { ArrowBack } from "@mui/icons-material";
 
 
 // Class for the input field group.
@@ -24,42 +26,68 @@ export class IsbarSimpleApp extends React.Component {
       // turns true if it's isobar
       isIsobar: false,
       // indicates saved state
-      isNew: false,
+      published: false,
       // indicates updated state.
       uploaded: true,
-      practitioners: []
+      recipient: null
     };
 
     this.updateFieldValue = this.updateFieldValue.bind(this)
+    this.onRecipientSelect = this.onRecipientSelect.bind(this)
+    this.createNewForm = this.createNewForm.bind(this)
   }
 
   componentDidMount() {
     console.log(this.props.create)
     if (this.props.create) {
       // create new resource and store that 
-      // now the question is.. do we have to create the resource in the server?
-      // no, we include a publish button for now, because it may result in many duplicates.
-      // this.createSimpleIsbar()
-      // new form targets to current practitiner?
+      // new form targets to current practitiner
       const newForm = newQuestionnaireResponse(
         this.props.questionnaireID,
         this.context.client.patient.id,
         this.context.client.user.id)
       // always create a new form when approached this way
-      this.context.client.create(newForm)
-        .then((res) => {
-          // console.log(res)
-          this.setState({ content: res, loaded: true })
-        })
+      this.setState({content: newForm, loaded: true})
+      // this.context.client.create(newForm)
+      //   .then((res) => {
+      //     // console.log(res)
+      //     this.setState({ content: res, loaded: true })
+      //   })
     } else {
 
       // note we are not directly modifying the file in parent.
       // parent will fetch the updated version via database query
       this.context.client.request("QuestionnaireResponse/" + this.props.formID)
-        .then((res) => this.setState({ content: res, loaded: true }))
+        .then((res) => {
+          // res is the questionnaire object
+          console.log(res)
+          this.setState({ content: res })
+          // turn on isobar if the given form is isobar
+          if (res.item[2].hasOwnProperty('answer')) {
+            this.setState({ isIsobar: true })
+          }
+          if (res.hasOwnProperty('extension')) {
+
+            return this.context.client.request(res.extension[0].valueReference.reference)
+          }
+        })
+        .then((res) => {
+          // res is practitioner resource of recipient practitioner
+          this.setState({ recipient: res, loaded: true, published: true })
+
+        })
     }
-    // get all the practitioners
-    this.getAllPractitioner()
+  }
+
+  createNewForm(){
+    // upload the new form
+    if(!this.state.published){
+      this.context.client.create(this.state.content)
+        .then((res) => {
+          
+          this.setState({ content: res, published: true })
+        })
+    }
   }
 
   componentDidUpdate() {
@@ -69,7 +97,8 @@ export class IsbarSimpleApp extends React.Component {
   // function to send upload request
   // checks if requires uploading
   uploadToServer() {
-    if (!this.state.uploaded) {
+    if (!this.state.uploaded && this.state.published) {
+      // console.log(this.state.content)
       this.context.client.update(this.state.content)
         .then((res) => {
           this.setState({ uploaded: true })
@@ -84,24 +113,6 @@ export class IsbarSimpleApp extends React.Component {
       : ""
   }
 
-  getAllPractitioner(){
-
-    this.context.client.request("Practitioner", {pageLimit:0})
-    .then((res) => {
-      // this processing is based on smart cilent api. may not be suitable for big systems
-      // with thousands of practitioners?
-      const resultArray = []
-      res.forEach(element => {
-        element.entry.forEach(element => {
-          resultArray.push(element)
-        })
-      });
-      console.log(resultArray)
-      this.setState({practitioners:resultArray})
-      console.log(res)
-    })
-  }
-
   // update the isbar form field of given index to the value given
   updateFieldValue(value, index) {
     const prevContent = this.state.content
@@ -113,9 +124,35 @@ export class IsbarSimpleApp extends React.Component {
       }]
     }
     this.setState({ content: prevContent, uploaded: false })
-    // should we update the server?
-    // we will think about it!
-    // how often should it call the update?
+  }
+
+  // gets triggered when recipient is selected
+  // value is the value from the autocomplete
+  onRecipientSelect(value) {
+
+    if(!value){
+      return
+    }
+    // reviewer is the name of extension
+    const newContent = this.state.content
+    // console.log(newContent)
+    if (newContent.extension) {
+      if (newContent.extension[0].hasOwnProperty('valueReference')) {
+        newContent.extension[0].valueReference.reference = "Practitioner/" + value.id
+      } else {
+        newContent.extension[0].valueReference = {
+          reference: "Practitioner/" + value.id
+        }
+      }
+    } else {
+      newContent.extension = [{
+        url: "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
+        valueReference: {
+          reference: "Practitioner/" + value.id
+        }
+      }]
+    }
+    this.setState({ content: newContent, uploaded: false })
   }
 
   // Load the text fields after the questionnaire and questionnaire responses are loaded.
@@ -124,88 +161,165 @@ export class IsbarSimpleApp extends React.Component {
 
     if (this.state.loaded) {
       return (
-        <Stack spacing={2}
-          sx={{
-            padding: '5% 3% 5% 3%'
-          }}>
+        <Stack spacing={2}>
 
-          <Typography variant='h2'>
-            Simple ISBAR Form
-          </Typography>
-          <Grid>
-            <FormControlLabel
-              value="ISOBAR"
-              control={<Switch />}
-              label="ISOBAR"
-              labelPlacement="start"
-              onChange={(event) => this.setState({isIsobar: event.target.checked})}
-            >
-            </FormControlLabel>
-            <FHIRAutocomplete
-            resourceName="Practitioner"
-            query={[]}
-            >
+          {/* Header grid */}
+          <Grid container spacing={3} align="center" justify="center"
+            sx={{
+              borderBottomWidth: '1px',
+              borderBottomColor: 'text.secondary',
+              borderBottomStyle: 'solid',
+              padding: "10px"
+            }}
+          >
+            <Grid item xs={3} sx={{
+              color: "text.primary",
 
-            </FHIRAutocomplete>
+            }}>
+              <ArrowBack 
+              onClick={this.props.goBack}
+              sx={{
+                fontSize: "30px",
+                // padding: "5px",
+                cursor: "pointer"
+              }} />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant='h5'
+                align="center"
+              >
+                Simple ISBAR Form
+              </Typography>
+            </Grid>
+
+            <Grid item xs={2}>
+              <FormControlLabel
+                value="ISOBAR"
+                control={<Switch />}
+                checked={this.state.isIsobar}
+                label="ISOBAR"
+                labelPlacement="start"
+                onChange={(event) => this.setState({ isIsobar: event.target.checked })}
+                sx={{
+                  alignSelf: 'center'
+                }}
+              />
+            </Grid>
           </Grid>
-          <SimpleTextArea
-            initialValue={this.getFieldValue(0)}
-            placeholder="Introduction"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 0)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(1)}
-            placeholder="Situation"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 1)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(2)}
-            placeholder="Observation"
-            visible={this.state.isIsobar}
-            updateField={(value) => this.updateFieldValue(value, 2)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(3)}
-            placeholder="Background"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 3)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(4)}
-            placeholder="Assessment"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 4)}
-          />
-          <SimpleTextArea
-            initialValue={this.getFieldValue(5)}
-            placeholder="Recommendation"
-            visible={true}
-            updateField={(value) => this.updateFieldValue(value, 5)}
-          />
 
-          <button className="isbar-save">
-            <PDFDownloadLink
-              document={
-                <SimplePDF content={this.state.content} />
-              }
-              fileName="isbar.pdf"
+          <Stack spacing={3}
+            sx={{
+              padding: '3%'
+            }}>
+
+            <Grid container spacing={2}
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Preparing" : "Print"
-              }
-            </PDFDownloadLink>
-          </button>
 
-        </Stack >
+              <Grid item xs={8}>
+                <FHIRAutocomplete
+                  resourceName="Practitioner"
+                  searchTerm="name"
+                  label="Recipient"
+                  id="recipientAutocomplete"
+                  initialValue={this.state.recipient ? {
+                    label: getSimpleName(this.state.recipient.name[0]),
+                    id: this.state.recipient.id
+                  } : null}
+                  queries={[]}
+                  onSelect={(value) => this.onRecipientSelect(value)}
+                  getLabel={(resource) => getSimpleName(resource.name[0])}
+                />
+              </Grid>
 
+
+              <Grid item xs={2}
+                justifySelf="center"
+                alignSelf="center"
+              >
+                <Button
+                  size="large"
+                  variant="outlined"
+                  fullWidth={true}
+                >
+                  <PDFDownloadLink
+                    document={
+                      <SimplePDF content={this.state.content} />
+                    }
+                    fileName="isbar.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Preparing" : "Print"
+                    }
+                  </PDFDownloadLink>
+                </Button>
+              </Grid>
+              <Grid item xs={2}
+                justifySelf="center"
+                alignSelf="center"
+              >
+                <Button
+                  size="large"
+                  variant="outlined"
+                  fullWidth={true}
+                  disabled={this.state.published}
+                    onClick={this.createNewForm}
+                > Publish
+                </Button>
+
+              </Grid>
+
+            </Grid>
+            <SimpleTextArea
+              initialValue={this.getFieldValue(0)}
+              placeholder="Introduction"
+              label="Introduction"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 0)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(1)}
+              placeholder="Situation"
+              label="Situation"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 1)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(2)}
+              placeholder="Observation"
+              label="Observation"
+              visible={this.state.isIsobar}
+              updateField={(value) => this.updateFieldValue(value, 2)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(3)}
+              placeholder="Background"
+              label="Background"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 3)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(4)}
+              placeholder="Assessment"
+              label="Assessment"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 4)}
+            />
+            <SimpleTextArea
+              initialValue={this.getFieldValue(5)}
+              placeholder="Recommendation"
+              label="Recommendation"
+              visible={true}
+              updateField={(value) => this.updateFieldValue(value, 5)}
+            />
+
+          </Stack >
+        </Stack>
       )
     } else {
       return (
 
         <div className="loading-container">
-          Creating new form..
+          Loading ISBAR form
         </div>
       )
     }
@@ -239,12 +353,12 @@ function newQuestionnaireResponse(questionnaireID, patientID, sourceID) {
     },
     // extension not used because resolving reference requires extra effort. 
     // Instead, author section is used.
-    // extension: [{
-    //   url:"http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
-    //   valueReference:{
-    //     reference: "Practitioner/" + targetID
-    //   }
-    // }],
+    extension: [{
+      url: "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reviewer",
+      valueReference: {
+        // reference: "Practitioner/" + sourceID
+      }
+    }],
     item: [
       {
         linkId: "1",

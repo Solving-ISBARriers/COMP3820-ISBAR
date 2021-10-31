@@ -40,23 +40,6 @@
   /* background-color: #F4F9FD; */
 }
 
-#go-back-button{
-  background-color: #455d84;
-  border:none;
-  /* border-radius: 10px; */
-  color: white;
-  font-weight: 600;
-  padding-left: 10px;
-  padding-right: 10px;
-  
-  font-size: 20px;
-  flex-grow: 0;
-}
-#go-back-button:hover{
-  color: yellow;
-}
-
-
 .simple-textarea-container{
   display: flex;
   margin-top: 20px;
@@ -81,7 +64,7 @@
 /********** End of simple-specific style ***********/
 
 /* Style inputs, select elements and textareas */
-input[type="text"],
+/* input[type="text"],
 select,
 textarea {
   width: 100%;
@@ -91,9 +74,9 @@ textarea {
   border-radius: 5px;
   box-sizing: border-box;
   /* resize: vertical; */
-  font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif;
   line-height: 20px;
-}
+} */
 
 /* Style the label to display next to the inputs */
 /* label {
@@ -104,7 +87,7 @@ textarea {
 } */
 
 /* Style the submit button */
-button[class="isbar-save"] {
+/* button[class="isbar-save"] {
   background-color: #04aa6d;
   margin: 2%;
   color: white;
@@ -114,11 +97,11 @@ button[class="isbar-save"] {
   cursor: pointer;
   float: right;
   text-decoration: none;
-}
+} */
 
 a {
   text-decoration: none;
-  color: white;
+  /* color: white; */
 }
 
 /* Style the container */

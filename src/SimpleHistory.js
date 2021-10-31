@@ -1,9 +1,7 @@
 import React from "react";
-import { TableBody, TableContainer, Table, TableHead, TableCell, TableRow, Paper } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid'
 import { getSimpleName, getDateTimeString } from "./common/DisplayHelper";
 import { IsbarClientContext } from "./IsbarFhirClient";
-import { Edit } from "@mui/icons-material";
 
 // this displays the list of previous simple isbar entries
 // takes in the bundle from response
@@ -107,7 +105,7 @@ export class SimpleHistory extends React.Component {
                 if (resource.hasOwnProperty('extension')) {
                     this.context.client.request(resource.extension[0].valueReference.reference)
                         .then((res) => {
-                            console.log(newContent[index])
+                            // console.log(newContent[index])
                             newContent[index].recipient = getSimpleName(res.name[0])
                             // force component update
                             this.forceUpdate()
