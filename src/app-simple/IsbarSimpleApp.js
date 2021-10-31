@@ -58,6 +58,10 @@ export class IsbarSimpleApp extends React.Component {
         .then((res) => {
           // res is the questionnaire object
           this.setState({ content: res })
+          // turn on isobar if the given form is isobar
+          if(res.items[2].hasOwnProperty('answer')){
+            this.setState({isIsobar: true})
+          }
           if (res.hasOwnProperty('extension')) {
 
             return this.context.client.request(res.extension[0].valueReference.reference)
@@ -150,6 +154,7 @@ render() {
           <FormControlLabel
             value="ISOBAR"
             control={<Switch />}
+            checked={this.state.isIsobar}
             label="ISOBAR"
             labelPlacement="start"
             onChange={(event) => this.setState({ isIsobar: event.target.checked })}
@@ -219,15 +224,13 @@ render() {
             }
           </PDFDownloadLink>
         </button>
-
       </Stack >
-
     )
   } else {
     return (
 
       <div className="loading-container">
-        Creating new form..
+        Loading ISBAR form
       </div>
     )
   }
