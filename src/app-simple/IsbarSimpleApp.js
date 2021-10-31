@@ -29,7 +29,11 @@ export class IsbarSimpleApp extends React.Component {
       published: false,
       // indicates updated state.
       uploaded: true,
-      recipient: null
+      recipient: null,
+
+      // author and patient resources are required for print
+      author: null,
+      patient: null
     };
 
     this.updateFieldValue = this.updateFieldValue.bind(this)
@@ -39,6 +43,11 @@ export class IsbarSimpleApp extends React.Component {
 
   componentDidMount() {
     console.log(this.props.create)
+    // save author
+    this.context.client.request("Practitioner/" + this.context.client.user.id)
+      .then((res) => this.setState({ author: res }))
+    this.context.client.patient.read()
+      .then((res) => this.setState({ patient: res }))
     if (this.props.create) {
       // create new resource and store that 
       // new form targets to current practitiner
@@ -47,12 +56,7 @@ export class IsbarSimpleApp extends React.Component {
         this.context.client.patient.id,
         this.context.client.user.id)
       // always create a new form when approached this way
-      this.setState({content: newForm, loaded: true})
-      // this.context.client.create(newForm)
-      //   .then((res) => {
-      //     // console.log(res)
-      //     this.setState({ content: res, loaded: true })
-      //   })
+      this.setState({ content: newForm, loaded: true })
     } else {
 
       // note we are not directly modifying the file in parent.
@@ -79,12 +83,12 @@ export class IsbarSimpleApp extends React.Component {
     }
   }
 
-  createNewForm(){
+  createNewForm() {
     // upload the new form
-    if(!this.state.published){
+    if (!this.state.published) {
       this.context.client.create(this.state.content)
         .then((res) => {
-          
+          console.log(res)
           this.setState({ content: res, published: true })
         })
     }
@@ -101,8 +105,15 @@ export class IsbarSimpleApp extends React.Component {
       // console.log(this.state.content)
       this.context.client.update(this.state.content)
         .then((res) => {
+          // console.log(res)
+          if (res.hasOwnProperty('extension')) {
+            this.context.client.request(res.extension[0].valueReference.reference)
+              .then((res) => {
+                // this updates the recipient
+                this.setState({ recipient: res })
+              })
+          }
           this.setState({ uploaded: true })
-          console.log(res)
         })
     }
   }
@@ -130,7 +141,7 @@ export class IsbarSimpleApp extends React.Component {
   // value is the value from the autocomplete
   onRecipientSelect(value) {
 
-    if(!value){
+    if (!value) {
       return
     }
     // reviewer is the name of extension
@@ -176,13 +187,13 @@ export class IsbarSimpleApp extends React.Component {
               color: "text.primary",
 
             }}>
-              <ArrowBack 
-              onClick={this.props.goBack}
-              sx={{
-                fontSize: "30px",
-                // padding: "5px",
-                cursor: "pointer"
-              }} />
+              <ArrowBack
+                onClick={this.props.goBack}
+                sx={{
+                  fontSize: "30px",
+                  // padding: "5px",
+                  cursor: "pointer"
+                }} />
             </Grid>
             <Grid item xs={6}>
               <Typography variant='h5'
@@ -212,9 +223,7 @@ export class IsbarSimpleApp extends React.Component {
               padding: '3%'
             }}>
 
-            <Grid container spacing={2}
-            >
-
+            <Grid container spacing={2}>
               <Grid item xs={8}>
                 <FHIRAutocomplete
                   resourceName="Practitioner"
@@ -231,27 +240,33 @@ export class IsbarSimpleApp extends React.Component {
                 />
               </Grid>
 
-
               <Grid item xs={2}
                 justifySelf="center"
                 alignSelf="center"
               >
-                <Button
-                  size="large"
-                  variant="outlined"
-                  fullWidth={true}
+                <PDFDownloadLink
+                  document={
+                    <SimplePDF
+                      content={this.state.content}
+                      author={this.state.author}
+                      recipient={this.state.recipient}
+                      subject={this.state.patient}
+                    />
+                  }
+                  fileName="isbar.pdf"
                 >
-                  <PDFDownloadLink
-                    document={
-                      <SimplePDF content={this.state.content} />
-                    }
-                    fileName="isbar.pdf"
+                  <Button
+                    size="large"
+                    variant="outlined"
+                    fullWidth={true}
                   >
-                    {({ blob, url, loading, error }) =>
+                    {/* {({ blob, url, loading, error }) =>
                       loading ? "Preparing" : "Print"
-                    }
-                  </PDFDownloadLink>
-                </Button>
+                    } */}
+                    Print
+                  </Button>
+                </PDFDownloadLink>
+
               </Grid>
               <Grid item xs={2}
                 justifySelf="center"
@@ -262,7 +277,7 @@ export class IsbarSimpleApp extends React.Component {
                   variant="outlined"
                   fullWidth={true}
                   disabled={this.state.published}
-                    onClick={this.createNewForm}
+                  onClick={this.createNewForm}
                 > Publish
                 </Button>
 
