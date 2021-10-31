@@ -6,6 +6,7 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 // takes in fields as props
 // should return the target resource
 // onSelect prop triggered when there is a value selection
+// getLabel prop is to retrieve relevant label from the resource
 export default class FHIRAutocomplete extends React.Component {
 
     static contextType = IsbarClientContext;
@@ -14,7 +15,7 @@ export default class FHIRAutocomplete extends React.Component {
         this.state = {
             answerSet: [],
             // value from select
-            value: null,
+            value: this.props.initialValue,
             // input is what is entered
             input: "",
             // this displays loading when updating the answerset
@@ -27,6 +28,8 @@ export default class FHIRAutocomplete extends React.Component {
 
     componentDidMount() {
         this.updatAnswerSet("")
+        // console.log(this.state.value)
+        // this.setState({value: this.props.defaultValue})
     }
 
     componentWillUnmount() {
@@ -57,7 +60,7 @@ export default class FHIRAutocomplete extends React.Component {
         } else{
             queryString = queryString + "?" + inputString
         }
-        console.log(queryString)
+        // console.log(queryString)
         this.context.client.request(queryString)
             .then((res) => {
                 const resources = []
@@ -108,6 +111,9 @@ export default class FHIRAutocomplete extends React.Component {
                     <TextField {...params}
                         label={this.props.label}
                         helperText={this.state.loading? "Loading..." : ""}
+                        sx={{
+                            borderColor: '#ffffff'
+                        }}
                         // variant="standard"
                         // helperText={this.props.helperText}
                     />
