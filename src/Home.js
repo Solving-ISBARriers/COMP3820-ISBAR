@@ -52,9 +52,11 @@ class AppController extends React.Component {
     }
 
     backToMenu() {
-
-        // change the statte to come back to menu
-        this.setState({ isMenu: true })
+        // change the statte to come back to menu, and start loading
+        this.setState({isMenu: true, loaded: false})
+        this.loadSimpleIsbars(this.state.questionnaireID)
+        .then(() => this.setState({loaded: true}))
+        
     }
 
     // Returns a promise that loads questionnaire ID using questionnaire template

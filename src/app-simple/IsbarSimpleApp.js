@@ -129,6 +129,10 @@ export class IsbarSimpleApp extends React.Component {
   // gets triggered when recipient is selected
   // value is the value from the autocomplete
   onRecipientSelect(value) {
+
+    if(!value){
+      return
+    }
     // reviewer is the name of extension
     const newContent = this.state.content
     // console.log(newContent)
@@ -235,6 +239,7 @@ export class IsbarSimpleApp extends React.Component {
                 <Button
                   size="large"
                   variant="outlined"
+                  fullWidth={true}
                 >
                   <PDFDownloadLink
                     document={
@@ -255,6 +260,7 @@ export class IsbarSimpleApp extends React.Component {
                 <Button
                   size="large"
                   variant="outlined"
+                  fullWidth={true}
                   disabled={this.state.published}
                     onClick={this.createNewForm}
                 > Publish

@@ -43,7 +43,7 @@ export class Background extends React.Component {
                     <Box
                       component="form"
                       sx={{
-                        '& > :not(style)': { m: 1, width: '29ch' },
+                        '& > :not(style)': { m: 1, width: '28ch' },
                     }}
                     noValidate
                     autoComplete="off"
