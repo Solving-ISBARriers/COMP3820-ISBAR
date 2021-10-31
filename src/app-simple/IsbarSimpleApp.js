@@ -6,6 +6,7 @@ import SimpleTextArea from "../common/SimpleTextArea";
 import { Stack, Grid, Typography, Slider } from '@mui/material'
 import { FormGroup, FormControl, FormControlLabel, Switch } from "@mui/material";
 import FHIRAutocomplete from "../common/FHIRAutocomplete";
+import { getSimpleName } from "../common/DisplayHelper";
 
 
 // Class for the input field group.
@@ -143,7 +144,11 @@ export class IsbarSimpleApp extends React.Component {
             </FormControlLabel>
             <FHIRAutocomplete
             resourceName="Practitioner"
-            query={[]}
+            searchTerm="name"
+            label="Recipient"
+            id="recipientAutocomplete"
+            queries={[]}
+            getLabel={(resource) => getSimpleName(resource.name[0])}
             >
 
             </FHIRAutocomplete>
