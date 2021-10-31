@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/COMP3820-ISBAR/static/css/main.32c7b072.chunk.css",
+    "main.js": "/COMP3820-ISBAR/static/js/main.b76d138e.chunk.js",
+    "main.js.map": "/COMP3820-ISBAR/static/js/main.b76d138e.chunk.js.map",
+    "runtime-main.js": "/COMP3820-ISBAR/static/js/runtime-main.72083523.js",
+    "runtime-main.js.map": "/COMP3820-ISBAR/static/js/runtime-main.72083523.js.map",
+    "static/js/2.f462d17e.chunk.js": "/COMP3820-ISBAR/static/js/2.f462d17e.chunk.js",
+    "static/js/2.f462d17e.chunk.js.map": "/COMP3820-ISBAR/static/js/2.f462d17e.chunk.js.map",
+    "index.html": "/COMP3820-ISBAR/index.html",
+    "static/css/main.32c7b072.chunk.css.map": "/COMP3820-ISBAR/static/css/main.32c7b072.chunk.css.map",
+    "static/js/2.f462d17e.chunk.js.LICENSE.txt": "/COMP3820-ISBAR/static/js/2.f462d17e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.72083523.js",
+    "static/js/2.f462d17e.chunk.js",
+    "static/css/main.32c7b072.chunk.css",
+    "static/js/main.b76d138e.chunk.js"
+  ]
+}
