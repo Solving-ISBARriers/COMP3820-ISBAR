@@ -184,7 +184,7 @@ class AppController extends React.Component {
                         </AccordionSummary>
                         <AccordionDetails>
                             <SimpleHistory
-                                data={this.state.simpleResponses}
+                                data={null}
                                 editForm={(id) => this.editSimpleForm(id)}
                             />
                         </AccordionDetails>

@@ -14,7 +14,7 @@ export default class SimpleTextArea extends React.Component {
             value: "",
             timeout: null,
             // timeout delay
-            delay: 5000
+            delay: 3000
         }
         this.handleChange = this.handleChange.bind(this);
     }

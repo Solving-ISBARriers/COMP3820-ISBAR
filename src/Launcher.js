@@ -17,11 +17,12 @@ export default class Launcher extends React.Component {
      * and `launch` url parameters
      */
     componentDidMount() {
-        
+
         SMART.authorize({
             clientId: "my-client-id",
-            scope: "launch openid fhirUser patient/*.read patient/*.write",
+            scope: "launch launch/patient openid fhirUser patient/*.read patient/*.write",
             redirectUri: "./isbar-app",
+            iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImoiOiIxIn0/fhir',
             // Redirect to main screen.
             
             completeInTarget: true
