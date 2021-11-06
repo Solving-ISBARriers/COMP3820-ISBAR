@@ -21,7 +21,10 @@ export default class Launcher extends React.Component {
         SMART.authorize({
             clientId: "my-client-id",
             scope: "launch launch/patient openid fhirUser patient/*.read patient/*.write",
-            redirectUri: "./isbar-app",
+            // redirectURL for github deployment
+            // redirectUri: "https://solving-isbarriers.github.io/COMP3820-ISBAR/#/isbar-app",
+            // RedirectURL for the development version
+            redirectUri: "#/isbar-app",
             iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImoiOiIxIn0/fhir',
             // Redirect to main screen.
             
