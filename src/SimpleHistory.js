@@ -92,7 +92,7 @@ export class SimpleHistory extends React.Component {
                     entry.id = resource.id
                 }
                 if (resource.hasOwnProperty('author')) {
-                    entry.author = getSimpleName(resource.author.name[0])
+                    entry.author = getSimpleName(resource.author.name)
                 }
                 entry.action = "EDIT"
                 newContent.push(entry)
@@ -106,7 +106,7 @@ export class SimpleHistory extends React.Component {
                     this.context.client.request(resource.extension[0].valueReference.reference)
                         .then((res) => {
                             // console.log(newContent[index])
-                            newContent[index].recipient = getSimpleName(res.name[0])
+                            newContent[index].recipient = getSimpleName(res.name)
                             // force component update
                             this.forceUpdate()
                         })

@@ -12,7 +12,7 @@ import { SimpleHistory } from "./SimpleHistory";
 export default class Home extends React.Component {
 
     componentWillMount(){
-        console.log("HOme will mount")
+        console.log("Home will mount")
     }
     render() {
         return (

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 import { IsbarClientContext } from "../IsbarFhirClient";
 import { getSimpleName } from "../common/DisplayHelper";
-import { textAlign } from "@mui/system";
 
 // This is the pdf file that will be generated
 
@@ -54,6 +53,7 @@ export const SimplePDF = (props) => {
     // console.log(props.recipient)
     // console.log(props.subject)
     // need to resolve the practitioner and stuff, or more like given to it.
+    
     props.content.item.forEach((element, index) => {
         if (typeof element.answer !== 'undefined') {
 
@@ -61,7 +61,7 @@ export const SimplePDF = (props) => {
         }
     });
     if(props.author && props.recipient && props.subject){
-
+        
         return (
             <Document>
                 <Page size="A4" style={styles.page}>
@@ -69,14 +69,14 @@ export const SimplePDF = (props) => {
                     <View style={styles.header}>
                         <View style={styles.patientSection}>
                             <Text style={styles.heading}>Patient information</Text>
-                            <Text style={styles.content}>{"Name: " + getSimpleName(props.subject.name[0])}</Text>
+                            <Text style={styles.content}>{"Name: " + getSimpleName(props.subject.name)}</Text>
                             <Text style={styles.content}>{"DOB: " + props.subject.birthDate}</Text>
                         </View>
                         <View style={styles.practitionerSection}>
                             <Text style={styles.heading}>Author</Text>
-                            <Text style={styles.content}>{getSimpleName(props.author.name[0])}</Text>
+                            <Text style={styles.content}>{getSimpleName(props.author.name)}</Text>
                             <Text style={styles.heading}>Recipient</Text>
-                            <Text style={styles.content}>{getSimpleName(props.recipient.name[0])}</Text>
+                            <Text style={styles.content}>{getSimpleName(props.recipient.name)}</Text>
                         </View>
                     </View>
                     <View style={styles.section}>
@@ -107,7 +107,7 @@ export const SimplePDF = (props) => {
             </Document>
         )
     } else{
-
+        
     return (
         <Document>
             <Page size="A4" style={styles.page}>

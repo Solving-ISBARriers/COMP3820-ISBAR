@@ -8,7 +8,7 @@ import { FormControlLabel, Switch } from "@mui/material";
 import FHIRAutocomplete from "../common/FHIRAutocomplete";
 import { getSimpleName } from "../common/DisplayHelper";
 import { ArrowBack } from "@mui/icons-material";
-
+import Patient from "../app-complex/Patient"
 
 // Class for the input field group.
 export class IsbarSimpleApp extends React.Component {
@@ -231,12 +231,12 @@ export class IsbarSimpleApp extends React.Component {
                   label="Recipient"
                   id="recipientAutocomplete"
                   initialValue={this.state.recipient ? {
-                    label: getSimpleName(this.state.recipient.name[0]),
+                    label: getSimpleName(this.state.recipient.name),
                     id: this.state.recipient.id
                   } : null}
                   queries={[]}
                   onSelect={(value) => this.onRecipientSelect(value)}
-                  getLabel={(resource) => getSimpleName(resource.name[0])}
+                  getLabel={(resource) => getSimpleName(resource.name)}
                 />
               </Grid>
 
