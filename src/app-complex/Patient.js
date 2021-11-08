@@ -8,7 +8,7 @@ function PatientName({ name = [] }) {
     if (!entry) {
         return <h1>No Name</h1>;
     }
-    return <h1>{entry.given.join(" ") + " " + entry.family}</h1>;
+    return <p> Name: <b>{entry.given.join(" ") + " " + entry.family}</b></p>;
 
 }
 
@@ -17,17 +17,17 @@ function PatientName({ name = [] }) {
 function PatientBanner(patient) {
     console.log(patient);
     return (
-        <div className="container" >
+        <div>
             <PatientName name={patient.name} />
-            <span >
-                Gender: <b>{patient.gender}</b>{" "}
-            </span>
-            <span>
-                DOB: <b>{patient.birthDate}</b>{" "}
-            </span>  
-            <span>
+            <p >
+            Gender: <b>{patient.gender}{" "}</b>
+            </p>
+            <p>
+                DOB: <b>{patient.birthDate}{" "}</b>
+            </p>  
+            <p>
                 Address: <b>{patient.address[0].city}</b>
-            </span>   
+            </p>   
         </div>
     );
 }

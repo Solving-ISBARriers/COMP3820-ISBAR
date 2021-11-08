@@ -8,6 +8,7 @@ import { IsbarClientContext } from "../IsbarFhirClient";
 import Patient from "./Patient";
 import FormHeader from "../common/FormHeader";
 import { newCarePlan } from "./ResourceTemplates"
+import { Typography, Stack } from "@mui/material";
 
 export class IsbarComplexApp extends React.Component {
     static contextType = IsbarClientContext;
@@ -28,6 +29,8 @@ export class IsbarComplexApp extends React.Component {
             author: null,
             patient: null
         };
+        this.onRecipientSelect = this.onRecipientSelect.bind(this)
+        this.createNewForm = this.createNewForm.bind(this)
     }
 
     componentDidMount() {
@@ -109,26 +112,31 @@ export class IsbarComplexApp extends React.Component {
             return (
                 <div className="app-complex">
                     <div className="container">
-                        <FormHeader
-                            recipient={this.state.recipient}
-                            onRecipientSelect={(value) => this.onRecipientSelect(value)}
-                            content={this.state.carePlan}
-                            patient={this.state.patient}
-                            published={this.state.published}
-                            publishForm={this.createNewForm}
-                            isSimple={false}
-    
+                        <Stack spacing={3}>
+                        <Typography variant="h3">Introduction</Typography>
+                        {/* <h2 className="section-title">Introduction</h2> */}
+                        <Introduction 
+                        recipient={this.state.recipient}
+                        carePlan={this.state.carePlan}
+                        patient={this.state.patient}
+                        published={this.state.published}
+                        onRecipientSelect={(value) => this.onRecipientSelect(value)}
+                        publishForm={this.createNewForm}
                         />
-                        <h2 className="section-title">Introduction</h2>
-                        <Introduction />
-                        <h2 className="section-title">Situation</h2>
+
+                        <Typography variant="h3">Situation</Typography>
+                        {/* <h2 className="section-title">Situation</h2> */}
                         <Situation />
-                        <h2 className="section-title">Background</h2>
+                        <Typography variant="h3">Background</Typography>
+                        {/* <h2 className="section-title">Background</h2> */}
                         <Background />
-                        <h2 className="section-title">Assessment</h2>
+                        <Typography variant="h3">Assessment</Typography>
+                        {/* <h2 className="section-title">Assessment</h2> */}
                         <Assessment />
-                        <h2 className="section-title">Recommendation</h2>
+                        <Typography variant="h3">Recommendation</Typography>
+                        {/* <h2 className="section-title">Recommendation</h2> */}
                         <Recommendation />
+                        </Stack>
 
                     </div>
 

@@ -15,16 +15,30 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack'
+import FormHeader from "../common/FormHeader";
 
 export class Introduction extends React.Component {
 
     constructor(props) {
         super(props)
     }
+
     render() {
         return (
             <div className="container">
                 <Grid container spacing={5} >
+                    <Grid item xs={12}>
+                        <FormHeader
+                            recipient={this.props.recipient}
+                            onRecipientSelect={(value) => this.props.onRecipientSelect(value)}
+                            content={this.props.carePlan}
+                            patient={this.props.patient}
+                            published={this.props.published}
+                            publishForm={this.props.publishForm}
+                            isSimple={false}
+
+                        />
+                    </Grid>
                     <Grid item xs={6}>
                         <Stack spacing={2}>
                             <h3>Date/Time</h3>
@@ -33,7 +47,7 @@ export class Introduction extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                         <Stack spacing={2}>
-                            <h3>   Patient Transfer Details</h3>
+                            <h3>Patient Transfer Details</h3>
 
                             <FormControl sx={{ m: 1, width: '100%' }}>
                                 Category of transfer
@@ -62,75 +76,7 @@ export class Introduction extends React.Component {
 
                         </Stack>
                     </Grid>
-                    <Grid item xs={6} sx={{ flexGrow: 1 }}>
-                        <Stack spacing={2}>
-
-
-                            <h3>   Referring Practitioner</h3>
-                            <Typography variant='p'>Name</Typography>
-                            <TextField
-                                id="practitioner-name"
-                                label="Referring Practitioner"
-                                multiline
-                                fullWidth
-                                
-                            />
-
-
-                            <Typography variant='p'>Role</Typography>
-                            <TextField
-                                id="practitioner-role"
-                                label="Role"
-                                fullWidth
-                                multiline
-                                
-                            />
-                            <Typography variant='p'>Location</Typography>
-                            <TextField
-                                id="practitioner-location"
-                                label="Location"
-                                fullWidth
-                                
-                                
-                                multiline />
-
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Stack spacing={2}>
-
-
-
-                        <h3>   Referring Practitioner</h3>
-                            <Typography variant='p'>Name</Typography>
-                            <TextField
-                                id="next-practitioner-name"
-                                label="Next Practitioner"
-                                multiline
-                                fullWidth
-                                
-                            />
-
-
-                            <Typography variant='p'>Role</Typography>
-                            <TextField
-                                id="practitioner-role"
-                                label="Role"
-                                fullWidth
-                                multiline
-                                
-                            />
-                            <Typography variant='p'>Location</Typography>
-                            <TextField
-                                id="practitioner-location"
-                                label="Location"
-                                fullWidth
-                                multiline />
-
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={6}>
-                    </Grid>
+                    
                 </Grid>
 
 

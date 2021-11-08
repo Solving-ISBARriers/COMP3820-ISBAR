@@ -34,60 +34,61 @@ export default class FormHeader extends React.Component {
             return (
                 <Grid container spacing={4} columnSpacing={2}>
                     <Grid item xs={6}>
-                        <Stack spacing={2}>
-                            <Typography variant="h4">Author</Typography>
-                            <Typography variant="h5">{getSimpleName(this.state.author.name)}</Typography>
-                        </Stack>
+
+                        {/* <Typography variant="h4">Patient</Typography> */}
+                        <h3>Patient</h3>
+                        <Patient />
+
                     </Grid>
                     <Grid item xs={6}>
-                        <Stack spacing={2}>
-                            <Typography variant="h4">Recipient</Typography>
-                            <FHIRAutocomplete
-                                resourceName="Practitioner"
-                                searchTerm="name"
-                                label=""
-                                id="recipientAutocomplete"
-                                recipient={this.props.recipient}
-                                queries={[]}
-                                onSelect={(value) => this.props.onRecipientSelect(value)}
-                                getLabel={(resource) => getSimpleName(resource.name)}
-                            />
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Stack spacing={2}>
-                            <Typography variant="h4">Patient</Typography>
-                            <Patient />
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Stack spacing={2}>
-                            <Typography variant="h4">Actions</Typography>
-                            <Grid container spacing={0}>
-                                <Grid item xs={5}>
-                                    <PrintButton 
+
+                        <h3>Actions</h3>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <PrintButton
                                     simple={this.props.isSimple}
                                     content={this.props.content}
                                     author={this.state.author}
                                     recipient={this.props.recipient}
                                     subject={this.props.patient}
-                                    />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    </Grid>
-                                <Grid item xs={5}>
-                                    <Button
-                                        size="large"
-                                        variant="outlined"
-                                        fullWidth={true}
-                                        disabled={this.props.published}
-                                        onClick={this.props.publishForm}
-                                    >
-                                        Publish
-                                    </Button>
-                                </Grid>
+                                />
                             </Grid>
-                        </Stack>
+                            <Grid item xs={12}>
+                                <Button
+                                    size="large"
+                                    variant="outlined"
+                                    fullWidth={true}
+                                    disabled={this.props.published}
+                                    onClick={this.props.publishForm}
+                                >
+                                    Publish
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+                    <Grid item xs={6}>
+
+                        {/* <Typography variant="h4">Author</Typography> */}
+                        <h3> Author </h3>
+                        <p>{getSimpleName(this.state.author.name)}</p>
+
+                    </Grid>
+                    <Grid item xs={6}>
+
+                        {/* <Typography variant="h4">Recipient</Typography> */}
+                        <h3> Recipient </h3>
+                        <FHIRAutocomplete
+                            resourceName="Practitioner"
+                            searchTerm="name"
+                            label=""
+                            id="recipientAutocomplete"
+                            recipient={this.props.recipient}
+                            queries={[]}
+                            onSelect={(value) => this.props.onRecipientSelect(value)}
+                            getLabel={(resource) => getSimpleName(resource.name)}
+                        />
+
                     </Grid>
                 </Grid>
             )
