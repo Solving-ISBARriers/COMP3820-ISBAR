@@ -1,6 +1,7 @@
 import React from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { IsbarClientContext } from "../IsbarFhirClient";
+import { getSimpleName } from "./DisplayHelper";
 
 // autocomplete that displays values based on fhir search query.
 // takes in fields as props
@@ -15,7 +16,7 @@ export default class FHIRAutocomplete extends React.Component {
         this.state = {
             answerSet: [],
             // value from select
-            value: this.props.initialValue,
+            value: null,
             // input is what is entered
             input: "",
             timeout: null,
@@ -26,6 +27,9 @@ export default class FHIRAutocomplete extends React.Component {
 
     componentDidMount() {
         this.updatAnswerSet("")
+        if(this.props.recipient){
+            this.setState({value: {label: getSimpleName(this.props.recipient.name), id:this.props.recipient.id}})
+        }
         // console.log(this.state.value)
         // this.setState({value: this.props.defaultValue})
     }
@@ -99,7 +103,6 @@ export default class FHIRAutocomplete extends React.Component {
                 onChange={(event, newValue) => {
                     this.setState({ value: newValue })
                     this.props.onSelect(newValue)
-                    console.log(newValue)
                 }}
                 input={this.state.input}
                 onInputChange={(event, newInput) => this.handleInputChange(event, newInput)}

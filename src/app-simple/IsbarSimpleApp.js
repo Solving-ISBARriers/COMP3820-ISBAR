@@ -1,14 +1,10 @@
 import React from "react";
 import { IsbarClientContext } from "../IsbarFhirClient";
-import { SimplePDF } from "./SimplePDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import SimpleTextArea from "../common/SimpleTextArea";
-import { Stack, Grid, Typography, Button } from '@mui/material'
+import { Stack, Grid, Typography } from '@mui/material'
 import { FormControlLabel, Switch } from "@mui/material";
-import FHIRAutocomplete from "../common/FHIRAutocomplete";
-import { getSimpleName } from "../common/DisplayHelper";
 import { ArrowBack } from "@mui/icons-material";
-import Patient from "../app-complex/Patient"
+import FormHeader from "../common/FormHeader";
 
 // Class for the input field group.
 export class IsbarSimpleApp extends React.Component {
@@ -45,7 +41,7 @@ export class IsbarSimpleApp extends React.Component {
     console.log(this.props.create)
     // save author
     this.context.client.request("Practitioner/" + this.context.client.user.id)
-      .then((res) => this.setState({ author: res }))
+      .then((res) => this.setState({ author: res }, console.log(res)))
     this.context.client.patient.read()
       .then((res) => this.setState({ patient: res }))
     if (this.props.create) {
@@ -223,67 +219,16 @@ export class IsbarSimpleApp extends React.Component {
               padding: '3%'
             }}>
 
-            <Grid container spacing={2}>
-              <Grid item xs={8}>
-                <FHIRAutocomplete
-                  resourceName="Practitioner"
-                  searchTerm="name"
-                  label="Recipient"
-                  id="recipientAutocomplete"
-                  initialValue={this.state.recipient ? {
-                    label: getSimpleName(this.state.recipient.name),
-                    id: this.state.recipient.id
-                  } : null}
-                  queries={[]}
-                  onSelect={(value) => this.onRecipientSelect(value)}
-                  getLabel={(resource) => getSimpleName(resource.name)}
-                />
-              </Grid>
-
-              <Grid item xs={2}
-                justifySelf="center"
-                alignSelf="center"
-              >
-                <PDFDownloadLink
-                  document={
-                    <SimplePDF
-                      content={this.state.content}
-                      author={this.state.author}
-                      recipient={this.state.recipient}
-                      subject={this.state.patient}
-                    />
-                  }
-                  fileName="isbar.pdf"
-                >
-                  <Button
-                    size="large"
-                    variant="outlined"
-                    fullWidth={true}
-                  >
-                    {/* {({ blob, url, loading, error }) =>
-                      loading ? "Preparing" : "Print"
-                    } */}
-                    Print
-                  </Button>
-                </PDFDownloadLink>
-
-              </Grid>
-              <Grid item xs={2}
-                justifySelf="center"
-                alignSelf="center"
-              >
-                <Button
-                  size="large"
-                  variant="outlined"
-                  fullWidth={true}
-                  disabled={this.state.published}
-                  onClick={this.createNewForm}
-                > Publish
-                </Button>
-
-              </Grid>
-
-            </Grid>
+            <FormHeader
+              recipient={this.state.recipient}
+              onRecipientSelect={(value) => this.onRecipientSelect(value)}
+              content={this.state.content}
+              patient={this.state.patient}
+              published={this.state.published}
+              publishForm={this.createNewForm}
+              isSimple={true}
+            />
+          
             <SimpleTextArea
               initialValue={this.getFieldValue(0)}
               placeholder="Introduction"
@@ -328,7 +273,7 @@ export class IsbarSimpleApp extends React.Component {
             />
 
           </Stack >
-        </Stack>
+        </Stack >
       )
     } else {
       return (

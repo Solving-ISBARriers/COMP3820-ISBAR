@@ -209,7 +209,9 @@ class AppController extends React.Component {
         } else if (this.state.loaded && !this.state.isSimple) {
             return (
                 // <IsbarComplexDevelopment />
-                <IsbarComplexApp />
+                <IsbarComplexApp 
+                create={this.state.createNew}
+                />
             )
         } else {
             return (<div>Loading</div>)
