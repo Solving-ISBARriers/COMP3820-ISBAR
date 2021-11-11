@@ -49,7 +49,9 @@ class AppController extends React.Component {
             // .then(() => this.createSimpleIsbar())
             .then((res) => this.loadSimpleIsbars(res))
             .then(() => this.setState({ loaded: true }))
-        // this.context.client.request("Practitioner/e443ac58-8ece-4385-8d55-775c1b8f3a37").then(console.log)
+        this.context.client.request("ValueSet" ).then(console.log)
+        this.context.client.patient.request("Observation").then(console.log)
+        
         // wait till all promises resolved
         Promise.all([loadSimple]).then(() => console.log("all loaded"))
     }
